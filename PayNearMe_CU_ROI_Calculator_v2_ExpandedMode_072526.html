@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayNearMe ROI Calculator — Credit Union</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* PayNearMe Official Brand Colors */
+  --purple:      #012341;   /* Midnight */
+  --purple2:     #4350A9;   /* San Marino */
+  --purple3:     #6973BA;   /* San Marino 800 */
+  --green:       #00D14C;   /* Malachite */
+  --green2:      #0181F1;   /* Blue */
+  --green-light: #CCF6DB;   /* Malachite 500 */
+  --green-glow:  rgba(0,209,76,0.12);
+  --geraldine:   #FF767F;   /* Geraldine */
+  --sunglow:     #FED129;   /* Sunglow */
+  --pale-sky:    #6A757F;   /* Pale Sky */
+  --tiara:       #F4F6F6;   /* Tiara 500 */
+  --font-headline: 'Poppins', sans-serif;
+  --font-body:     'Nunito Sans', sans-serif;
+  --pg:          #F4F6F6;
+  --white:       #FFFFFF;
+  --text:        #012341;
+  --muted:       #6A757F;
+  --border:      #E0DBF5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.5;
+  background: var(--pg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--purple);
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky; top: 0; z-index: 50;
+  box-shadow: 0 2px 20px rgba(1,35,65,0.4);
+}
+.header-logo {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.header-logo span { color: var(--green); }
+.header-badge {
+  background: rgba(0,209,76,0.15);
+  border: 1px solid rgba(0,209,76,0.3);
+  color: #99EDB7;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 2rem;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--purple);
+  padding: 1.75rem 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  display: none;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem;
+}
+.hero h1 {
+  font-family: var(--font-headline);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #fff; line-height: 1.15; margin-bottom: 0.5rem;
+}
+.hero h1 em { color: var(--green); font-style: normal; }
+.hero-sub {
+  font-size: 0.88rem; color: rgba(255,255,255,0.65);
+  max-width: 100%; line-height: 1.65;
+}
+
+/* ── CU IDENTITY BAR ── */
+.cu-bar {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.cu-bar label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  display: block; margin-bottom: 0.2rem;
+}
+.cu-bar input {
+  background: transparent;
+  border: none; outline: none;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  color: #fff; width: 100%;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.15rem;
+}
+.cu-bar input::placeholder { color: rgba(255,255,255,0.3); }
+.cu-field { flex: 1; min-width: 140px; }
+.cu-field.wide { flex: 2; min-width: 220px; }
+
+/* ── MAIN LAYOUT ── */
+.main { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1.5rem 1rem; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.85rem; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--purple2);
+  margin-bottom: 0.65rem; margin-top: 0.85rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--border);
+}
+
+/* ── INPUT CARD ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.85rem;
+}
+.card-title {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 0.65rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.card-title .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+}
+
+.input-row { display: flex; flex-direction: column; gap: 0.55rem; }
+.input-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.input-group label {
+  font-size: 0.78rem; font-weight: 500; color: var(--muted);
+}
+.input-wrap {
+  position: relative; display: flex; align-items: center;
+}
+.input-wrap .prefix {
+  position: absolute; left: 0.85rem;
+  font-size: 0.9rem; color: var(--muted); font-weight: 500;
+  pointer-events: none;
+}
+.input-wrap .suffix {
+  position: absolute; right: 0.85rem;
+  font-size: 0.78rem; color: var(--muted); font-weight: 500;
+  pointer-events: none;
+}
+.input-wrap input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 2.5rem 0.6rem 0.9rem;
+  font-family: var(--font-headline);
+  font-size: 0.92rem; font-weight: 500;
+  color: var(--text);
+  transition: border-color 0.15s;
+  background: var(--pg);
+}
+.input-wrap.has-prefix input { padding-left: 1.8rem; }
+.input-wrap input:focus {
+  outline: none; border-color: var(--purple2);
+  background: #fff;
+}
+.ncua-tag {
+  font-size: 0.68rem; font-weight: 600;
+  background: #D9DCEE; color: var(--purple2);
+  padding: 0.1rem 0.45rem; border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+
+.internal-note {
+  font-size: 0.72rem; color: #9B7A00;
+  background: #FFFBEA; border: 1px solid #F0D060;
+  border-radius: 5px; padding: 0.3rem 0.6rem;
+  margin-top: 0.4rem; font-weight: 500;
+}
+
+/* Range slider */
+.slider-wrap { display: flex; flex-direction: column; gap: 0.4rem; }
+.slider-row { display: flex; align-items: center; gap: 0.75rem; }
+.slider-val {
+  font-family: var(--font-headline);
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--purple); min-width: 3.5rem; text-align: right;
+}
+input[type=range] {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 4px; border-radius: 2px;
+  background: var(--border); outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--purple2); cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(67,80,169,0.15);
+  transition: box-shadow 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 5px rgba(74,47,173,0.2);
+}
+
+/* ── RESULTS CARDS ── */
+.result-card {
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.result-card.primary {
+  background: var(--purple);
+  color: #fff;
+}
+.result-card.secondary {
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+.result-card.accent {
+  background: var(--green2);
+  color: #fff;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  top: -30px; right: -30px;
+  pointer-events: none;
+}
+.result-label {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.5rem; opacity: 0.7;
+}
+.result-value {
+  font-family: var(--font-headline);
+  font-size: 2.4rem; line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.result-card.primary .result-value { color: var(--green); }
+.result-card.accent .result-value { color: #fff; }
+.result-card.secondary .result-value { color: var(--purple); }
+.result-sub { font-size: 0.8rem; opacity: 0.7; line-height: 1.4; }
+
+/* ── BREAKDOWN TABLE ── */
+.breakdown {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.breakdown-head {
+  background: var(--purple);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 0.45rem 1.25rem;
+  gap: 1rem;
+}
+.breakdown-head span {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.breakdown-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 0.5rem 1.25rem;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.12s;
+}
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row:hover { background: var(--pg); }
+.breakdown-row .row-label {
+  font-size: 0.8rem; font-weight: 500; color: var(--text);
+}
+.breakdown-row .row-label small {
+  display: block; font-size: 0.7rem;
+  color: var(--muted); font-weight: 400; margin-top: 0.1rem;
+}
+.breakdown-row .row-val {
+  font-family: var(--font-headline);
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--purple); text-align: right;
+}
+.breakdown-row .row-val.positive { color: var(--green2); }
+.breakdown-row.total-row {
+  background: var(--green-light);
+  border-top: 2px solid var(--green);
+}
+.breakdown-row.total-row .row-label { font-weight: 700; color: var(--purple); }
+.breakdown-row.total-row .row-val { color: var(--green2); font-weight: 700; }
+
+/* ── PAYBACK VISUAL ── */
+.payback-bar-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  margin-top: 1.5rem;
+}
+.payback-bar-label {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1rem;
+}
+.months-track {
+  display: flex; gap: 4px; flex-wrap: nowrap;
+  overflow: hidden; border-radius: 6px;
+}
+.month-block {
+  height: 36px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; font-weight: 600;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+.month-block.paid { background: var(--green); color: #fff; }
+.month-block.unpaid { background: var(--border); color: var(--muted); }
+.months-legend {
+  display: flex; gap: 1.5rem; margin-top: 0.75rem;
+}
+.months-legend span {
+  font-size: 0.75rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.months-legend .dot {
+  width: 10px; height: 10px; border-radius: 2px;
+}
+
+/* ── MODE TOGGLE ── */
+.mode-toggle {
+  display: flex; gap: 0.15rem;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.25rem; width: fit-content;
+}
+.mode-btn {
+  padding: 0.5rem 1.1rem; border-radius: 8px;
+  font-family: var(--font-headline); font-size: 0.8rem; font-weight: 600;
+  color: var(--muted); cursor: pointer; border: none; background: transparent;
+  transition: all 0.15s;
+}
+.mode-btn.active { background: var(--purple); color: #fff; }
+.mode-btn:not(.active):hover { background: var(--pg); color: var(--text); }
+
+/* ── EXPANDED DRIVER CARDS ── */
+.driver-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 0.9rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.driver-card .dc-title {
+  font-size: 0.76rem; font-weight: 700; color: var(--purple);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.driver-card .dc-output {
+  margin-top: 0.35rem; padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.driver-card .dc-output-label { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+.driver-card .dc-output-val {
+  font-family: var(--font-headline); font-size: 1.35rem; font-weight: 700; color: var(--green2);
+}
+.mpp-subtotal {
+  background: var(--purple); border-radius: 12px;
+  padding: 0.9rem 1.4rem; margin-top: 0.85rem;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.mpp-subtotal .mpp-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+.mpp-subtotal .mpp-val { font-family: var(--font-headline); font-size: 1.5rem; font-weight: 700; color: var(--green); }
+
+/* ── ASSUMPTION NOTE ── */
+.assumption-note {
+  background: #D9DCEE;
+  border-left: 3px solid var(--purple2);
+  border-radius: 0 8px 8px 0;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.73rem;
+  color: var(--purple);
+  line-height: 1.45;
+  margin-top: 0.85rem;
+}
+.assumption-note strong { font-weight: 700; }
+
+/* ── PRINT BUTTON ── */
+.action-bar {
+  display: flex; gap: 1rem; margin-top: 1rem;
+  justify-content: flex-end;
+}
+.btn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all 0.15s;
+}
+.btn-primary {
+  background: var(--purple);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--purple2); }
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover { border-color: var(--purple2); color: var(--purple); }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 680px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .breakdown-head, .breakdown-row { grid-template-columns: 2fr 1fr; }
+  .breakdown-head span:nth-child(3),
+  .breakdown-head span:nth-child(4),
+  .breakdown-row .row-val:nth-child(3),
+  .breakdown-row .row-val:nth-child(4) { display: none; }
+  .cu-bar { flex-direction: column; }
+}
+
+@media print {
+  .header { position: static; }
+  .btn, .action-bar, .internal-note, #share-msg { display: none; }
+  body { background: white; }
+  .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .result-card { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  #roi-story-wrap { print-color-adjust: exact; -webkit-print-color-adjust: exact; page-break-inside: avoid; break-inside: avoid; }
+  .breakdown { page-break-inside: avoid; break-inside: avoid; }
+  .grid-3 { page-break-inside: avoid; break-inside: avoid; }
+  .section-label { page-break-after: avoid; break-after: avoid; }
+  .assumption-note { page-break-inside: avoid; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAyAKcDASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAcIAgYDBAUJAf/EADcQAAEDBAEDAgQCBwkAAAAAAAECAwQABQYRBxIhMUFRCBMiYRRxFSMyUnKRoQkWNDdDdYGxs//EABoBAQADAQEBAAAAAAAAAAAAAAABAgMEBQb/xAAnEQADAAIABgEDBQAAAAAAAAAAAQIDEQQSITFR8KETccFBQtHh8f/aAAwDAQACEQMRAD8Aq/SlK+iPBFKnbhr4acpzm2sXy9TE49aH0hbBcaLkh9J8KSjY6Un0Kj9wCKlab8HOMqhlMLMLu1J12W8w24jf8I6T/WueuJxS9Nm08NkpbSKZ0qROZeH8s4vmt/phpuXbH1dMe4x9lpZ89Kge6Fa76PnvonRqO62mlS2jKpcvTFKUqxApSlAKUpQClKUApSlAKUpQClKUApSlAKlT4V8Ki5xzDb4NxaS9boLap8ppQ2HEtkBKT9itSNj1G6iurG/AB/mrev8AZV/+zVY56c420aYUnkSZY/4h+VY3FGIMzWYjcy6zllmBGWdI2BtS1a79KQR2HckgdvIrBYfiu5LiXtEq7JtdygFf6yGIwa0n1CFp7g+xPV+RrdP7Q/8AxWF/wTf+2aqtboUy4zG4cCM7JkOHSG20lRNc/DYMbxbpdzo4jNayaT7H0rDmK8ycUrCNSLTeYmtLA+Ywsjtsei0K0fzHtXzXvdvftF5nWmUAJEKQ5HdA/eQopP8AUVcThqRO46xi3RlvJIjskzEFX0K2StQ39io6P2qpGb3Vu+5pe720kobuFwflISfIC3FKA/rU8LPLVJdiOJpVMt9yZIdh4mxfhTDcty3E7peZ99MlDiotxWyElp1Sd63rxrx7V0M54ntN9tWIZJxOzPciZO89GbtlweQlxh5sKKgHFEAp0hfknx5O9Db5mUY9jHwy8aO3/CYGVIfXOS03KfU2GCHlbI0Dvex/KvN48yGFzZyHb8cyC1QbZj1ktsh6z49bnTGbkPDp/VlewSpQJJI12SfdWyq1uvDfuhqXqfOvdkeZlwnyBilpbu90t0RVtU8hhyVHmNutsLUQkfMIP0jZA2e3cd+4rX8gwHKbFnbWEXG3dF7edZaaZQ4laXC7ro0oHRB6h39O/tVkYVsl2/gzk9ubxtGwcOQG1IjpnOOqf6VK0strUenXjrAHV9+ntlgE6y5HhuO823h5py4YLapMG4NLP1SX20gRT+ZDhO/3lD2qVnpLb98EPDO9L3yavxnwHar5gOU2/In2bdmEG7m3Q5Al9TKXvktrS0oA9KtlRSddxv3Gq0jhbjqFdcszWwZnbZDcqxWCZKSwXFNqakNKQAT0nuPqP2Owa2CyXa4S/hPzG+uynBcXsyalKfSohYdIZV1Ajwd96k/iDLLByLjGSZdKCI2cwsWlWy6pQAkTmSkKRI17j5fSdeN68dNVq7lU2/6JmIpyl/pXTBeH85zGyIvVrgRWLe64Wo782WiOmS4Drpb6jtR2NbHbexvsa8618a5pcM8fwdqzKav0cKU9GkPIa6EpAJV1KISRog7BOx3G6sJOgW3OuJ+P5dh48czdm2WxECQzFvaoi4ElISF9baf3yOrr9tb7arB21wuQ+Xr8nLMTjrvuOY223FsEe9/NNxeT1KHW8nRKgFJSpPnfnYq316679+f4K/Rnpr34IL5D4kzjBbdGud9trJt8lz5TcuLJQ8119/pJSex7Hz51XoXbhHkGxRLhc71Z249uthYMp78SgpIcUkBKNH6j9Q3rxvvUxZPb5MH4W8sanYLHwxz9KQnEwG5jjpO3mh8woWpRb2O3pvW9VqvxlXq5yeaLfZnZjxt8OHFLMcLPQFL+pSunx1HsN+wFTGW6aX3/AAKxTK39vydr4ouDrLiFuRkWBodVAhLTHu8QvKdXGUvRbd2dkJV1AH8068nWbnBtix/4d71keSJcXmLMJueI4fUn8C24sJbStAPdRAUTv12PSvf5m5Om8Z/FBdJoi/pG0zbZGan29SgEvAN7Qob2ApJ8HXgqHrWvYTk91zDhvm3JL2986ZNENa9fsoT1qCUJ9kpAAH2FZy8vJLb6dPku1j52kvJHWL8IciZFYY15g2uKyzNQVwWpc1th6Wkd9toUQSPYnW/Pio+uUGZbLhIt9wjOxZcZxTTzLqelba0nRBHoQauHnlvj5lfsazHE+M3cviLhRxBuMTIVxRCU2d/KU2OzZQe5/wCfUVW3nu+P5Fy1fbpLtsS3SlPJafYiyhIb620JQVBwABW+nfj1rbDlq31MsuOYXQ0alKV0mAqwXwLXW12nk67v3W5Q4DK7OtCXJL6WklXzmjoFRA32Paq+0qmSOeXJbHfJSo+mOX3DjrJbf+Gn5LjinEbLLqpzKlNn7bV4PqPWoUvN0xfH5LzT17saAj/UYlNFKx6EdJ71Tmlc0cJy/uOiuK5v0Jg5a5VYusF2xY2pf4Z0dMmWpJT8xPqlAPfR9SfPiofpSumIULSOeqdPbM1vPLaQ0t1xTaP2EFRIT+Q9K/G1rbcS42tSFpO0qSdEH3BrGlWKnZfuE+QtxyROkvKdADiluqUVgeAdnvW+5jyq/ecH/ufZsWsmM2x55Eicm2oUDLcQAE9RUT2Ggde4Heo5pUOE9bJVNdjMPPBgsB1wNKPUUdR6SffVGXXWSSy6tsqSUkpURse3b0rClSQdiFOmwVKVCmSIqljSiy6UFQ9jo1xsvvsSEyGH3WnknaXELIUD77HeuOlNA535sx8uF+XIdLpCnOtwnrI9TvzXG888858x55xxfjqWok/zNYUoDN9559z5j7rjqz26lqJP8zRDzzbS2kPOIbc/bSlRAV+Y9awpQHZiz58RlxmLNksNOjTiG3VJSv8AMA9661KUApSlSBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgP/Z" alt="PayNearMe" style="height:30px; width:auto; display:block;">
+  <div class="header-badge">ROI Calculator — Credit Union Edition</div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Payment Experience Management</div>
+    <h1>Your <em>PayNearMe</em> ROI<br>in 60 Seconds</h1>
+    <p class="hero-sub">Quantify the exact dollar value of reducing agent-assisted payments, recovering delinquent balances, and delivering a modern member payment experience.</p>
+
+    <div class="cu-bar">
+      <div class="cu-field wide">
+        <label>Credit Union Name</label>
+        <input type="text" id="cu-name" placeholder="Enter credit union name" value="">
+      </div>
+      <div class="cu-field">
+        <label>City, State</label>
+        <input type="text" id="cu-location" placeholder="e.g. Austin, TX" value="">
+      </div>
+      <div class="cu-field">
+        <label>Charter #</label>
+        <input type="text" id="cu-charter" placeholder="e.g. 12345" value="">
+      </div>
+      <div class="cu-field">
+        <label>Prepared By</label>
+        <input type="text" id="cu-rep" placeholder="Rep name" value="">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ── MODE TOGGLE ── -->
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.25rem;">
+    <div class="mode-toggle" id="mode-toggle">
+      <button type="button" class="mode-btn active" id="mode-btn-quick" onclick="setMode('quick')">⚡ Quick Mode</button>
+      <button type="button" class="mode-btn" id="mode-btn-expanded" onclick="setMode('expanded')">🧩 Expanded Mode</button>
+    </div>
+    <div style="font-size:0.75rem; color:var(--muted); max-width:420px; text-align:right;" id="mode-caption">
+      Call deflection + delinquency recovery — built for live discovery calls.
+    </div>
+  </div>
+
+  <!-- ── SECTION 1: LOAN PORTFOLIO ── -->
+  <div class="section-label">📊 Loan Portfolio Inputs <span class="ncua-tag">Review NCUA 5300 Call Report</span></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Portfolio Size</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Total Loan Portfolio</label>
+          <div class="input-wrap has-prefix">
+            <span class="prefix">$</span>
+            <input type="text" id="total-loans" value="350,000,000" inputmode="numeric">
+            <span class="suffix">actual $</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Consumer Loans (auto, personal, credit card)</label>
+          <div class="input-wrap has-prefix">
+            <span class="prefix">$</span>
+            <input type="text" id="consumer-loans" value="140,000,000" inputmode="numeric">
+            <span class="suffix">actual $</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Current Delinquency Rate <span style="font-size:0.72rem; color:var(--muted); font-weight:400;">(ask the stakeholder)</span></label>
+          <div class="input-wrap">
+            <input type="number" id="delinquency-rate" value="1.50" step="0.01" min="0" max="20">
+            <span class="suffix">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Call Center Profile</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Monthly Agent-Assisted Loan Payments</label>
+          <div class="input-wrap">
+            <input type="text" id="monthly-calls" value="5,000" inputmode="numeric">
+            <span class="suffix">calls/mo</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Cost Per Agent-Assisted Payment</label>
+          <div class="input-wrap has-prefix">
+            <span class="prefix">$</span>
+            <input type="number" id="cost-per-call" value="9.50" step="0.50" min="5" max="30">
+            <span class="suffix">per call</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Annual Platform License <span style="font-size:0.72rem; color:var(--muted); font-weight:400;">(implementation fee quoted separately)</span></label>
+          <div class="slider-wrap">
+            <div class="slider-row">
+              <input type="range" id="platform-cost-slider" min="20000" max="75000" value="45000" step="5000"
+                     oninput="document.getElementById('platform-cost').value=this.value; document.getElementById('platform-cost-val').textContent='$'+Number(this.value).toLocaleString(); calculate();">
+              <span class="slider-val" id="platform-cost-val">$45,000</span>
+            </div>
+            <input type="hidden" id="platform-cost" value="45000">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: PAYNEARME ASSUMPTIONS ── -->
+  <div class="section-label">⚙️ PayNearMe Performance Assumptions</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Member Adoption Rate</div>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="adoption-rate" min="10" max="80" value="20" step="5">
+          <span class="slider-val" id="adoption-val">20%</span>
+        </div>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.25rem;">
+          % of members who shift to self-service channels · Early stage: <strong>15–25%</strong> · As adoption matures: <strong>up to 40%</strong> · Default: conservative early-stage 20%
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Call Deflection Rate</div>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="deflection-rate" min="10" max="40" value="20" step="1">
+          <span class="slider-val" id="deflection-val">20%</span>
+        </div>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.25rem;">Call volume reduction as adoption matures · Early stage: <strong>15–25%</strong> · Mature deployment: <strong>up to 40%</strong> · Default: conservative 20%</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Delinquency Reduction</div>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="delinq-reduction" min="5" max="20" value="10" step="1">
+          <span class="slider-val" id="delinq-val">10%</span>
+        </div>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.25rem;">Friction removal drives on-time payments · Industry benchmark: <strong>15–20%</strong> for payment modernization · Default: conservative 10%</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Implementation Timeline</div>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="impl-weeks" min="4" max="16" value="8" step="1">
+          <span class="slider-val" id="impl-val">8 wks</span>
+        </div>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.25rem;">Weeks to go-live via Kinective/Core10 middleware · Adoption ramps over first 90 days post-launch</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2B: EXPANDED DRIVERS — MODERN PAYMENT PROCESSING ── -->
+  <div id="expanded-mpp-section" style="display:none;">
+    <div class="section-label">🔧 Modern Payment Processing <span class="ncua-tag" style="background:#FFFBEA; color:#9B7A00;">Expanded Mode</span></div>
+
+    <div class="grid-2">
+
+      <!-- DRIVER: DOWNTIME / RELIABILITY -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Reliability — Reduced Downtime</div>
+        <div class="input-group">
+          <label>Minutes of Downtime Per Month <span style="font-weight:400;color:var(--muted)">(incl. maintenance windows)</span></label>
+          <div class="input-wrap"><input type="number" id="downtime-minutes" value="240" min="0" step="10"><span class="suffix">min/mo</span></div>
+        </div>
+        <div class="input-group">
+          <label>Avg. Payments Processed Per Hour</label>
+          <div class="input-wrap"><input type="number" id="payments-per-hour" value="12" min="0" step="1"><span class="suffix">per hr</span></div>
+        </div>
+        <div class="input-group">
+          <label>Cost of a Delayed / Failed Payment <span style="font-weight:400;color:var(--muted)">(support + reprocessing)</span></label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="cost-per-delayed-payment" value="15" min="0" step="1"></div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="downtime-reduction" min="30" max="60" value="50" step="5">
+            <span class="slider-val" id="downtime-reduction-val">50%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Downtime with PayNearMe</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Default reflects PayNearMe's own modeled figure for this driver</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-downtime-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: RECONCILIATION AUTOMATION -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Automation — Reduced Reconciliation</div>
+        <div class="input-group">
+          <label>Annual Employee Salary <span style="font-weight:400;color:var(--muted)">(reconciliation staff)</span></label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="text" id="annual-employee-salary" value="70,000" inputmode="numeric"></div>
+        </div>
+        <div class="input-group">
+          <label>Hours Per Day Spent Reconciling</label>
+          <div class="input-wrap"><input type="number" id="recon-hours-per-day" value="3" min="0" max="8" step="0.5"><span class="suffix">hrs/day</span></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Based on 260 working days/year</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="recon-reduction" min="40" max="80" value="65" step="5">
+            <span class="slider-val" id="recon-reduction-val">65%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Reconciliation Time</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe case average: 4 hrs → 30 min/day · modeled conservatively here</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-recon-annual">$0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mpp-subtotal">
+      <span class="mpp-lbl">Modern Payment Processing Subtotal · rolls into Net Return below</span>
+      <span class="mpp-val" id="mpp-subtotal-annual">$0 / year</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2C: EXPANDED DRIVERS — WIDER PAYMENT OPTIONS ── -->
+  <div id="expanded-wpo-section" style="display:none;">
+    <div class="section-label">🌐 Wider Payment Options <span class="ncua-tag" style="background:#FFFBEA; color:#9B7A00;">Expanded Mode</span></div>
+
+    <div class="grid-2">
+
+      <!-- DRIVER: CASH / IN-PERSON OUTSOURCING -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Convenience — Outsource In-Person Payments</div>
+        <div class="input-group">
+          <label>In-Person / Cash Payments Per Month <span style="font-weight:400;color:var(--muted)">(branch or dealer)</span></label>
+          <div class="input-wrap"><input type="number" id="in-person-payments" value="150" min="0" step="10"></div>
+        </div>
+        <div class="input-group">
+          <label>Cost Per In-Person Payment</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="cost-per-in-person" value="5.00" min="0" step="0.5"></div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="in-person-reduction" min="40" max="100" value="60" step="5">
+            <span class="slider-val" id="in-person-reduction-val">60%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in In-Person Payments with PayNearMe</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Members can pay cash at 62,000+ retail locations instead of in-branch — PayNearMe's own model assumes up to 100%; shown conservatively here</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-inperson-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: PAPER → ELECTRONIC DISBURSEMENTS -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Timeliness — Reduce Paper Disbursements</div>
+        <div class="input-group">
+          <label>Paper Disbursements Per Month <span style="font-weight:400;color:var(--muted)">(mailed checks)</span></label>
+          <div class="input-wrap"><input type="number" id="paper-disbursements" value="200" min="0" step="10"></div>
+        </div>
+        <div class="input-group">
+          <label>Cost of a Paper Disbursement</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="cost-per-paper-disb" value="3.00" min="0" step="0.5"></div>
+        </div>
+        <div class="input-group">
+          <label>Cost of an Electronic Disbursement</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="cost-per-electronic-disb" value="0.00" min="0" step="0.5"></div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="disb-switch-rate" min="40" max="100" value="70" step="5">
+            <span class="slider-val" id="disb-switch-rate-val">70%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% of Paper Disbursements Switching to Electronic</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe case: one partner reached 65% adoption of instant digital disbursements within 6 months</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-disb-annual">$0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mpp-subtotal">
+      <span class="mpp-lbl">Wider Payment Options Subtotal · rolls into Net Return below</span>
+      <span class="mpp-val" id="wpo-subtotal-annual">$0 / year</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2D: EXPANDED DRIVERS — EXCEPTION MANAGEMENT ── -->
+  <div id="expanded-em-section" style="display:none;">
+    <div class="section-label">🛡️ Exception Management <span class="ncua-tag" style="background:#FFFBEA; color:#9B7A00;">Expanded Mode</span></div>
+
+    <div class="grid-2">
+
+      <!-- DRIVER: CONFIGURABILITY / EXCEPTION HANDLING -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Configurability — Reduced Exception Handling</div>
+        <div class="input-group">
+          <label>Payment Exceptions Per Month</label>
+          <div class="input-wrap"><input type="number" id="payment-exceptions" value="40" min="0" step="5"></div>
+        </div>
+        <div class="input-group">
+          <label>Minutes to Resolve 1 Payment Exception</label>
+          <div class="input-wrap"><input type="number" id="minutes-per-exception" value="10" min="0" step="1"></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Uses Annual Employee Salary above to derive hourly cost</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="exception-reduction" min="30" max="60" value="50" step="5">
+            <span class="slider-val" id="exception-reduction-val">50%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Payment Exceptions with PayNearMe</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Matches PayNearMe's own modeled default (50%) — one client cited $44K/month saved from a single business rule</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-exception-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: CHARGEBACKS & RETURNS -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Quality — Reduced Chargebacks &amp; Returns</div>
+        <div class="input-group">
+          <label>Chargebacks &amp; Returns Per Month</label>
+          <div class="input-wrap"><input type="number" id="chargebacks-returns" value="30" min="0" step="5"></div>
+        </div>
+        <div class="input-group">
+          <label>Average Payment Amount</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="average-payment-amount" value="450" min="0" step="10"></div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="chargeback-reduction" min="15" max="40" value="25" step="5">
+            <span class="slider-val" id="chargeback-reduction-val">25%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Chargebacks &amp; Returns with PayNearMe</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe case: clients with 3+ business rules saw 44% fewer ACH returns than those with fewer than three</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-chargeback-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: FRAUD & WRITE-OFF REDUCTION -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Risk — Reduced Fraud &amp; Write-Offs</div>
+        <div class="input-group">
+          <label>Monthly Fraud Losses</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="text" id="monthly-fraud-losses" value="8,000" inputmode="numeric"></div>
+        </div>
+        <div class="input-group">
+          <label>Monthly Write-Off Losses</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="text" id="monthly-writeoff-losses" value="12,000" inputmode="numeric"></div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="fraud-reduction" min="25" max="50" value="50" step="5">
+            <span class="slider-val" id="fraud-reduction-val">50%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Fraud &amp; Write-Off Losses with PayNearMe</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Matches PayNearMe's own modeled default (50%) for offering members more ways to pay</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-fraud-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: RECENCY RATE IMPROVEMENT -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>On-Time — Improved Recency Rate</div>
+        <div class="input-group">
+          <label>Total Delinquent Loans</label>
+          <div class="input-wrap"><input type="number" id="total-delinquent-loans" value="1500" min="0" step="50"></div>
+        </div>
+        <div class="input-group">
+          <label>Current Recency Rate <span style="font-weight:400;color:var(--muted)">(% paying on schedule)</span></label>
+          <div class="input-wrap"><input type="number" id="current-recency-rate" value="85" min="0" max="100" step="1"><span class="suffix">%</span></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Uses Average Payment Amount from Chargebacks driver above</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="recency-improvement" min="3" max="10" value="5" step="1">
+            <span class="slider-val" id="recency-improvement-val">5%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">Percentage-Point Increase in Recency Rate</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Deliberately simpler and more conservative than PayNearMe's own model — worth validating against a closed AFA deal before quoting</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-recency-annual">$0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mpp-subtotal">
+      <span class="mpp-lbl">Exception Management Subtotal · rolls into Net Return below</span>
+      <span class="mpp-val" id="em-subtotal-annual">$0 / year</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2E: EXPANDED DRIVERS — AUTOMATION & SELF-SERVICE ── -->
+  <div id="expanded-aut-section" style="display:none;">
+    <div class="section-label">🤖 Automation &amp; Self-Service <span class="ncua-tag" style="background:#FFFBEA; color:#9B7A00;">Expanded Mode</span></div>
+
+    <div class="grid-2">
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Smart Link — Reduced Inquiry Calls</div>
+        <div class="input-group">
+          <label>Inquiry / Self-Service Calls Per Month <span style="font-weight:400;color:var(--muted)">(balance checks, general questions — no payment or disbursement action)</span></label>
+          <div class="input-wrap"><input type="number" id="inquiry-calls" value="2000" min="0" step="100"></div>
+        </div>
+        <div class="input-group">
+          <label>Cost of an Inquiry Call</label>
+          <div class="input-wrap has-prefix"><span class="prefix">$</span><input type="number" id="cost-per-inquiry-call" value="6.00" min="0" step="0.5"></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Scaled off your own $9.50 payment-call cost using PayNearMe's published cost ratio between inquiry and payment calls — not their raw published figure, which may be stale</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="inquiry-deflection-rate" min="40" max="90" value="60" step="5">
+            <span class="slider-val" id="inquiry-deflection-rate-val">60%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% Reduction in Inquiry Call Volume with Smart Link <span style="font-weight:400">(scales with Member Adoption Rate above)</span></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe's own modeled default is 90% — one high-volume partner saw a 90% reduction in inquiry-related call volume; shown conservatively here</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-inquiry-annual">$0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mpp-subtotal">
+      <span class="mpp-lbl">Automation &amp; Self-Service Subtotal · rolls into Net Return below</span>
+      <span class="mpp-val" id="aut-subtotal-annual">$0 / year</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2F: EXPANDED DRIVERS — PAYMENT ABANDONMENT & RECOVERY ── -->
+  <div id="expanded-par-section" style="display:none;">
+    <div class="section-label">🔄 Payment Abandonment &amp; Recovery <span class="ncua-tag" style="background:#E9F9EF; color:#0B7A34;">PayNearMe-Sourced Data</span></div>
+    <div style="font-size:0.78rem;color:var(--muted);margin:-0.35rem 0 0.85rem;">Not part of LeveragePoint's driver set — this is PayNearMe's own published 2026 research on the "invisible" third bucket of delinquency: members who tried to pay, hit friction, and abandoned it.</div>
+
+    <div class="grid-2">
+
+      <!-- DRIVER: IN-THE-MOMENT RECOVERY -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>In-the-Moment Recovery</div>
+        <div class="input-group">
+          <label>Failed Payments Per Month <span style="font-weight:400;color:var(--muted)">(expired card, unsupported wallet, etc.)</span></label>
+          <div class="input-wrap"><input type="number" id="monthly-failed-payments" value="100" min="0" step="10"></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Uses Average Payment Amount from Chargebacks driver above</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="in-moment-recovery-rate" min="5" max="12" value="9" step="1">
+            <span class="slider-val" id="in-moment-recovery-rate-val">9%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% of Failed Payments Recovered via Smart Method-Surfacing</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe platform data: ~9% of failed payments convert to completions in the self-service channel — used as published, not scaled</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-inmoment-annual">$0</span>
+        </div>
+      </div>
+
+      <!-- DRIVER: RE-ENGAGEMENT NUDGE RECOVERY -->
+      <div class="driver-card">
+        <div class="dc-title"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Re-Engagement Nudge Recovery</div>
+        <div class="input-group">
+          <label>Abandoned Payments Per Month <span style="font-weight:400;color:var(--muted)">(started, never finished)</span></label>
+          <div class="input-wrap"><input type="number" id="monthly-abandoned-payments" value="80" min="0" step="10"></div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">Uses Average Payment Amount from Chargebacks driver above</div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <input type="range" id="nudge-completion-rate" min="5" max="10" value="7" step="1">
+            <span class="slider-val" id="nudge-completion-rate-val">7%</span>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted)">% of Abandoned Payments Completed After Nudge</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:-0.15rem;">PayNearMe data: personalized text/email nudge brings 50% back to the payment flow, 7% complete — 7% is what's modeled here since only completions recover dollars</div>
+        <div class="dc-output">
+          <span class="dc-output-label">Annual savings</span>
+          <span class="dc-output-val" id="mpp-nudge-annual">$0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mpp-subtotal">
+      <span class="mpp-lbl">Payment Abandonment &amp; Recovery Subtotal · rolls into Net Return below</span>
+      <span class="mpp-val" id="par-subtotal-annual">$0 / year</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: RESULTS ── -->
+  <div class="section-label">💰 Your ROI Summary</div>
+
+  <!-- ROI Story -->
+  <div id="roi-story-wrap" style="
+    background: var(--purple);
+    border-radius: 12px; padding: 1rem 1.4rem;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1.25rem;
+    page-break-inside: avoid; break-inside: avoid;
+  ">
+    <div style="font-size: 1.6rem; flex-shrink:0;">💡</div>
+    <div>
+      <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); margin-bottom:0.3rem;">The ROI Story</div>
+      <div id="roi-story" style="font-size:0.97rem; color:#fff; line-height:1.6; font-weight:400;"></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="result-card primary">
+      <div class="result-label">Monthly Savings</div>
+      <div class="result-value" id="monthly-savings">$0</div>
+      <div class="result-sub">Combined call center + delinquency recovery</div>
+    </div>
+    <div class="result-card secondary">
+      <div class="result-label">Annual Savings</div>
+      <div class="result-value" id="annual-savings">$0</div>
+      <div class="result-sub">Net of estimated PayNearMe platform cost</div>
+    </div>
+    <div class="result-card accent">
+      <div class="result-label">Payback Period</div>
+      <div class="result-value" id="payback-period">0 mo</div>
+      <div class="result-sub">Months to full ROI from go-live date</div>
+    </div>
+  </div>
+
+  <!-- ── PAYBACK TIMELINE ── -->
+  <div class="payback-bar-wrap">
+    <div class="payback-bar-label">Month-by-Month Payback Timeline (12 Months from Go-Live)</div>
+    <div class="months-track" id="months-track"></div>
+    <div class="months-legend">
+      <span><span class="dot" style="background:var(--green)"></span>Paid back</span>
+      <span><span class="dot" style="background:var(--border)"></span>Remaining</span>
+    </div>
+  </div>
+
+  <!-- ── VALUE BREAKDOWN ── -->
+  <div class="breakdown">
+    <div class="breakdown-head">
+      <span>Value Driver</span>
+      <span style="text-align:right">Monthly</span>
+      <span style="text-align:right">Annual</span>
+      <span style="text-align:right">3-Year</span>
+    </div>
+
+    <div class="breakdown-row">
+      <div class="row-label">
+        Call Center Cost Reduction
+        <small>Agent-assisted calls deflected × cost per call</small>
+      </div>
+      <div class="row-val positive" id="b-call-monthly">$0</div>
+      <div class="row-val positive" id="b-call-annual">$0</div>
+      <div class="row-val positive" id="b-call-3yr">$0</div>
+    </div>
+
+    <div class="breakdown-row">
+      <div class="row-label">
+        Delinquency Recovery
+        <small>Reduced delinquent balance × loan portfolio</small>
+      </div>
+      <div class="row-val positive" id="b-delinq-monthly">$0</div>
+      <div class="row-val positive" id="b-delinq-annual">$0</div>
+      <div class="row-val positive" id="b-delinq-3yr">$0</div>
+    </div>
+
+    <div id="mpp-breakdown-rows" style="display:none;">
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Downtime <small style="font-weight:400;text-transform:none;letter-spacing:0">(Modern Payment Processing)</small>
+          <small>Recovered payments during downtime × cost per delayed payment</small>
+        </div>
+        <div class="row-val positive" id="b-downtime-monthly">$0</div>
+        <div class="row-val positive" id="b-downtime-annual">$0</div>
+        <div class="row-val positive" id="b-downtime-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Reconciliation <small style="font-weight:400;text-transform:none;letter-spacing:0">(Modern Payment Processing)</small>
+          <small>Reconciliation labor hours × hourly cost × % reduction</small>
+        </div>
+        <div class="row-val positive" id="b-recon-monthly">$0</div>
+        <div class="row-val positive" id="b-recon-annual">$0</div>
+        <div class="row-val positive" id="b-recon-3yr">$0</div>
+      </div>
+    </div>
+
+    <div id="wpo-breakdown-rows" style="display:none;">
+      <div class="breakdown-row">
+        <div class="row-label">
+          Outsourced In-Person Payments <small style="font-weight:400;text-transform:none;letter-spacing:0">(Wider Payment Options)</small>
+          <small>In-person payments deflected × cost per in-person payment</small>
+        </div>
+        <div class="row-val positive" id="b-inperson-monthly">$0</div>
+        <div class="row-val positive" id="b-inperson-annual">$0</div>
+        <div class="row-val positive" id="b-inperson-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Paper Disbursements <small style="font-weight:400;text-transform:none;letter-spacing:0">(Wider Payment Options)</small>
+          <small>Disbursements switched × net cost per switch (paper − electronic)</small>
+        </div>
+        <div class="row-val positive" id="b-disb-monthly">$0</div>
+        <div class="row-val positive" id="b-disb-annual">$0</div>
+        <div class="row-val positive" id="b-disb-3yr">$0</div>
+      </div>
+    </div>
+
+    <div id="em-breakdown-rows" style="display:none;">
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Exception Handling <small style="font-weight:400;text-transform:none;letter-spacing:0">(Exception Management)</small>
+          <small>Exceptions avoided × minutes to resolve × hourly employee cost</small>
+        </div>
+        <div class="row-val positive" id="b-exception-monthly">$0</div>
+        <div class="row-val positive" id="b-exception-annual">$0</div>
+        <div class="row-val positive" id="b-exception-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Chargebacks &amp; Returns <small style="font-weight:400;text-transform:none;letter-spacing:0">(Exception Management)</small>
+          <small>Chargebacks/returns avoided × average payment amount</small>
+        </div>
+        <div class="row-val positive" id="b-chargeback-monthly">$0</div>
+        <div class="row-val positive" id="b-chargeback-annual">$0</div>
+        <div class="row-val positive" id="b-chargeback-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Fraud &amp; Write-Offs <small style="font-weight:400;text-transform:none;letter-spacing:0">(Exception Management)</small>
+          <small>Monthly fraud + write-off losses × % reduction</small>
+        </div>
+        <div class="row-val positive" id="b-fraud-monthly">$0</div>
+        <div class="row-val positive" id="b-fraud-annual">$0</div>
+        <div class="row-val positive" id="b-fraud-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Improved Recency Rate <small style="font-weight:400;text-transform:none;letter-spacing:0">(Exception Management)</small>
+          <small>Delinquent loans × recency-rate increase × average payment amount</small>
+        </div>
+        <div class="row-val positive" id="b-recency-monthly">$0</div>
+        <div class="row-val positive" id="b-recency-annual">$0</div>
+        <div class="row-val positive" id="b-recency-3yr">$0</div>
+      </div>
+    </div>
+
+    <div id="aut-breakdown-rows" style="display:none;">
+      <div class="breakdown-row">
+        <div class="row-label">
+          Reduced Inquiry Calls <small style="font-weight:400;text-transform:none;letter-spacing:0">(Automation &amp; Self-Service)</small>
+          <small>Inquiry calls deflected × cost per inquiry call</small>
+        </div>
+        <div class="row-val positive" id="b-inquiry-monthly">$0</div>
+        <div class="row-val positive" id="b-inquiry-annual">$0</div>
+        <div class="row-val positive" id="b-inquiry-3yr">$0</div>
+      </div>
+    </div>
+
+    <div id="par-breakdown-rows" style="display:none;">
+      <div class="breakdown-row">
+        <div class="row-label">
+          In-the-Moment Recovery <small style="font-weight:400;text-transform:none;letter-spacing:0">(Payment Abandonment &amp; Recovery)</small>
+          <small>Failed payments recovered × average payment amount</small>
+        </div>
+        <div class="row-val positive" id="b-inmoment-monthly">$0</div>
+        <div class="row-val positive" id="b-inmoment-annual">$0</div>
+        <div class="row-val positive" id="b-inmoment-3yr">$0</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="row-label">
+          Re-Engagement Nudge Recovery <small style="font-weight:400;text-transform:none;letter-spacing:0">(Payment Abandonment &amp; Recovery)</small>
+          <small>Abandoned payments completed after nudge × average payment amount</small>
+        </div>
+        <div class="row-val positive" id="b-nudge-monthly">$0</div>
+        <div class="row-val positive" id="b-nudge-annual">$0</div>
+        <div class="row-val positive" id="b-nudge-3yr">$0</div>
+      </div>
+    </div>
+
+    <div class="breakdown-row">
+      <div class="row-label">
+        PayNearMe Platform Cost
+        <small>Annual license only — implementation fee quoted separately</small>
+      </div>
+      <div class="row-val" id="b-cost-monthly" style="color:#FF767F">$0</div>
+      <div class="row-val" id="b-cost-annual" style="color:#FF767F">$0</div>
+      <div class="row-val" id="b-cost-3yr" style="color:#FF767F">$0</div>
+    </div>
+
+    <div class="breakdown-row total-row">
+      <div class="row-label">NET RETURN</div>
+      <div class="row-val" id="b-net-monthly">$0</div>
+      <div class="row-val" id="b-net-annual">$0</div>
+      <div class="row-val" id="b-net-3yr">$0</div>
+    </div>
+  </div>
+
+  <!-- ── KEY METRICS ── -->
+  <div class="section-label">📋 Supporting Metrics</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Call Volume Impact</div>
+      <div style="display:flex; flex-direction:column; gap:0.35rem; margin-top:0.15rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Calls per month (today)</span>
+          <span class="row-val" id="m-calls-today" style="font-family:var(--font-headline); color:var(--text)">5,000</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Calls deflected per month</span>
+          <span class="row-val" id="m-calls-deflected" style="font-family:var(--font-headline); color:var(--green2)">2,250</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Remaining agent calls</span>
+          <span class="row-val" id="m-calls-remaining" style="font-family:var(--font-headline); color:var(--text)">2,750</span>
+        </div>
+        <div style="height:1px; background:var(--border)"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Cost savings per month</span>
+          <span id="m-call-saving" style="font-family:var(--font-headline); font-weight:700; color:var(--green2)">$29,250</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Delinquency Impact</div>
+      <div style="display:flex; flex-direction:column; gap:0.35rem; margin-top:0.15rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Current delinquent balance</span>
+          <span id="m-delinq-current" style="font-family:var(--font-headline); color:var(--text)">$5.3M</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Balance recovered (est.)</span>
+          <span id="m-delinq-recovered" style="font-family:var(--font-headline); color:var(--green2)">$630K</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">New delinquency rate</span>
+          <span id="m-delinq-new" style="font-family:var(--font-headline); color:var(--green2)">1.32%</span>
+        </div>
+        <div style="height:1px; background:var(--border)"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Annualized recovery</span>
+          <span id="m-delinq-annual" style="font-family:var(--font-headline); font-weight:700; color:var(--green2)">$7.6M</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>ROI Efficiency</div>
+      <div style="display:flex; flex-direction:column; gap:0.35rem; margin-top:0.15rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Return on investment</span>
+          <span id="m-roi-pct" style="font-family:var(--font-headline); font-weight:700; color:var(--purple)">0%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Cost per deflected call</span>
+          <span id="m-cost-deflected" style="font-family:var(--font-headline); color:var(--text)">$0.00</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Savings per member loan</span>
+          <span id="m-per-loan" style="font-family:var(--font-headline); color:var(--text)">$0.00</span>
+        </div>
+        <div style="height:1px; background:var(--border)"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--muted)">Break-even from go-live</span>
+          <span id="m-breakeven" style="font-family:var(--font-headline); font-weight:700; color:var(--green2)">— mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="assumption-note">
+    <strong>Model assumptions:</strong> Call deflection savings are calculated as: monthly call volume × deflection rate × member adoption rate × cost per call. Delinquency recovery is calculated as: total loan portfolio × current delinquency rate × delinquency reduction % × member adoption rate (applied as annual recovered balance). Platform investment is adjustable above — confirm actual pricing with your PayNearMe sales leader before presenting. <strong>Expanded Mode</strong> adds Modern Payment Processing (downtime savings = downtime minutes recovered × payments/hour × cost per delayed payment; reconciliation savings = hours/day × hourly employee cost × 260 working days × % reduction) and Wider Payment Options (in-person savings = in-person payments/month × cost per in-person payment × % reduction; disbursement savings = paper disbursements/month × % switching to electronic × net cost per switch) and Exception Management (exception handling savings = exceptions avoided × minutes to resolve × hourly employee cost; chargeback/return savings = count avoided × average payment amount; fraud/write-off savings = monthly losses × % reduction; recency savings = loans moved to recent × average payment amount — this last one uses a deliberately simpler model than PayNearMe's own and should be validated against a closed deal before quoting) and Automation & Self-Service (inquiry-call savings = inquiry calls deflected × cost per inquiry call, scaled by the same Member Adoption Rate used above — this is separate call volume from the Agent-Assisted Loan Payments field, which already covers payment/disbursement calls, so the two do not double-count) and Payment Abandonment &amp; Recovery — sourced directly from PayNearMe's own 2026 published research, not LeveragePoint's driver set (in-the-moment recovery savings = failed payments recovered × average payment amount, using PayNearMe's published 9% recovery rate; re-engagement nudge savings = abandoned payments completed after nudge × average payment amount, using PayNearMe's published 7% completion rate). <strong>All figures are estimates for illustrative and discussion purposes only. Actual results will vary based on institution size, member behavior, implementation approach, and market conditions.</strong> This model is intended to support discovery conversations — not replace a formal business case. Validate all inputs with actual institution data before presenting.
+  </div>
+
+  <div class="action-bar">
+    <button class="btn btn-outline" onclick="resetDefaults()">Reset to Defaults</button>
+    <button class="btn btn-outline" disabled title="Disabled while this file is local-only — the link it generates only works on this computer. Re-enable once this is hosted somewhere with a real URL." style="opacity:0.45; cursor:not-allowed;" id="share-btn">🔗 Save / Share Scenario <span style="font-weight:400;">(needs hosting)</span></button>
+    <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </div>
+
+  <div id="share-msg" style="display:none; text-align:center; font-size:0.78rem; color:var(--green); margin-top:0.5rem; font-weight:600;">✓ Link copied to clipboard — paste it anywhere to restore this scenario.</div>
+
+</div>
+
+<div class="footer">
+  PayNearMe · Credit Union ROI Calculator · paynearme.com
+</div>
+
+<script>
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+const fmt  = (n, dec=0) => '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+const fmtN = (n)        => Math.abs(n).toLocaleString('en-US');
+const pct  = (n, dec=1) => n.toFixed(dec) + '%';
+const el   = id         => document.getElementById(id);
+
+function val(id)    { return parseFloat((el(id).value || "").toString().replace(/,/g, "")) || 0; }
+function intVal(id) { return parseInt(el(id).value)   || 0; }
+
+// ── URL STATE: SAVE ───────────────────────────────────────────────────────────
+function shareScenario() {
+  const params = new URLSearchParams({
+    cu:       el('cu-name').value,
+    loc:      el('cu-location').value,
+    charter:  el('cu-charter').value,
+    rep:      el('cu-rep').value,
+    loans:    val('total-loans'),
+    cloans:   val('consumer-loans'),
+    delinq:   val('delinquency-rate'),
+    calls:    val('monthly-calls'),
+    cpc:      val('cost-per-call'),
+    platform: val('platform-cost'),
+    adopt:    intVal('adoption-rate'),
+    deflect:  intVal('deflection-rate'),
+    dred:     intVal('delinq-reduction'),
+    weeks:    intVal('impl-weeks'),
+  });
+  const url = window.location.href.split('?')[0] + '?' + params.toString();
+
+  // Try clipboard first, fall back to prompt
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(() => {
+      const msg = el('share-msg');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    }).catch(() => { prompt('Copy this link to save or share your scenario:', url); });
+  } else {
+    // For local files — select text in a temporary textarea
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      document.execCommand('copy');
+      const msg = el('share-msg');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    } catch(e) {
+      prompt('Copy this link to save or share your scenario:', url);
+    }
+    document.body.removeChild(ta);
+  }
+}
+
+// ── URL STATE: LOAD ───────────────────────────────────────────────────────────
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has('loans')) return; // no state in URL, use defaults
+
+  if (params.get('cu'))       el('cu-name').value     = params.get('cu');
+  if (params.get('loc'))      el('cu-location').value  = params.get('loc');
+  if (params.get('charter'))  el('cu-charter').value   = params.get('charter');
+  if (params.get('rep'))      el('cu-rep').value        = params.get('rep');
+  if (params.get('loans'))    { el('total-loans').value    = parseInt(params.get('loans')).toLocaleString('en-US'); }
+  if (params.get('cloans'))   { el('consumer-loans').value = parseInt(params.get('cloans')).toLocaleString('en-US'); }
+  if (params.get('delinq'))   el('delinquency-rate').value = params.get('delinq');
+  if (params.get('calls'))    { el('monthly-calls').value  = parseInt(params.get('calls')).toLocaleString('en-US'); }
+  if (params.get('cpc'))      el('cost-per-call').value    = params.get('cpc');
+  if (params.get('platform')) {
+    const p = parseInt(params.get('platform'));
+    el('platform-cost').value        = p;
+    el('platform-cost-slider').value = p;
+    el('platform-cost-val').textContent = '$' + p.toLocaleString('en-US');
+  }
+  if (params.get('adopt')) {
+    el('adoption-rate').value      = params.get('adopt');
+    el('adoption-val').textContent = params.get('adopt') + '%';
+  }
+  if (params.get('deflect')) {
+    el('deflection-rate').value      = params.get('deflect');
+    el('deflection-val').textContent = params.get('deflect') + '%';
+  }
+  if (params.get('dred')) {
+    el('delinq-reduction').value   = params.get('dred');
+    el('delinq-val').textContent   = params.get('dred') + '%';
+  }
+  if (params.get('weeks')) {
+    el('impl-weeks').value       = params.get('weeks');
+    el('impl-val').textContent   = params.get('weeks') + ' wks';
+  }
+}
+
+// ── SLIDERS ──────────────────────────────────────────────────────────────────
+el('adoption-rate').addEventListener('input', e => {
+  el('adoption-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('deflection-rate').addEventListener('input', e => {
+  el('deflection-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('delinq-reduction').addEventListener('input', e => {
+  el('delinq-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('impl-weeks').addEventListener('input', e => {
+  el('impl-val').textContent = e.target.value + ' wks';
+  calculate();
+});
+el('downtime-reduction').addEventListener('input', e => {
+  el('downtime-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('recon-reduction').addEventListener('input', e => {
+  el('recon-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('in-person-reduction').addEventListener('input', e => {
+  el('in-person-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('disb-switch-rate').addEventListener('input', e => {
+  el('disb-switch-rate-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('exception-reduction').addEventListener('input', e => {
+  el('exception-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('chargeback-reduction').addEventListener('input', e => {
+  el('chargeback-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('fraud-reduction').addEventListener('input', e => {
+  el('fraud-reduction-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('recency-improvement').addEventListener('input', e => {
+  el('recency-improvement-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('inquiry-deflection-rate').addEventListener('input', e => {
+  el('inquiry-deflection-rate-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('in-moment-recovery-rate').addEventListener('input', e => {
+  el('in-moment-recovery-rate-val').textContent = e.target.value + '%';
+  calculate();
+});
+el('nudge-completion-rate').addEventListener('input', e => {
+  el('nudge-completion-rate-val').textContent = e.target.value + '%';
+  calculate();
+});
+
+// ── MODE TOGGLE ─────────────────────────────────────────────────────────────
+let currentMode = 'quick';
+function setMode(mode) {
+  currentMode = mode;
+  el('mode-btn-quick').classList.toggle('active', mode === 'quick');
+  el('mode-btn-expanded').classList.toggle('active', mode === 'expanded');
+  el('expanded-mpp-section').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('mpp-breakdown-rows').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('expanded-wpo-section').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('wpo-breakdown-rows').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('expanded-em-section').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('em-breakdown-rows').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('expanded-aut-section').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('aut-breakdown-rows').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('expanded-par-section').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('par-breakdown-rows').style.display = mode === 'expanded' ? 'block' : 'none';
+  el('mode-caption').textContent = mode === 'expanded'
+    ? 'Adds Modern Payment Processing, Wider Payment Options, Exception Management, Automation & Self-Service, and Payment Abandonment & Recovery savings.'
+    : 'Call deflection + delinquency recovery — built for live discovery calls.';
+  calculate();
+}
+
+// ── COMMA FORMATTING ─────────────────────────────────────────────────────────
+function fmtInput(id) {
+  const input = el(id);
+  const cursorPos = input.selectionStart;
+  const prevLen = input.value.length;
+  const raw = input.value.replace(/[^0-9]/g, '');
+  if (raw === '') { input.value = ''; calculate(); return; }
+  const num = parseInt(raw, 10);
+  input.value = num.toLocaleString('en-US');
+  const newLen = input.value.length;
+  const newCursor = cursorPos + (newLen - prevLen);
+  input.setSelectionRange(newCursor, newCursor);
+  calculate();
+}
+['total-loans','consumer-loans','monthly-calls','annual-employee-salary','monthly-fraud-losses','monthly-writeoff-losses'].forEach(id => {
+  el(id).addEventListener('input', () => fmtInput(id));
+});
+
+// ── ALL INPUTS ────────────────────────────────────────────────────────────────
+['delinquency-rate','cost-per-call','platform-cost','downtime-minutes','payments-per-hour','cost-per-delayed-payment','recon-hours-per-day','in-person-payments','cost-per-in-person','paper-disbursements','cost-per-paper-disb','cost-per-electronic-disb','payment-exceptions','minutes-per-exception','chargebacks-returns','average-payment-amount','total-delinquent-loans','current-recency-rate','inquiry-calls','cost-per-inquiry-call','monthly-failed-payments','monthly-abandoned-payments'].forEach(id => {
+  el(id).addEventListener('input', calculate);
+});
+el('cu-name').addEventListener('input', calculate);
+
+// ── CALCULATE ─────────────────────────────────────────────────────────────────
+function calculate() {
+  const totalLoans      = val('total-loans');
+  const consumerLoans   = val('consumer-loans');
+  const delinqRate      = val('delinquency-rate') / 100;
+  const monthlyCalls    = val('monthly-calls');
+  const costPerCall     = val('cost-per-call');
+  const platformCost    = val('platform-cost');
+  const adoptionRate    = intVal('adoption-rate')   / 100;
+  const deflectionRate  = intVal('deflection-rate')  / 100;
+  const delinqReduction = intVal('delinq-reduction') / 100;
+  const implWeeks       = intVal('impl-weeks');
+
+  // Effective rates: adoption scales both deflection and delinquency impact
+  const effectiveDeflection  = deflectionRate  * adoptionRate;
+  const effectiveDelinqRedux = delinqReduction * adoptionRate;
+
+  // ── Call center savings (adoption-adjusted)
+  const callsDeflected     = Math.round(monthlyCalls * effectiveDeflection);
+  const callsRemaining     = monthlyCalls - callsDeflected;
+  const callSavingsMonthly = callsDeflected * costPerCall;
+  const callSavingsAnnual  = callSavingsMonthly * 12;
+
+  // ── Delinquency savings (adoption-adjusted)
+  const currentDelinqBal     = totalLoans * delinqRate;
+  const recoveredBal         = currentDelinqBal * effectiveDelinqRedux;
+  const newDelinqRate        = delinqRate * (1 - effectiveDelinqRedux);
+  // Recovery treated as annual recovered balance (cash flow improvement)
+  const delinqSavingsAnnual  = recoveredBal;
+  const delinqSavingsMonthly = delinqSavingsAnnual / 12;
+
+  // ── Modern Payment Processing (Expanded Mode drivers) ───────────────────────
+  const downtimeMinutes     = val('downtime-minutes');
+  const paymentsPerHour     = val('payments-per-hour');
+  const costPerDelayed      = val('cost-per-delayed-payment');
+  const downtimeReduction   = intVal('downtime-reduction') / 100;
+  const minutesRecovered    = downtimeMinutes * downtimeReduction;
+  const downtimeSavingsMonthly = (minutesRecovered / 60) * paymentsPerHour * costPerDelayed;
+  const downtimeSavingsAnnual  = downtimeSavingsMonthly * 12;
+
+  const annualSalary        = val('annual-employee-salary');
+  const hourlyCost          = annualSalary / 2080;
+  const reconHoursPerDay    = val('recon-hours-per-day');
+  const reconReduction      = intVal('recon-reduction') / 100;
+  const workingDaysPerYear  = 260;
+  const reconBaselineAnnual = reconHoursPerDay * hourlyCost * workingDaysPerYear;
+  const reconSavingsAnnual  = reconBaselineAnnual * reconReduction;
+  const reconSavingsMonthly = reconSavingsAnnual / 12;
+
+  const mppSubtotalMonthly  = downtimeSavingsMonthly + reconSavingsMonthly;
+  const mppSubtotalAnnual   = downtimeSavingsAnnual  + reconSavingsAnnual;
+
+  // Per-card outputs always reflect current inputs, regardless of mode
+  el('mpp-downtime-annual').textContent = fmt(downtimeSavingsAnnual);
+  el('mpp-recon-annual').textContent    = fmt(reconSavingsAnnual);
+  el('mpp-subtotal-annual').textContent = fmt(mppSubtotalAnnual) + ' / year';
+
+  // ── Wider Payment Options (Expanded Mode drivers) ───────────────────────────
+  const inPersonPayments    = val('in-person-payments');
+  const costPerInPerson     = val('cost-per-in-person');
+  const inPersonReduction   = intVal('in-person-reduction') / 100;
+  const inPersonSavingsMonthly = inPersonPayments * costPerInPerson * inPersonReduction;
+  const inPersonSavingsAnnual  = inPersonSavingsMonthly * 12;
+
+  const paperDisbursements  = val('paper-disbursements');
+  const costPerPaperDisb    = val('cost-per-paper-disb');
+  const costPerElectronicDisb = val('cost-per-electronic-disb');
+  const disbSwitchRate      = intVal('disb-switch-rate') / 100;
+  const netCostPerSwitch    = costPerPaperDisb - costPerElectronicDisb;
+  const disbSavingsMonthly  = paperDisbursements * disbSwitchRate * netCostPerSwitch;
+  const disbSavingsAnnual   = disbSavingsMonthly * 12;
+
+  const wpoSubtotalMonthly  = inPersonSavingsMonthly + disbSavingsMonthly;
+  const wpoSubtotalAnnual   = inPersonSavingsAnnual  + disbSavingsAnnual;
+
+  el('mpp-inperson-annual').textContent = fmt(inPersonSavingsAnnual);
+  el('mpp-disb-annual').textContent     = fmt(disbSavingsAnnual);
+  el('wpo-subtotal-annual').textContent = fmt(wpoSubtotalAnnual) + ' / year';
+
+  el('b-inperson-monthly').textContent = fmt(inPersonSavingsMonthly);
+  el('b-inperson-annual').textContent  = fmt(inPersonSavingsAnnual);
+  el('b-inperson-3yr').textContent     = fmt(inPersonSavingsAnnual * 3);
+  el('b-disb-monthly').textContent     = fmt(disbSavingsMonthly);
+  el('b-disb-annual').textContent      = fmt(disbSavingsAnnual);
+  el('b-disb-3yr').textContent         = fmt(disbSavingsAnnual * 3);
+
+  // ── Exception Management (Expanded Mode drivers) ────────────────────────────
+  const paymentExceptions   = val('payment-exceptions');
+  const minutesPerException = val('minutes-per-exception');
+  const exceptionReduction  = intVal('exception-reduction') / 100;
+  const exceptionsAvoided   = paymentExceptions * exceptionReduction;
+  const exceptionSavingsMonthly = exceptionsAvoided * (minutesPerException / 60) * hourlyCost;
+  const exceptionSavingsAnnual  = exceptionSavingsMonthly * 12;
+
+  const chargebacksReturns  = val('chargebacks-returns');
+  const avgPaymentAmount    = val('average-payment-amount');
+  const chargebackReduction = intVal('chargeback-reduction') / 100;
+  const chargebacksAvoided  = chargebacksReturns * chargebackReduction;
+  const chargebackSavingsMonthly = chargebacksAvoided * avgPaymentAmount;
+  const chargebackSavingsAnnual  = chargebackSavingsMonthly * 12;
+
+  const monthlyFraudLosses  = val('monthly-fraud-losses');
+  const monthlyWriteoffLosses = val('monthly-writeoff-losses');
+  const fraudReduction      = intVal('fraud-reduction') / 100;
+  const fraudSavingsMonthly = (monthlyFraudLosses + monthlyWriteoffLosses) * fraudReduction;
+  const fraudSavingsAnnual  = fraudSavingsMonthly * 12;
+
+  const totalDelinquentLoans = val('total-delinquent-loans');
+  const currentRecencyRate  = val('current-recency-rate') / 100;
+  const recencyImprovement  = intVal('recency-improvement') / 100;
+  const nonRecentLoans      = totalDelinquentLoans * (1 - currentRecencyRate);
+  const loansMovedToRecent  = totalDelinquentLoans * recencyImprovement;
+  const recencySavingsAnnual  = loansMovedToRecent * avgPaymentAmount;
+  const recencySavingsMonthly = recencySavingsAnnual / 12;
+
+  const emSubtotalMonthly = exceptionSavingsMonthly + chargebackSavingsMonthly + fraudSavingsMonthly + recencySavingsMonthly;
+  const emSubtotalAnnual  = exceptionSavingsAnnual  + chargebackSavingsAnnual  + fraudSavingsAnnual  + recencySavingsAnnual;
+
+  el('mpp-exception-annual').textContent  = fmt(exceptionSavingsAnnual);
+  el('mpp-chargeback-annual').textContent = fmt(chargebackSavingsAnnual);
+  el('mpp-fraud-annual').textContent      = fmt(fraudSavingsAnnual);
+  el('mpp-recency-annual').textContent    = fmt(recencySavingsAnnual);
+  el('em-subtotal-annual').textContent    = fmt(emSubtotalAnnual) + ' / year';
+
+  // ── Automation & Self-Service (Expanded Mode driver) ────────────────────────
+  const inquiryCalls        = val('inquiry-calls');
+  const costPerInquiryCall  = val('cost-per-inquiry-call');
+  const inquiryDeflection   = intVal('inquiry-deflection-rate') / 100;
+  const effectiveInquiryDeflection = inquiryDeflection * adoptionRate;
+  const inquiryCallsDeflected = inquiryCalls * effectiveInquiryDeflection;
+  const inquirySavingsMonthly = inquiryCallsDeflected * costPerInquiryCall;
+  const inquirySavingsAnnual  = inquirySavingsMonthly * 12;
+
+  const autSubtotalMonthly = inquirySavingsMonthly;
+  const autSubtotalAnnual  = inquirySavingsAnnual;
+
+  el('mpp-inquiry-annual').textContent  = fmt(inquirySavingsAnnual);
+  el('aut-subtotal-annual').textContent = fmt(autSubtotalAnnual) + ' / year';
+
+  el('b-inquiry-monthly').textContent = fmt(inquirySavingsMonthly);
+  el('b-inquiry-annual').textContent  = fmt(inquirySavingsAnnual);
+  el('b-inquiry-3yr').textContent     = fmt(inquirySavingsAnnual * 3);
+
+  // ── Payment Abandonment & Recovery (Expanded Mode drivers) ──────────────────
+  const monthlyFailedPayments    = val('monthly-failed-payments');
+  const inMomentRecoveryRate     = intVal('in-moment-recovery-rate') / 100;
+  const paymentsRecoveredInMoment = monthlyFailedPayments * inMomentRecoveryRate;
+  const inMomentSavingsMonthly    = paymentsRecoveredInMoment * avgPaymentAmount;
+  const inMomentSavingsAnnual     = inMomentSavingsMonthly * 12;
+
+  const monthlyAbandonedPayments = val('monthly-abandoned-payments');
+  const nudgeCompletionRate      = intVal('nudge-completion-rate') / 100;
+  const paymentsRecoveredViaNudge = monthlyAbandonedPayments * nudgeCompletionRate;
+  const nudgeSavingsMonthly       = paymentsRecoveredViaNudge * avgPaymentAmount;
+  const nudgeSavingsAnnual        = nudgeSavingsMonthly * 12;
+
+  const parSubtotalMonthly = inMomentSavingsMonthly + nudgeSavingsMonthly;
+  const parSubtotalAnnual  = inMomentSavingsAnnual  + nudgeSavingsAnnual;
+
+  el('mpp-inmoment-annual').textContent = fmt(inMomentSavingsAnnual);
+  el('mpp-nudge-annual').textContent    = fmt(nudgeSavingsAnnual);
+  el('par-subtotal-annual').textContent = fmt(parSubtotalAnnual) + ' / year';
+
+  el('b-inmoment-monthly').textContent = fmt(inMomentSavingsMonthly);
+  el('b-inmoment-annual').textContent  = fmt(inMomentSavingsAnnual);
+  el('b-inmoment-3yr').textContent     = fmt(inMomentSavingsAnnual * 3);
+  el('b-nudge-monthly').textContent    = fmt(nudgeSavingsMonthly);
+  el('b-nudge-annual').textContent     = fmt(nudgeSavingsAnnual);
+  el('b-nudge-3yr').textContent        = fmt(nudgeSavingsAnnual * 3);
+
+  el('b-exception-monthly').textContent  = fmt(exceptionSavingsMonthly);
+  el('b-exception-annual').textContent   = fmt(exceptionSavingsAnnual);
+  el('b-exception-3yr').textContent      = fmt(exceptionSavingsAnnual * 3);
+  el('b-chargeback-monthly').textContent = fmt(chargebackSavingsMonthly);
+  el('b-chargeback-annual').textContent  = fmt(chargebackSavingsAnnual);
+  el('b-chargeback-3yr').textContent     = fmt(chargebackSavingsAnnual * 3);
+  el('b-fraud-monthly').textContent      = fmt(fraudSavingsMonthly);
+  el('b-fraud-annual').textContent       = fmt(fraudSavingsAnnual);
+  el('b-fraud-3yr').textContent          = fmt(fraudSavingsAnnual * 3);
+  el('b-recency-monthly').textContent    = fmt(recencySavingsMonthly);
+  el('b-recency-annual').textContent     = fmt(recencySavingsAnnual);
+  el('b-recency-3yr').textContent        = fmt(recencySavingsAnnual * 3);
+
+  // Breakdown rows for the expanded drivers
+  el('b-downtime-monthly').textContent = fmt(downtimeSavingsMonthly);
+  el('b-downtime-annual').textContent  = fmt(downtimeSavingsAnnual);
+  el('b-downtime-3yr').textContent     = fmt(downtimeSavingsAnnual * 3);
+  el('b-recon-monthly').textContent    = fmt(reconSavingsMonthly);
+  el('b-recon-annual').textContent     = fmt(reconSavingsAnnual);
+  el('b-recon-3yr').textContent        = fmt(reconSavingsAnnual * 3);
+
+  // Only rolls into the headline totals when Expanded Mode is active
+  const mppMonthlyContribution = currentMode === 'expanded' ? (mppSubtotalMonthly + wpoSubtotalMonthly + emSubtotalMonthly + autSubtotalMonthly + parSubtotalMonthly) : 0;
+  const mppAnnualContribution  = currentMode === 'expanded' ? (mppSubtotalAnnual  + wpoSubtotalAnnual  + emSubtotalAnnual  + autSubtotalAnnual  + parSubtotalAnnual)  : 0;
+
+  // ── Totals
+  const grossMonthly  = callSavingsMonthly + delinqSavingsMonthly + mppMonthlyContribution;
+  const grossAnnual   = callSavingsAnnual  + delinqSavingsAnnual  + mppAnnualContribution;
+  const platformMonthly = platformCost / 12;
+  const netMonthly    = grossMonthly - platformMonthly;
+  const netAnnual     = grossAnnual  - platformCost;
+  const net3yr        = netAnnual * 3;
+
+  // ── Payback (months from signing, accounting for impl time)
+  const implMonths = implWeeks / 4.33;
+  const paybackFromGoLive = platformCost / (grossMonthly || 1);
+  const paybackTotal = implMonths + paybackFromGoLive;
+
+  // ── ROI %
+  const roiPct = platformCost > 0 ? ((netAnnual / platformCost) * 100) : 0;
+
+  // ── Per-loan metric
+  const loanCount    = totalLoans > 0 ? totalLoans / 15000 : 1; // rough avg loan size
+  const perLoanSaving = callSavingsAnnual / loanCount;
+
+  // ── Update results ─────────────────────────────────────────────────────────
+  el('monthly-savings').textContent  = fmt(grossMonthly);
+  el('annual-savings').textContent   = fmt(netAnnual);
+  el('payback-period').textContent   = paybackTotal > 0 ? paybackTotal.toFixed(1) + ' mo' : '—';
+
+  // Breakdown
+  el('b-call-monthly').textContent   = fmt(callSavingsMonthly);
+  el('b-call-annual').textContent    = fmt(callSavingsAnnual);
+  el('b-call-3yr').textContent       = fmt(callSavingsAnnual * 3);
+  el('b-delinq-monthly').textContent = fmt(delinqSavingsMonthly);
+  el('b-delinq-annual').textContent  = fmt(delinqSavingsAnnual);
+  el('b-delinq-3yr').textContent     = fmt(delinqSavingsAnnual * 3);
+  el('b-cost-monthly').textContent   = '(' + fmt(platformMonthly) + ')';
+  el('b-cost-annual').textContent    = '(' + fmt(platformCost) + ')';
+  el('b-cost-3yr').textContent       = '(' + fmt(platformCost * 3) + ')';
+  el('b-net-monthly').textContent    = fmt(netMonthly);
+  el('b-net-annual').textContent     = fmt(netAnnual);
+  el('b-net-3yr').textContent        = fmt(net3yr);
+
+  // Supporting metrics
+  el('m-calls-today').textContent      = fmtN(monthlyCalls);
+  el('m-calls-deflected').textContent  = fmtN(callsDeflected);
+  el('m-calls-remaining').textContent  = fmtN(callsRemaining);
+  el('m-call-saving').textContent      = fmt(callSavingsMonthly);
+  el('m-delinq-current').textContent   = fmt(currentDelinqBal);
+  el('m-delinq-recovered').textContent = fmt(recoveredBal);
+  el('m-delinq-new').textContent       = pct(newDelinqRate * 100, 2);
+  el('m-delinq-annual').textContent    = fmt(delinqSavingsAnnual);
+  el('m-roi-pct').textContent          = roiPct.toFixed(0) + '%';
+  el('m-cost-deflected').textContent   = callsDeflected > 0 ? fmt(platformCost / (callsDeflected * 12), 2) : '—';
+  el('m-per-loan').textContent         = fmt(perLoanSaving, 2);
+  el('m-breakeven').textContent        = paybackTotal > 0 ? paybackTotal.toFixed(1) + ' mo' : '—';
+
+  // ── ROI Story ──────────────────────────────────────────────────────────────
+  const cuName = el('cu-name').value.trim() || 'This credit union';
+  const adoptPct = Math.round(adoptionRate * 100);
+  const effDeflPct = Math.round(effectiveDeflection * 100);
+
+  let story = '';
+  if (netAnnual > 0 && paybackTotal > 0 && paybackTotal <= 12) {
+    story = `By deploying PayNearMe at <strong>${cuName}</strong>, a ${adoptPct}% member adoption rate is projected to deflect <strong>${fmtN(callsDeflected)} calls per month</strong> — generating <strong>${fmt(netAnnual)} in net annual savings</strong> and paying back the full investment in just <strong>${paybackTotal.toFixed(1)} months</strong>.`;
+  } else if (netAnnual > 0) {
+    story = `At a ${adoptPct}% adoption rate, <strong>${cuName}</strong> is projected to deflect <strong>${fmtN(callsDeflected)} agent-assisted calls per month</strong> and recover <strong>${fmt(recoveredBal)} in delinquent balances annually</strong> — delivering <strong>${fmt(netAnnual)} in net annual savings</strong> from day one of go-live.`;
+  } else {
+    story = `Adjust the inputs above to model the expected ROI for <strong>${cuName}</strong>. Start with the monthly call volume and current delinquency rate for the most accurate picture.`;
+  }
+  el('roi-story').innerHTML = story;
+
+  // Payback timeline bar
+  updateTimeline(paybackTotal);
+}
+
+function updateTimeline(paybackMonths) {
+  const track = el('months-track');
+  track.innerHTML = '';
+  for (let m = 1; m <= 12; m++) {
+    const div = document.createElement('div');
+    div.className = 'month-block ' + (m <= Math.ceil(paybackMonths) ? 'unpaid' : 'paid');
+    div.textContent = m;
+    track.appendChild(div);
+  }
+  // Mark exact payback month as partially paid
+  if (paybackMonths < 12) {
+    const blocks = track.querySelectorAll('.month-block');
+    blocks.forEach((b, i) => {
+      if (i < paybackMonths) b.classList.replace('month-block', 'month-block');
+    });
+  }
+}
+
+function resetDefaults() {
+  el('total-loans').value      = 350000000;
+  el('consumer-loans').value   = 140000000;
+  el('delinquency-rate').value = 1.50;
+  el('monthly-calls').value    = 5000;
+  el('cost-per-call').value    = 9.50;
+  el('platform-cost').value           = 45000;
+  el('platform-cost-slider').value    = 45000;
+  el('platform-cost-val').textContent = '$45,000';
+  el('adoption-rate').value         = 20;
+  el('adoption-val').textContent    = '50%';
+  el('deflection-rate').value  = 20;
+  el('deflection-val').textContent = '45%';
+  el('delinq-reduction').value = 10;
+  el('delinq-val').textContent = '10%';
+  el('impl-weeks').value       = 8;
+  el('impl-val').textContent   = '8 wks';
+  el('downtime-minutes').value = 240;
+  el('payments-per-hour').value = 12;
+  el('cost-per-delayed-payment').value = 15;
+  el('downtime-reduction').value = 50;
+  el('downtime-reduction-val').textContent = '50%';
+  el('annual-employee-salary').value = '70,000';
+  el('recon-hours-per-day').value = 3;
+  el('recon-reduction').value = 65;
+  el('recon-reduction-val').textContent = '65%';
+  el('in-person-payments').value = 150;
+  el('cost-per-in-person').value = 5.00;
+  el('in-person-reduction').value = 60;
+  el('in-person-reduction-val').textContent = '60%';
+  el('paper-disbursements').value = 200;
+  el('cost-per-paper-disb').value = 3.00;
+  el('cost-per-electronic-disb').value = 0.00;
+  el('disb-switch-rate').value = 70;
+  el('disb-switch-rate-val').textContent = '70%';
+  el('payment-exceptions').value = 40;
+  el('minutes-per-exception').value = 10;
+  el('exception-reduction').value = 50;
+  el('exception-reduction-val').textContent = '50%';
+  el('chargebacks-returns').value = 30;
+  el('average-payment-amount').value = 450;
+  el('chargeback-reduction').value = 25;
+  el('chargeback-reduction-val').textContent = '25%';
+  el('monthly-fraud-losses').value = '8,000';
+  el('monthly-writeoff-losses').value = '12,000';
+  el('fraud-reduction').value = 50;
+  el('fraud-reduction-val').textContent = '50%';
+  el('total-delinquent-loans').value = 1500;
+  el('current-recency-rate').value = 85;
+  el('recency-improvement').value = 5;
+  el('recency-improvement-val').textContent = '5%';
+  el('inquiry-calls').value = 2000;
+  el('cost-per-inquiry-call').value = 6.00;
+  el('inquiry-deflection-rate').value = 60;
+  el('inquiry-deflection-rate-val').textContent = '60%';
+  el('monthly-failed-payments').value = 100;
+  el('in-moment-recovery-rate').value = 9;
+  el('in-moment-recovery-rate-val').textContent = '9%';
+  el('monthly-abandoned-payments').value = 80;
+  el('nudge-completion-rate').value = 7;
+  el('nudge-completion-rate-val').textContent = '7%';
+  setMode('quick');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadFromURL();
+calculate();
+</script>
+</body>
+</html>
