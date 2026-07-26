@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ready &amp; Steady — In-Meeting Confidence Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --midnight:#012341;--green:#00D14C;--green2:#009F3C;--green-light:#CCF6DB;
+  --purple2:#4350A9;--purple-light:#D9DCEE;--geraldine:#FF767F;--ger-light:#FFE4E5;
+  --sunglow:#FED129;--sun-light:#FFF6D4;--pale-sky:#6A757F;--tiara:#F4F6F6;
+  --border:#E2E6EA;--text:#1A2B3C;--muted:#6A757F;
+  --font-h:'Poppins',sans-serif;--font-b:'Nunito Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-b);background:#F0F2F5;color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem}
+.card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(1,35,65,0.12);width:100%;max-width:1180px;overflow:hidden}
+
+/* HEADER */
+.card-hdr{background:var(--midnight);padding:0.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.card-hdr img{height:24px;width:auto}
+.card-hdr-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:#fff;letter-spacing:-0.01em;text-align:center;flex:1}
+.card-hdr-title em{color:var(--geraldine);font-style:normal}
+.card-badge{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.3);border-radius:2rem;padding:0.25rem 0.75rem;white-space:nowrap}
+
+/* STAT BAR */
+.stat-bar{background:var(--midnight);border-top:1px solid rgba(255,255,255,0.08);padding:0.65rem 1.5rem;display:flex;gap:0;justify-content:space-between;align-items:center}
+.stat{text-align:center;padding:0 1rem;border-right:1px solid rgba(255,255,255,0.1);flex:1}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--font-h);font-size:1rem;font-weight:800;color:var(--green);line-height:1}
+.stat-lbl{font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.15rem;line-height:1.3}
+
+/* NORTH STAR */
+.north-star{background:var(--sun-light);border-left:4px solid var(--sunglow);padding:0.65rem 1.25rem;font-size:0.8rem;color:#5A3000;line-height:1.6}
+.north-star strong{color:#3A2000}
+
+/* BODY GRID */
+.card-body{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.col{padding:1rem 1.25rem;border-right:1px solid var(--border)}
+.col:last-child{border-right:none}
+.col-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid}
+.lbl-purple{color:var(--purple2);border-color:var(--purple2)}
+.lbl-red{color:var(--geraldine);border-color:var(--geraldine)}
+
+/* OPENING & NARRATIVE */
+.sub-lbl{font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--pale-sky);text-transform:uppercase;letter-spacing:0.1em;margin:0.6rem 0 0.25rem}
+.body-sm{font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:0.5rem}
+.seq-pills{display:flex;align-items:center;gap:0.35rem;flex-wrap:wrap;margin:0.35rem 0}
+.seq-pill{font-family:var(--font-h);font-size:0.65rem;font-weight:700;background:var(--green-light);color:var(--green2);border-radius:2rem;padding:0.2rem 0.6rem}
+.seq-arrow{color:var(--muted);font-size:0.7rem}
+.seq-hint{font-size:0.7rem;color:var(--muted);line-height:1.4;margin-top:0.3rem}
+.close-quote{background:var(--tiara);border-radius:8px;padding:0.65rem 0.85rem;margin-top:0.6rem;font-size:0.77rem;color:var(--midnight);line-height:1.6;font-style:italic}
+
+/* OBJECTIONS */
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem}
+.obj{border-radius:7px;padding:0.5rem 0.7rem}
+.obj-label{font-family:var(--font-h);font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.2rem}
+.obj-body{font-size:0.72rem;color:var(--text);line-height:1.5}
+.obj-body strong{color:var(--midnight)}
+.obj-fiserv{background:var(--ger-light)} .obj-fiserv .obj-label{color:#8B1A22}
+.obj-member{background:var(--purple-light)} .obj-member .obj-label{color:var(--purple2)}
+.obj-reaction{background:var(--green-light)} .obj-reaction .obj-label{color:var(--green2)}
+.obj-integration{background:var(--sun-light)} .obj-integration .obj-label{color:#7A4A00}
+.obj-fraud{background:var(--ger-light)} .obj-fraud .obj-label{color:#8B1A22}
+.obj-security{background:var(--tiara)} .obj-security .obj-label{color:var(--pale-sky)}
+.obj-competition{background:var(--midnight);grid-column:1/-1} .obj-competition .obj-label{color:var(--green)} .obj-competition .obj-body{color:rgba(255,255,255,0.75)}
+
+/* CLOSING MOVES */
+.closing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;border-top:1px solid var(--border);padding:1rem 1.25rem}
+.closing-stage{border-radius:8px;padding:0.55rem 0.7rem}
+.cs-disc{background:var(--purple-light)}
+.cs-demo{background:var(--green-light)}
+.cs-scoping{background:var(--sun-light)}
+.cs-stall{background:var(--ger-light)}
+.cs-label{font-family:var(--font-h);font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;display:flex;align-items:center;gap:0.3rem}
+.cs-disc .cs-label{color:var(--purple2)}
+.cs-demo .cs-label{color:var(--green2)}
+.cs-scoping .cs-label{color:#7A4A00}
+.cs-stall .cs-label{color:#8B1A22}
+.cs-q{font-size:0.72rem;color:var(--midnight);line-height:1.5;font-style:italic}
+
+/* BOTTOM ROW */
+.card-bottom{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.bot-col{padding:1rem 1.25rem;border-right:1px solid var(--border)}
+.bot-col:last-child{border-right:none}
+.bot-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.65rem;padding-bottom:0.4rem;border-bottom:2px solid}
+.lbl-green{color:var(--green2);border-color:var(--green)}
+.lbl-gold{color:#7A4A00;border-color:var(--sunglow)}
+
+/* WINNING MOVES */
+.move-pills{display:flex;flex-wrap:wrap;gap:0.35rem}
+.move-pill{font-family:var(--font-h);font-size:0.66rem;font-weight:700;background:var(--green-light);color:var(--green2);border-radius:2rem;padding:0.22rem 0.7rem;border:1px solid rgba(0,209,76,0.3)}
+
+/* CREDIBILITY */
+.cred-pills{display:flex;flex-wrap:wrap;gap:0.35rem}
+.cred-pill{font-family:var(--font-h);font-size:0.66rem;font-weight:700;background:var(--tiara);color:var(--midnight);border-radius:2rem;padding:0.22rem 0.7rem;border:1px solid var(--border)}
+
+/* MASTER POSITIONING */
+.master{background:var(--midnight);padding:0.85rem 1.5rem;border-top:1px solid rgba(255,255,255,0.08)}
+.master-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.35rem}
+.master-body{font-size:0.78rem;color:rgba(255,255,255,0.8);line-height:1.65}
+.master-body strong{color:var(--green)}
+.master-body em{color:var(--geraldine);font-style:normal}
+
+/* FOOTER */
+.card-footer{background:var(--midnight);padding:0.5rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08)}
+.footer-tagline{font-family:var(--font-h);font-size:0.65rem;color:rgba(255,255,255,0.45);font-style:italic}
+.footer-tagline em{color:var(--geraldine);font-style:normal}
+.footer-meta{font-size:0.62rem;color:rgba(255,255,255,0.3)}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0.4in;
+  }
+  body {
+    background: #fff !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border-radius: 8px !important;
+    border: 1px solid #E2E6EA !important;
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="card-hdr">
+    <img src="data:image/jpeg;base64,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" alt="PayNearMe">
+    <div class="card-hdr-title">Ready &amp; Steady — <em>Your In-Meeting Confidence Card</em></div>
+    <span class="card-badge">Internal · AE Use Only</span>
+  </div>
+
+  <!-- STAT BAR -->
+  <div class="stat-bar">
+    <div class="stat"><div class="stat-num">$7–$12</div><div class="stat-lbl">Cost per agent-assisted payment (fin services avg.)</div></div>
+    <div class="stat"><div class="stat-num">Up to 40%</div><div class="stat-lbl">Call volume reduction as adoption matures</div></div>
+    <div class="stat"><div class="stat-num">51%</div><div class="stat-lbl">Millennials abandon w/o preferred payment (Oliver Wyman)</div></div>
+    <div class="stat"><div class="stat-num">62,000+</div><div class="stat-lbl">Retail cash locations (Walmart, CVS, 7-Eleven)</div></div>
+    <div class="stat"><div class="stat-num">ETA 2026</div><div class="stat-lbl">Top Payments ISV (Electronic Transactions Association)</div></div>
+    <div class="stat"><div class="stat-num">Banking Tech 2026</div><div class="stat-lbl">Best PayTech Solution (Banking Tech Awards USA)</div></div>
+  </div>
+
+  <!-- NORTH STAR -->
+  <div class="north-star">
+    💡 <strong>Your North Star: Change isn't the risk — staying is. Lead them to that conclusion; don't tell them.</strong> Every month they delay: delinquency compounds, younger members defect, and agent-assisted costs climb. Help them see the cost of inaction before they ask about the cost of moving.
+  </div>
+
+  <!-- BODY -->
+  <div class="card-body">
+
+    <!-- LEFT: OPENING & NARRATIVE -->
+    <div class="col">
+      <div class="col-lbl lbl-purple">🎙️ Opening &amp; Narrative</div>
+
+      <div class="sub-lbl">Universal Principle</div>
+      <div class="body-sm">Title varies by CU size — CEO/COO in smaller · functional leader closest to pain in mid-size · build through champion in larger. Every opener lands on the same destination: <strong>a question about their world. The rep who asks the best questions wins the deal.</strong></div>
+
+      <div class="sub-lbl">Outcome-Led Sequence</div>
+      <div class="seq-pills">
+        <span class="seq-pill">Better Member Experience</span>
+        <span class="seq-arrow">→</span>
+        <span class="seq-pill">Engagement</span>
+        <span class="seq-arrow">→</span>
+        <span class="seq-pill">Growth</span>
+      </div>
+      <div class="seq-hint">Lead with human · Surface potential · Prove through data · Make it "just work"</div>
+
+      <div class="sub-lbl">Bring It Together Close</div>
+      <div class="close-quote">"Your members get a payment experience that works for their life. Your delinquency comes down because friction — not intent — was driving it up. <strong>Better member experience. Less noise. Lower cost to serve.</strong> That's not a promise — that's PayNearMe."</div>
+    </div>
+
+    <!-- RIGHT: TOP OBJECTIONS -->
+    <div class="col">
+      <div class="col-lbl lbl-red">🛡️ Top Objections</div>
+      <div class="obj-grid">
+        <div class="obj obj-fiserv">
+          <div class="obj-label">Fiserv / Core</div>
+          <div class="obj-body">Fiserv processes transactions. <strong>We manage the payment experience</strong> — and fill the gap they can't.</div>
+        </div>
+        <div class="obj obj-integration">
+          <div class="obj-label">Integration</div>
+          <div class="obj-body">Already built via Kinective/Core10. <strong>Your IT team enables it, not builds it.</strong> 6–8 week integration kickoff.</div>
+        </div>
+        <div class="obj obj-member">
+          <div class="obj-label">Member Experience</div>
+          <div class="obj-body">Portal buried 3 clicks deep? <strong>They're tolerating it, not fine with it.</strong> Check delinquency for the real answer.</div>
+        </div>
+        <div class="obj obj-fraud">
+          <div class="obj-label">Fraud Risk</div>
+          <div class="obj-body"><strong>Fragmentation is the real fraud risk.</strong> One platform, unified visibility, tokenization built in.</div>
+        </div>
+        <div class="obj obj-reaction">
+          <div class="obj-label">Member Reaction</div>
+          <div class="obj-body">We expand options, not replace them. <strong>Adoption is organic</strong> — highest adopters are the most frustrated.</div>
+        </div>
+        <div class="obj obj-security">
+          <div class="obj-label">IT Security</div>
+          <div class="obj-body">PCI DSS 4.0 + SOC 2. Client: <strong>"The best part is I never hear from you."</strong></div>
+        </div>
+        <div class="obj obj-competition">
+          <div class="obj-label">Competition</div>
+          <div class="obj-body">Worth comparing. Few can match our <strong>CU implementation track record</strong>, Kinective/Core10 certified integrations, Smart Switch™ redundancy, or <strong>cash at 62,000+ locations.</strong> We welcome a side-by-side. → See KNOW Playbook Section 8 for full competitive positioning.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CLOSING MOVES BY STAGE -->
+  <div class="closing-grid">
+    <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--pale-sky);grid-column:1/-1;margin-bottom:0.35rem">⚡ Closing Moves by Stage</div>
+    <div class="closing-stage cs-disc">
+      <div class="cs-label">🔍 Discovery</div>
+      <div class="cs-q">"What you've described is exactly what we solve — let's get a demo on the calendar. Who else should be in the room?"</div>
+    </div>
+    <div class="closing-stage cs-demo">
+      <div class="cs-label">🎯 Post-Demo</div>
+      <div class="cs-q">"What resonated most? Let's get our Solutions Consultant and your IT contact on a call to confirm the integration path."</div>
+    </div>
+    <div class="closing-stage cs-scoping">
+      <div class="cs-label">⚙️ Post-Scoping</div>
+      <div class="cs-q">"Integration confirmed. Who approves this, what do they need to say yes, and how do we get them there?"</div>
+    </div>
+    <div class="closing-stage cs-stall">
+      <div class="cs-label">🔄 Stalled</div>
+      <div class="cs-q">"What would need to be different for this to become a priority again? Let's reconnect — 10 mins this week?"</div>
+    </div>
+  </div>
+
+  <!-- MASTER POSITIONING -->
+  <div class="master">
+    <div class="master-lbl">💡 Master Positioning</div>
+    <div class="master-body">PayNearMe modernizes payments — improving <strong>convenience, trust, loan performance, collections outcomes, fraud confidence, and member growth</strong> — sustaining CU relevancy. Not a payments vendor story. <em>A strategic priority story.</em> The real win is not call deflection — it is call prevention.</div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="card-bottom">
+    <div class="bot-col">
+      <div class="bot-lbl lbl-green">✅ The Winning Moves</div>
+      <div class="move-pills">
+        <span class="move-pill">✓ Lead COO/CLO first · pull CFO &amp; IT in strategically</span>
+        <span class="move-pill">✓ Stop after your pitch — ask a question</span>
+        <span class="move-pill">✓ Walk pricing live</span>
+        <span class="move-pill">✓ Every touchpoint delivers value</span>
+        <span class="move-pill">✓ Find their ally</span>
+      </div>
+    </div>
+    <div class="bot-col">
+      <div class="bot-lbl lbl-gold">⭐ Credibility Anchors</div>
+      <div class="cred-pills">
+        <span class="cred-pill">Kinective/Core10 · 40+ cores</span>
+        <span class="cred-pill">PCI DSS 4.0 + SOC 2</span>
+        <span class="cred-pill">"Best part — I never hear from you"</span>
+        <span class="cred-pill">LeveragePoint ROI — walk live with CFO</span>
+        <span class="cred-pill">Peer CU reference — Reluctant Changers</span>
+        <span class="cred-pill">ETA 2026 Top Payments ISV</span>
+        <span class="cred-pill">Banking Tech 2026 Best PayTech Solution</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer">
+    <div class="footer-tagline">Surface the potential. <em>Silence the noise.</em> Own the outcome.</div>
+    <div class="footer-meta">PayNearMe · Credit Union Vertical · Internal Use Only</div>
+  </div>
+
+</div>
+<div style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:999">
+  <button onclick="window.print()" style="background:var(--midnight);color:#fff;font-family:var(--font-h);font-size:0.7rem;font-weight:700;border:none;border-radius:2rem;padding:0.5rem 1.1rem;cursor:pointer;box-shadow:0 2px 12px rgba(1,35,65,0.25);display:flex;align-items:center;gap:0.4rem;letter-spacing:0.05em">🖨️ Print / Save as PDF</button>
+</div>
+</body>
+</html>

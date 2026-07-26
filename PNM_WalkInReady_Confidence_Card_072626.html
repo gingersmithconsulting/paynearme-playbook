@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walk In Ready — Pre-Meeting Confidence Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --midnight:#012341;--green:#00D14C;--green2:#009F3C;--green-light:#CCF6DB;
+  --purple2:#4350A9;--purple-light:#D9DCEE;--geraldine:#FF767F;--ger-light:#FFE4E5;
+  --sunglow:#FED129;--sun-light:#FFF6D4;--pale-sky:#6A757F;--tiara:#F4F6F6;
+  --border:#E2E6EA;--text:#1A2B3C;--muted:#6A757F;
+  --font-h:'Poppins',sans-serif;--font-b:'Nunito Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-b);background:#F0F2F5;color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem}
+.card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(1,35,65,0.12);width:100%;max-width:1180px;overflow:hidden}
+
+/* HEADER */
+.card-hdr{background:var(--midnight);padding:0.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.card-hdr img{height:24px;width:auto}
+.card-hdr-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:#fff;letter-spacing:-0.01em;text-align:center;flex:1}
+.card-hdr-title em{color:var(--green);font-style:normal}
+.card-badge{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.3);border-radius:2rem;padding:0.25rem 0.75rem;white-space:nowrap}
+
+/* BODY */
+.card-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+
+/* COLUMNS */
+.col{padding:1.1rem 1.25rem;border-right:1px solid var(--border)}
+.col:last-child{border-right:none}
+.col-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid}
+.col-icp .col-lbl{color:var(--green2);border-color:var(--green)}
+.col-buyer .col-lbl{color:var(--purple2);border-color:var(--purple2)}
+.col-stk .col-lbl{color:var(--geraldine);border-color:var(--geraldine)}
+
+/* ICP */
+.pill-group{display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.65rem}
+.pill{font-family:var(--font-h);font-size:0.62rem;font-weight:700;border-radius:2rem;padding:0.2rem 0.6rem;border:1px solid}
+.pill-green{background:var(--green-light);color:var(--green2);border-color:rgba(0,209,76,0.3)}
+.pill-red{background:var(--ger-light);color:#8B1A22;border-color:rgba(255,118,127,0.3)}
+.pill-grey{background:var(--tiara);color:var(--muted);border-color:var(--border)}
+.depri-lbl{font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--geraldine);text-transform:uppercase;letter-spacing:0.1em;margin:0.6rem 0 0.3rem}
+.env-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.3rem;margin-top:0.65rem}
+.env-pill{background:var(--purple-light);border-radius:6px;padding:0.3rem 0.5rem;font-family:var(--font-h);font-size:0.62rem;font-weight:700;color:var(--purple2);text-align:center}
+
+/* ARCHETYPES */
+.arch{border-radius:8px;padding:0.55rem 0.75rem;margin-bottom:0.4rem}
+.arch-ca{background:var(--green-light)}
+.arch-rc{background:var(--purple-light)}
+.arch-sq{background:var(--tiara)}
+.arch-name{font-family:var(--font-h);font-size:0.68rem;font-weight:800;margin-bottom:0.2rem}
+.arch-ca .arch-name{color:var(--green2)}
+.arch-rc .arch-name{color:var(--purple2)}
+.arch-sq .arch-name{color:var(--pale-sky)}
+.arch-signals{font-size:0.71rem;color:var(--muted);line-height:1.45;margin-bottom:0.2rem}
+.arch-play{font-size:0.71rem;font-weight:600;line-height:1.45}
+.arch-ca .arch-play{color:var(--green2)}
+.arch-rc .arch-play{color:var(--purple2)}
+.arch-sq .arch-play{color:var(--pale-sky)}
+.retire-flag{background:var(--sun-light);border-left:3px solid var(--sunglow);border-radius:0 6px 6px 0;padding:0.45rem 0.6rem;margin-top:0.4rem;font-size:0.7rem;color:#5A3000;line-height:1.5}
+.retire-flag strong{color:#7A4A00}
+
+/* STAKEHOLDER */
+.stk-row{margin-bottom:0.65rem;padding-bottom:0.65rem;border-bottom:1px solid var(--border)}
+.stk-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.stk-hdr{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.2rem}
+.stk-badge{font-family:var(--font-h);font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border-radius:2rem;padding:0.15rem 0.5rem}
+.stk-primary{background:var(--green-light);color:var(--green2)}
+.stk-secondary{background:var(--purple-light);color:var(--purple2)}
+.stk-strategic{background:var(--tiara);color:var(--pale-sky)}
+.stk-name{font-family:var(--font-h);font-size:0.72rem;font-weight:800;color:var(--midnight)}
+.stk-desc{font-size:0.72rem;color:var(--muted);line-height:1.5}
+
+/* BOTTOM SECTION */
+.card-bottom{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.bot-col{padding:1.1rem 1.25rem;border-right:1px solid var(--border)}
+.bot-col:last-child{border-right:none}
+.bot-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid}
+.disc-lbl{color:var(--purple2);border-color:var(--purple2)}
+.out-lbl{color:var(--midnight);border-color:var(--midnight)}
+
+/* DISCOVERY QS */
+.dq{display:flex;gap:0.5rem;margin-bottom:0.5rem;font-size:0.78rem;color:var(--text);line-height:1.55}
+.dq-num{font-family:var(--font-h);font-size:0.6rem;font-weight:800;background:var(--midnight);color:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem}
+.flip-risk{background:var(--purple-light);border-radius:8px;padding:0.6rem 0.8rem;margin-top:0.5rem;font-size:0.75rem;color:var(--midnight);line-height:1.55}
+.flip-risk strong{color:var(--geraldine)}
+
+/* OUTCOME STORY */
+.out-step{display:flex;gap:0.65rem;margin-bottom:0.55rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border)}
+.out-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.out-num{font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#fff;background:var(--green2);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem}
+.out-title{font-family:var(--font-h);font-size:0.72rem;font-weight:800;color:var(--midnight);margin-bottom:0.15rem}
+.out-body{font-size:0.72rem;color:var(--muted);line-height:1.5}
+.out-kicker{font-size:0.72rem;color:var(--midnight);font-weight:600;line-height:1.5}
+
+/* MASTER POSITIONING */
+.master{background:var(--midnight);padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.08)}
+.master-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.4rem}
+.master-body{font-size:0.8rem;color:rgba(255,255,255,0.8);line-height:1.65}
+.master-body strong{color:var(--green)}
+.master-body em{color:var(--geraldine);font-style:normal}
+
+/* FOOTER */
+.card-footer{background:var(--midnight);padding:0.5rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08)}
+.footer-tagline{font-family:var(--font-h);font-size:0.65rem;color:rgba(255,255,255,0.45);font-style:italic}
+.footer-tagline em{color:var(--geraldine);font-style:normal}
+.footer-meta{font-size:0.62rem;color:rgba(255,255,255,0.3)}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0.4in;
+  }
+  body {
+    background: #fff !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border-radius: 8px !important;
+    border: 1px solid #E2E6EA !important;
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="card-hdr">
+    <img src="data:image/jpeg;base64,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" alt="PayNearMe">
+    <div class="card-hdr-title">Walk In Ready — <em>Your Pre-Meeting Confidence Card</em></div>
+    <span class="card-badge">Internal · AE Use Only</span>
+  </div>
+
+  <!-- THREE COLUMNS -->
+  <div class="card-body">
+
+    <!-- COL 1: ICP SNAPSHOT -->
+    <div class="col col-icp">
+      <div class="col-lbl">🎯 ICP Snapshot</div>
+      <div class="pill-group">
+        <span class="pill pill-green">Assets $300M–$2B</span>
+        <span class="pill pill-green">Core JH · Fiserv · Corelation</span>
+        <span class="pill pill-green">Consumer Loans ≥20%</span>
+        <span class="pill pill-green">Call Center / Collections 5+ FTEs</span>
+        <span class="pill pill-green">Delinquency active challenge</span>
+        <span class="pill pill-green">Merger activity</span>
+        <span class="pill pill-green">New CEO / COO / CLO</span>
+      </div>
+      <div class="depri-lbl">Deprioritize if...</div>
+      <div class="pill-group">
+        <span class="pill pill-red">Under $100M assets</span>
+        <span class="pill pill-red">No loan portfolio</span>
+        <span class="pill pill-red">No call center</span>
+        <span class="pill pill-red">Core conversion underway</span>
+        <span class="pill pill-red">No business-side champion</span>
+      </div>
+      <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--pale-sky);text-transform:uppercase;letter-spacing:0.1em;margin:0.65rem 0 0.3rem">CU Environment — Pressures Driving the Buy</div>
+      <div class="env-grid">
+        <div class="env-pill">Growth &amp; Relevancy</div>
+        <div class="env-pill">Margin &amp; ROA Pressure</div>
+        <div class="env-pill">Delinquency &amp; Risk</div>
+        <div class="env-pill">Engagement &amp; Retention</div>
+      </div>
+    </div>
+
+    <!-- COL 2: READ THE BUYER FIRST -->
+    <div class="col col-buyer">
+      <div class="col-lbl">🧠 Read the Buyer First</div>
+      <div class="arch arch-ca">
+        <div class="arch-name">🟢 Change Agent</div>
+        <div class="arch-signals">New to role · LinkedIn active · aspirational language · came from outside</div>
+        <div class="arch-play">→ Move fast · make them the hero · ask for CFO early</div>
+      </div>
+      <div class="arch arch-rc">
+        <div class="arch-name">🟣 Reluctant Changer</div>
+        <div class="arch-signals">Sees the problem · risk-averse · "tried this before" · asks implementation questions</div>
+        <div class="arch-play">→ Slow down · peer references first · reduce risk at every step</div>
+      </div>
+      <div class="arch arch-sq">
+        <div class="arch-name">⚫ Status Quo Protector</div>
+        <div class="arch-signals">8+ yrs tenure · operational language · deflects to IT · vendor fatigue · retirement horizon</div>
+        <div class="arch-play">→ Don't pitch · find an ally · show data they can't ignore</div>
+        <div class="retire-flag">⚠️ <strong>Retirement Horizon Signal:</strong> A CEO, CFO, COO, or CLO with 18 months left has inverted risk/reward. Find their successor — that person owns the outcome and has every incentive to move.</div>
+      </div>
+    </div>
+
+    <!-- COL 3: STAKEHOLDER MAP -->
+    <div class="col col-stk">
+      <div class="col-lbl">👥 Stakeholder Map</div>
+      <p style="font-size:0.7rem;color:var(--muted);margin-bottom:0.65rem;line-height:1.5">Title varies by CU size. Lead with function &amp; motivation, not title.</p>
+      <div class="stk-row">
+        <div class="stk-hdr"><span class="stk-badge stk-primary">Primary</span><span class="stk-name">COO / VP Operations</span></div>
+        <div class="stk-desc">Call volume down · cleaner reconciliation · scale without headcount · modernize member experience</div>
+      </div>
+      <div class="stk-row">
+        <div class="stk-hdr"><span class="stk-badge stk-secondary">Secondary</span><span class="stk-name">CLO / VP Lending</span></div>
+        <div class="stk-desc">Fewer late payments · same-day options · delinquency reduction · close the fintech gap</div>
+      </div>
+      <div class="stk-row">
+        <div class="stk-hdr"><span class="stk-badge stk-strategic">Strategic</span><span class="stk-name">CTO / IT &amp; CFO</span></div>
+        <div class="stk-desc">CTO: Kinective/Core10 built · PCI DSS 4.0 + SOC 2 · 6–8 week integration kickoff · no rip-and-replace<br>CFO: payback period · call center ROI · single platform</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM: DISCOVERY + OUTCOME STORY -->
+  <div class="card-bottom">
+
+    <div class="bot-col">
+      <div class="bot-lbl disc-lbl">🔍 5 Discovery Questions to Open Every Deal</div>
+      <div class="dq"><div class="dq-num">1</div><div>"Walk me through exactly what a member experiences when they want to make a loan payment today."</div></div>
+      <div class="dq"><div class="dq-num">2</div><div>"What payment channels do your members ask for that you don't currently offer?"</div></div>
+      <div class="dq"><div class="dq-num">3</div><div>"How much of your delinquency is attributed to members who genuinely can't pay vs. members who just didn't get around to it?"</div></div>
+      <div class="dq"><div class="dq-num">4</div><div>"Is your current self-serve option actually self-serve — or is it just a detour back to your call center?"</div></div>
+      <div class="dq"><div class="dq-num">5</div><div>"What percentage of your loan payments come through your call center — do you have a sense of that number?"</div></div>
+      <div class="flip-risk"><strong>Flip the risk:</strong> Staying with a legacy payment system is riskier than changing. Delinquency compounds, younger members defect, and agent-assisted costs keep climbing. Help them see the cost of inaction before they ask about the cost of moving. <strong>If they've answered honestly, the cost of staying is already clear.</strong></div>
+    </div>
+
+    <div class="bot-col">
+      <div class="bot-lbl out-lbl">💬 The Outcome Story — In Sequence</div>
+      <div class="out-step">
+        <div class="out-num">1</div>
+        <div>
+          <div class="out-title">Better Member Experience — Lead Here</div>
+          <div class="out-body">Members benchmark you against every modern brand — Amazon, Delta, Whole Foods. Personalized, frictionless payment experiences signal that their CU gets it. Future of financial services = interactions, not transactions. <strong>51% of millennials abandon a payment when their preferred method isn't available.</strong> (Oliver Wyman)</div>
+        </div>
+      </div>
+      <div class="out-step">
+        <div class="out-num">2</div>
+        <div>
+          <div class="out-title">Less Noise in the Payment Moment — Build Here</div>
+          <div class="out-body">Most delinquency is friction, not intent. Real win = call prevention, not just deflection. Up to 40% call reduction as adoption matures.</div>
+        </div>
+      </div>
+      <div class="out-step">
+        <div class="out-num">3</div>
+        <div>
+          <div class="out-title">Lower Cost to Serve — Close Here</div>
+          <div class="out-body">$7–$12/agent call → fraction with self-service. Delinquency drops → lower provisioning → healthier balance sheet. Less noise shows up on the income statement.</div>
+        </div>
+      </div>
+      <div class="out-kicker" style="margin-top:0.5rem;background:var(--midnight);color:rgba(255,255,255,0.8);border-radius:8px;padding:0.65rem 0.85rem;font-size:0.75rem">PayNearMe helps credit unions modernize one of their most frequent member touchpoints — payments — in a way that improves <span style="color:var(--green)">convenience, trust, loan performance, collections outcomes, fraud confidence, and member relationship growth.</span> The real win is not call deflection — <em style="color:var(--geraldine);font-style:normal">it is call prevention.</em></div>
+    </div>
+
+  </div>
+
+  <!-- MASTER POSITIONING -->
+  <div class="master">
+    <div class="master-lbl">Master Positioning</div>
+    <div class="master-body">PayNearMe modernizes payments — improving <strong>convenience, trust, loan performance, collections outcomes, fraud confidence, and member growth</strong> — sustaining CU relevancy. Not a payments vendor story. <em>A strategic priority story.</em> The real win is not call deflection — it is call prevention.</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer">
+    <div class="footer-tagline">Surface the potential. <em>Silence the noise.</em> Own the outcome.</div>
+    <div class="footer-meta">PayNearMe · Credit Union Vertical · Internal Use Only</div>
+  </div>
+
+</div>
+<div style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:999">
+  <button onclick="window.print()" style="background:var(--midnight);color:#fff;font-family:var(--font-h);font-size:0.7rem;font-weight:700;border:none;border-radius:2rem;padding:0.5rem 1.1rem;cursor:pointer;box-shadow:0 2px 12px rgba(1,35,65,0.25);display:flex;align-items:center;gap:0.4rem;letter-spacing:0.05em">🖨️ Print / Save as PDF</button>
+</div>
+</body>
+</html>
