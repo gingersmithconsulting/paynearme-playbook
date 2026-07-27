@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayNearMe · CU Playbook · DO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --midnight:#012341;--green:#00D14C;--green2:#009F3C;
+  --green-light:#CCF6DB;--purple2:#4350A9;--purple-light:#D9DCEE;
+  --geraldine:#FF767F;--ger-light:#FFE4E5;
+  --sunglow:#FED129;--sun-light:#FFF6D4;
+  --pale-sky:#6A757F;--tiara:#F4F6F6;--border:#E2E6EA;
+  --text:#1A2B3C;--muted:#6A757F;
+  --font-h:'Poppins',sans-serif;--font-b:'Nunito Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-b);background:#F0F2F5;color:var(--text)}
+
+/* NAV */
+.nav{background:var(--midnight);position:sticky;top:0;z-index:200;display:flex;align-items:center;padding:0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-logo{padding:0.6rem 1.25rem;border-right:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:0.65rem;flex-shrink:0}
+.nav-logo img{height:26px;width:auto}
+.nav-badge{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);background:rgba(255,118,127,0.12);border:1px solid rgba(255,118,127,0.3);border-radius:2rem;padding:0.2rem 0.6rem}
+.nav-chips{display:flex;align-items:center;flex:1;overflow-x:auto;padding:0 0.5rem}
+.nav-chip{font-family:var(--font-h);font-size:0.6rem;font-weight:600;color:rgba(255,255,255,0.6);padding:0.85rem 0.65rem;white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.15s;user-select:none}
+.nav-chip:hover,.nav-chip.active{color:#fff;border-bottom-color:var(--geraldine)}
+.nav-switch{padding:0.4rem 1rem;margin:0.35rem 0.75rem 0.35rem auto;background:var(--green);color:var(--midnight);font-family:var(--font-h);font-size:0.6rem;font-weight:800;border-radius:2rem;text-decoration:none;letter-spacing:0.05em;white-space:nowrap;flex-shrink:0;transition:opacity 0.15s}
+.nav-switch:hover{opacity:0.85}
+
+/* HERO */
+.hero{background:var(--midnight);padding:2.5rem 2.5rem 1.75rem}
+.hero-vol{font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.6rem}
+.hero h1{font-family:var(--font-h);font-size:2.4rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:0.5rem}
+.hero h1 em{color:var(--geraldine);font-style:normal}
+.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.65);font-style:italic;max-width:680px;line-height:1.65}
+
+/* NAVIGATOR */
+.navigator{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.ns-title{font-family:var(--font-h);font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--pale-sky);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem}
+.ns-title::before,.ns-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* DEAL HEALTH CHECK */
+.health-check{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.hc-trigger{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.25rem;cursor:pointer;user-select:none;transition:background 0.15s}
+.hc-trigger:hover{background:var(--tiara)}
+.hc-trigger-left{display:flex;align-items:center;gap:0.75rem}
+.hc-icon{font-size:1.1rem}
+.hc-label{font-family:var(--font-h);font-size:0.82rem;font-weight:800;color:var(--midnight)}
+.hc-sub{font-size:0.72rem;color:var(--muted)}
+.hc-arr{color:var(--pale-sky);font-size:0.7rem;transition:transform 0.2s;font-weight:700}
+.hc-body{display:none;border-top:1px solid var(--border);padding:1.25rem}
+.hc-body.open{display:block}
+.hc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+.hc-col-title{font-family:var(--font-h);font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid}
+.hc-pre .hc-col-title{color:var(--purple2);border-color:var(--purple2)}
+.hc-in .hc-col-title{color:var(--midnight);border-color:var(--midnight)}
+.hc-post .hc-col-title{color:var(--green2);border-color:var(--green)}
+.hc-item{display:flex;align-items:flex-start;gap:0.5rem;margin-bottom:0.5rem;font-size:0.8rem;color:var(--text);line-height:1.5}
+.hc-item input[type=checkbox]{margin-top:0.15rem;flex-shrink:0;accent-color:var(--green);width:13px;height:13px;cursor:pointer}
+.hc-item label{cursor:pointer;line-height:1.5}
+.hc-note{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border)}
+
+/* STAGE CARDS */
+.stage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:1.75rem}
+.stage-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.1rem 1rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.stage-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--geraldine);opacity:0;transition:opacity 0.2s}
+.stage-card:hover{background:#FFF5F6;border-color:rgba(255,118,127,0.4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1)}
+.stage-card:hover::before{opacity:1}
+.sc-emoji{font-size:1.6rem;margin-bottom:0.6rem;display:block}
+.sc-label{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.25rem}
+.sc-name{font-family:var(--font-h);font-size:0.88rem;font-weight:800;color:var(--midnight);margin-bottom:0.3rem;line-height:1.2}
+.sc-outcome{font-size:0.72rem;color:var(--muted);line-height:1.4}
+
+/* INTENT BUTTONS */
+.intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:1.75rem}
+.intent-btn{background:#fff;border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;cursor:pointer;display:flex;align-items:flex-start;gap:0.75rem;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.intent-btn:hover{background:#F0FFF6;border-color:rgba(0,209,76,0.4);transform:translateY(-1px)}
+.ib-emoji{font-size:1.3rem;flex-shrink:0;margin-top:0.1rem}
+.ib-label{font-family:var(--font-h);font-size:0.82rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem;line-height:1.3}
+.ib-desc{font-size:0.7rem;color:var(--muted);line-height:1.4}
+
+/* AI LANE */
+.ai-box{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.ai-wrap{display:flex;gap:0.75rem;align-items:flex-end;margin-top:0.75rem}
+.ai-input{flex:1;background:var(--tiara);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;font-family:var(--font-b);font-size:0.85rem;color:var(--midnight);resize:none;height:52px;outline:none;transition:border-color 0.15s}
+.ai-input:focus{border-color:var(--geraldine);background:#fff}
+.ai-input::placeholder{color:var(--muted)}
+.ai-send{background:var(--geraldine);border:none;border-radius:10px;padding:0.75rem 1.25rem;font-family:var(--font-h);font-size:0.75rem;font-weight:700;color:#fff;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.ai-send:disabled{opacity:0.4}
+.ai-response{margin-top:1rem;background:var(--tiara);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;font-size:0.84rem;color:var(--midnight);line-height:1.7;display:none}
+
+/* STAGE OVERLAY — same pattern as DevAltus */
+.stage-overlay{position:fixed;inset:0;z-index:300;overflow-y:auto;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.18s ease,visibility 0s linear 0.18s}
+.stage-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity 0.18s ease,visibility 0s linear 0s}
+.stage-overlay.active .overlay-panel{visibility:visible}
+.overlay-backdrop{position:absolute;inset:0;background:rgba(1,35,65,0.55)}
+.overlay-panel{position:relative;background:#F0F2F5;width:100%;min-height:100%;overflow-y:auto;transform:translateY(20px);transition:transform 0.18s ease}
+.stage-overlay.active .overlay-panel{transform:translateY(0)}
+.overlay-nav{background:var(--midnight);position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:1rem;padding:0.6rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.overlay-back{background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.3);color:var(--geraldine);font-family:var(--font-h);font-size:0.6rem;font-weight:700;border-radius:2rem;padding:0.3rem 0.85rem;cursor:pointer;letter-spacing:0.05em;white-space:nowrap;transition:all 0.15s}
+.overlay-back:hover{background:rgba(255,118,127,0.3)}
+.overlay-stage-name{font-family:var(--font-h);font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.7)}
+
+/* STAGE PANELS — all hidden, shown via JS */
+.stage-panel{display:none;visibility:hidden}
+.stage-panel.active{display:block;visibility:visible}
+.sv-hero{background:var(--midnight);padding:1.25rem 2rem;display:flex;align-items:center;gap:1rem}
+.sv-emoji{font-size:1.75rem}
+.sv-label{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine)}
+.sv-title{font-family:var(--font-h);font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.sv-owner{font-size:0.75rem;color:rgba(255,255,255,0.5)}
+.sv-body{max-width:1100px;margin:0 auto;padding:1.5rem}
+
+/* BID GRID */
+.bid-grid{display:grid;grid-template-columns:1fr 1fr 1fr;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1rem}
+.bid-col{padding:1.25rem 1.35rem}
+.bid-col:not(:last-child){border-right:1px solid var(--border)}
+.bid-lbl{font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.85rem;padding-bottom:0.5rem;border-bottom:2px solid}
+.bid-before .bid-lbl{color:var(--purple2);border-color:var(--purple2)}
+.bid-in .bid-lbl{color:var(--midnight);border-color:var(--midnight)}
+.bid-leave .bid-lbl{color:var(--green2);border-color:var(--green)}
+.bid-item{display:flex;align-items:flex-start;gap:0.5rem;margin-bottom:0.6rem;font-size:0.82rem;color:var(--text);line-height:1.55}
+.bid-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:0.45rem}
+.bid-before .bid-dot{background:var(--purple2)}
+.bid-in .bid-dot{background:var(--midnight)}
+.bid-leave .bid-dot{background:var(--green)}
+.bid-item strong{font-weight:700;color:var(--midnight)}
+.bid-item em{font-style:italic;color:var(--muted)}
+
+/* FIND/TELL */
+.find-tell{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0.65rem 0}
+.ft-col{padding:0.85rem 1rem}
+.ft-you{background:var(--purple-light);border-right:1px solid var(--border)}
+.ft-they{background:var(--green-light)}
+.ft-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem}
+.ft-you .ft-lbl{color:var(--purple2)}
+.ft-they .ft-lbl{color:var(--green2)}
+.ft-item{font-size:0.79rem;color:var(--midnight);line-height:1.55;margin-bottom:0.3rem;padding-left:0.7rem;position:relative}
+.ft-item::before{content:"→";position:absolute;left:0;color:var(--muted)}
+
+/* COLLAPSIBLE */
+.coll-trigger{display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--tiara);border:1px solid var(--border);border-radius:8px;padding:0.55rem 0.85rem;margin:0.65rem 0;font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--purple2);user-select:none;transition:background 0.15s}
+.coll-trigger:hover{background:var(--purple-light)}
+.coll-arr{font-size:0.65rem;transition:transform 0.2s;font-weight:700}
+.coll-body{display:none}
+.coll-body.open{display:block}
+
+/* SANDLER QUESTIONS */
+.sandler{margin:0.75rem 0}
+.sandler-env{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:0.65rem;overflow:hidden}
+.sandler-env-hdr{background:var(--tiara);padding:0.6rem 1rem;font-family:var(--font-h);font-size:0.72rem;font-weight:800;color:var(--midnight);cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.sandler-env-hdr:hover{background:#E8EBF0}
+.sandler-env-body{display:none;padding:0.75rem 1rem}
+.sandler-env-body.open{display:block}
+.sandler-q{display:flex;gap:0.65rem;margin-bottom:0.65rem;padding-bottom:0.65rem;border-bottom:1px solid var(--border);font-size:0.81rem;line-height:1.55}
+.sandler-q:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.sandler-level{font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;border-radius:2rem;padding:0.15rem 0.45rem;white-space:nowrap;flex-shrink:0;margin-top:0.1rem}
+.sl1{background:var(--ger-light);color:#8B1A22}
+.sl2{background:var(--sun-light);color:#7A4A00}
+.sl3{background:var(--green-light);color:var(--green2)}
+
+/* LEAVE HIGHLIGHT */
+.leave-hl{background:var(--green-light);border:1px solid rgba(0,209,76,0.3);border-radius:10px;padding:0.85rem 1rem;margin-top:0.75rem}
+.lh-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--green2);margin-bottom:0.3rem}
+.lh-txt{font-size:0.84rem;color:var(--midnight);font-weight:600;line-height:1.5}
+
+/* TALK TRACK */
+.tt{background:var(--purple-light);border-radius:8px;padding:0.75rem 0.9rem;margin:0.6rem 0}
+.tt-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.2rem}
+.tt-body{font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic}
+
+/* CALLOUTS */
+.callout{border-radius:9px;padding:0.8rem 1rem;margin:0.65rem 0;font-size:0.81rem;line-height:1.6}
+.callout .cl{font-family:var(--font-h);font-size:0.57rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.25rem}
+.cy{background:var(--sun-light);border-left:4px solid var(--sunglow)}.cy .cl{color:#7A4A00}.cy p{color:#5A3000}
+.cr{background:var(--ger-light);border-left:4px solid var(--geraldine)}.cr .cl{color:#8B1A22}.cr p{color:#5A1A1A}
+.cg{background:var(--green-light);border-left:4px solid var(--green)}.cg .cl{color:var(--green2)}.cg p{color:var(--midnight)}
+
+/* TOOLS ROW */
+.tools-row{background:var(--tiara);border-top:1px solid var(--border);padding:0.75rem 1.25rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.tl{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pale-sky);flex-shrink:0}
+.tc{background:#fff;border:1px solid var(--border);border-radius:2rem;padding:0.18rem 0.6rem;font-size:0.73rem;color:var(--midnight);font-weight:600}
+
+/* TABLES */
+.nt{width:100%;border-collapse:collapse;font-size:0.78rem;margin:0.65rem 0;border-radius:8px;overflow:hidden}
+.nt th{background:var(--midnight);color:#fff;font-family:var(--font-h);font-size:0.57rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:0.45rem 0.7rem;text-align:left}
+.nt td{padding:0.42rem 0.7rem;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.nt tr:last-child td{border-bottom:none}
+.nt tr:nth-child(even) td{background:var(--tiara)}
+.nf{font-weight:700;color:var(--purple2)}
+
+/* EMAIL SEQ */
+.eseq{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0.5rem 0}
+.etouch{padding:0.8rem 1rem;border-bottom:1px solid var(--border);background:#fff}
+.etouch:last-child{border-bottom:none}
+.eth{display:flex;align-items:center;gap:0.65rem;margin-bottom:0.3rem}
+.etnum{font-family:var(--font-h);font-size:0.57rem;font-weight:800;background:var(--midnight);color:#fff;border-radius:2rem;padding:0.12rem 0.45rem}
+.etday{font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight)}
+.etsubj{font-size:0.72rem;color:var(--purple2);font-weight:600;margin-bottom:0.25rem}
+.etbody{font-size:0.77rem;color:var(--muted);line-height:1.6;font-style:italic;background:var(--tiara);border-radius:6px;padding:0.45rem 0.65rem}
+
+/* SCRIPT BLOCK */
+.scblk{background:var(--tiara);border-radius:9px;padding:0.75rem 0.9rem;margin:0.5rem 0}
+.scl{font-family:var(--font-h);font-size:0.57rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--pale-sky);margin-bottom:0.3rem}
+.scb{font-size:0.8rem;color:var(--midnight);line-height:1.65;font-style:italic}
+
+/* IT GRID */
+.it-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin:0.75rem 0}
+
+/* STALL */
+.stall-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.85rem;margin-top:0.85rem}
+.stall-card{background:#fff;border:1px solid var(--border);border-left:4px solid var(--geraldine);border-radius:0 10px 10px 0;padding:0.85rem 1rem}
+.stall-title{font-family:var(--font-h);font-size:0.75rem;font-weight:800;color:var(--midnight);margin-bottom:0.25rem}
+.stall-diag{font-size:0.77rem;color:var(--muted);line-height:1.5;margin-bottom:0.3rem}
+.stall-move{font-size:0.77rem;color:var(--purple2);font-weight:600;line-height:1.5}
+
+/* MISC */
+.sub-hdr{font-family:var(--font-h);font-size:0.78rem;font-weight:700;color:var(--midnight);margin:1rem 0 0.5rem}
+.body-p{font-size:0.84rem;color:var(--muted);line-height:1.7;margin-bottom:0.65rem}
+
+/* STANDARD FOOTER */
+.std-footer{background:var(--tiara);border-top:2px solid var(--border);padding:1.25rem 2rem}
+.sf-lbl{font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--pale-sky);margin-bottom:0.65rem}
+.sf-rules{display:flex;flex-wrap:wrap;gap:0.35rem 1.5rem}
+.sf-rule{font-size:0.74rem;color:var(--midnight);display:flex;align-items:center;gap:0.4rem}
+.sf-rule strong{color:var(--geraldine);font-family:var(--font-h);font-size:0.65rem;font-weight:800}
+.page-footer{text-align:center;padding:1rem;font-size:0.7rem;color:var(--muted);background:var(--tiara);border-top:1px solid var(--border)}
+
+@media(max-width:900px){
+  .stage-grid{grid-template-columns:repeat(2,1fr)}
+  .intent-grid{grid-template-columns:1fr 1fr}
+  .bid-grid{grid-template-columns:1fr}
+  .bid-col:not(:last-child){border-right:none;border-bottom:1px solid var(--border)}
+  .stall-grid{grid-template-columns:1fr 1fr}
+  .it-grid{grid-template-columns:1fr}
+  .find-tell{grid-template-columns:1fr}
+  .hc-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAyAKcDASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAcIAgYDBAUJAf/EADcQAAEDBAEDAgQCBwkAAAAAAAECAwQABQYRBxIhMUFRCBMiYRRxFSMyUnKRoQkWNDdDdYGxs//EABoBAQADAQEBAAAAAAAAAAAAAAABAgMEBQb/xAAnEQADAAIABgEDBQAAAAAAAAAAAQIDEQQSITFR8KETccFBQtHh8f/aAAwDAQACEQMRAD8Aq/SlK+iPBFKnbhr4acpzm2sXy9TE49aH0hbBcaLkh9J8KSjY6Un0Kj9wCKlab8HOMqhlMLMLu1J12W8w24jf8I6T/WueuJxS9Nm08NkpbSKZ0qROZeH8s4vmt/phpuXbH1dMe4x9lpZ89Kge6Fa76PnvonRqO62mlS2jKpcvTFKUqxApSlAKUpQClKUApSlAKUpQClKUApSlAKlT4V8Ki5xzDb4NxaS9boLap8ppQ2HEtkBKT9itSNj1G6iurG/AB/mrev8AZV/+zVY56c420aYUnkSZY/4h+VY3FGIMzWYjcy6zllmBGWdI2BtS1a79KQR2HckgdvIrBYfiu5LiXtEq7JtdygFf6yGIwa0n1CFp7g+xPV+RrdP7Q/8AxWF/wTf+2aqtboUy4zG4cCM7JkOHSG20lRNc/DYMbxbpdzo4jNayaT7H0rDmK8ycUrCNSLTeYmtLA+Ywsjtsei0K0fzHtXzXvdvftF5nWmUAJEKQ5HdA/eQopP8AUVcThqRO46xi3RlvJIjskzEFX0K2StQ39io6P2qpGb3Vu+5pe720kobuFwflISfIC3FKA/rU8LPLVJdiOJpVMt9yZIdh4mxfhTDcty3E7peZ99MlDiotxWyElp1Sd63rxrx7V0M54ntN9tWIZJxOzPciZO89GbtlweQlxh5sKKgHFEAp0hfknx5O9Db5mUY9jHwy8aO3/CYGVIfXOS03KfU2GCHlbI0Dvex/KvN48yGFzZyHb8cyC1QbZj1ktsh6z49bnTGbkPDp/VlewSpQJJI12SfdWyq1uvDfuhqXqfOvdkeZlwnyBilpbu90t0RVtU8hhyVHmNutsLUQkfMIP0jZA2e3cd+4rX8gwHKbFnbWEXG3dF7edZaaZQ4laXC7ro0oHRB6h39O/tVkYVsl2/gzk9ubxtGwcOQG1IjpnOOqf6VK0strUenXjrAHV9+ntlgE6y5HhuO823h5py4YLapMG4NLP1SX20gRT+ZDhO/3lD2qVnpLb98EPDO9L3yavxnwHar5gOU2/In2bdmEG7m3Q5Al9TKXvktrS0oA9KtlRSddxv3Gq0jhbjqFdcszWwZnbZDcqxWCZKSwXFNqakNKQAT0nuPqP2Owa2CyXa4S/hPzG+uynBcXsyalKfSohYdIZV1Ajwd96k/iDLLByLjGSZdKCI2cwsWlWy6pQAkTmSkKRI17j5fSdeN68dNVq7lU2/6JmIpyl/pXTBeH85zGyIvVrgRWLe64Wo782WiOmS4Drpb6jtR2NbHbexvsa8618a5pcM8fwdqzKav0cKU9GkPIa6EpAJV1KISRog7BOx3G6sJOgW3OuJ+P5dh48czdm2WxECQzFvaoi4ElISF9baf3yOrr9tb7arB21wuQ+Xr8nLMTjrvuOY223FsEe9/NNxeT1KHW8nRKgFJSpPnfnYq316679+f4K/Rnpr34IL5D4kzjBbdGud9trJt8lz5TcuLJQ8119/pJSex7Hz51XoXbhHkGxRLhc71Z249uthYMp78SgpIcUkBKNH6j9Q3rxvvUxZPb5MH4W8sanYLHwxz9KQnEwG5jjpO3mh8woWpRb2O3pvW9VqvxlXq5yeaLfZnZjxt8OHFLMcLPQFL+pSunx1HsN+wFTGW6aX3/AAKxTK39vydr4ouDrLiFuRkWBodVAhLTHu8QvKdXGUvRbd2dkJV1AH8068nWbnBtix/4d71keSJcXmLMJueI4fUn8C24sJbStAPdRAUTv12PSvf5m5Om8Z/FBdJoi/pG0zbZGan29SgEvAN7Qob2ApJ8HXgqHrWvYTk91zDhvm3JL2986ZNENa9fsoT1qCUJ9kpAAH2FZy8vJLb6dPku1j52kvJHWL8IciZFYY15g2uKyzNQVwWpc1th6Wkd9toUQSPYnW/Pio+uUGZbLhIt9wjOxZcZxTTzLqelba0nRBHoQauHnlvj5lfsazHE+M3cviLhRxBuMTIVxRCU2d/KU2OzZQe5/wCfUVW3nu+P5Fy1fbpLtsS3SlPJafYiyhIb620JQVBwABW+nfj1rbDlq31MsuOYXQ0alKV0mAqwXwLXW12nk67v3W5Q4DK7OtCXJL6WklXzmjoFRA32Paq+0qmSOeXJbHfJSo+mOX3DjrJbf+Gn5LjinEbLLqpzKlNn7bV4PqPWoUvN0xfH5LzT17saAj/UYlNFKx6EdJ71Tmlc0cJy/uOiuK5v0Jg5a5VYusF2xY2pf4Z0dMmWpJT8xPqlAPfR9SfPiofpSumIULSOeqdPbM1vPLaQ0t1xTaP2EFRIT+Q9K/G1rbcS42tSFpO0qSdEH3BrGlWKnZfuE+QtxyROkvKdADiluqUVgeAdnvW+5jyq/ecH/ufZsWsmM2x55Eicm2oUDLcQAE9RUT2Ggde4Heo5pUOE9bJVNdjMPPBgsB1wNKPUUdR6SffVGXXWSSy6tsqSUkpURse3b0rClSQdiFOmwVKVCmSIqljSiy6UFQ9jo1xsvvsSEyGH3WnknaXELIUD77HeuOlNA535sx8uF+XIdLpCnOtwnrI9TvzXG888858x55xxfjqWok/zNYUoDN9559z5j7rjqz26lqJP8zRDzzbS2kPOIbc/bSlRAV+Y9awpQHZiz58RlxmLNksNOjTiG3VJSv8AMA9661KUApSlSBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgP/Z" alt="PayNearMe">
+    <span class="nav-badge">Volume 2 · DO</span>
+  </div>
+  <div class="nav-chips">
+    <span class="nav-chip" data-stage="precall">🔭 Pre-Call</span>
+    <span class="nav-chip" data-stage="s1">🔍 Discovery</span>
+    <span class="nav-chip" data-stage="s2">✅ Qualify</span>
+    <span class="nav-chip" data-stage="s3">💡 Demo & ROI</span>
+    <span class="nav-chip" data-stage="s4">⚙️ Scoping</span>
+    <span class="nav-chip" data-stage="s5">📋 Proposal</span>
+    <span class="nav-chip" data-stage="s6">✍️ Close</span>
+    <span class="nav-chip" data-stage="s7">🌱 Post-Close</span>
+    <span class="nav-chip" data-stage="stall">🔄 Stalled?</span>
+  </div>
+  <a class="nav-switch" href="https://gingersmithconsulting.github.io/paynearme-playbook/PayNearMe_CU_Playbook_KNOW.html">← KNOW Playbook</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" style="display:flex;align-items:flex-start;justify-content:space-between;gap:2rem">
+  <div style="flex:1;min-width:0">
+    <div class="hero-vol">PayNearMe · Credit Union Vertical · Volume 2</div>
+    <h1>The <em>DO</em> Playbook</h1>
+    <p class="hero-sub">Simplify your process the way PayNearMe simplifies payments — reduce the friction, surface what matters, and close the gap one committed next step at a time.</p>
+  </div>
+  <div style="flex-shrink:0;display:flex;flex-direction:column;gap:0.4rem;align-items:flex-end;padding-top:0.25rem">
+    <div style="font-family:var(--font-h);font-size:0.55rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.15rem">Credibility Anchors</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem">
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">Up to 40% call reduction</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">62,000+ retail cash locations</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">600+ FIs on the platform</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">5–15% on-time payment lift</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">PCI DSS 4.0 + SOC 2 Type II</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">Smart Switch™ zero downtime failover</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">2026 Best PayTech Solution (Banking Tech)</span>
+      <span style="background:rgba(255,118,127,0.15);border:1px solid rgba(255,118,127,0.35);border-radius:2rem;padding:0.22rem 0.75rem;font-size:0.68rem;color:var(--geraldine);font-family:var(--font-h);font-weight:700;white-space:nowrap;text-align:center">2026 Top Payments ISV (ETA)</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATOR -->
+<div class="navigator">
+
+  <!-- DEAL HEALTH CHECK -->
+  <!-- WHERE AM I -->
+  <div class="ns-title">Build My Pipeline</div>
+  <div id="pipeline-card" style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.75rem;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <div style="background:var(--midnight);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer" id="pipeline-trigger">
+      <div style="display:flex;align-items:center;gap:0.85rem">
+        <span style="font-size:1.5rem">🏗️</span>
+        <div>
+          <div style="font-family:var(--font-h);font-size:0.88rem;font-weight:800;color:#fff;margin-bottom:0.2rem">Pipeline Builder — Start Here Before You're in a Deal</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.55);font-style:italic">A paint-by-numbers prospecting guide for the CU vertical. Consultative, not pushy — CUs earn trust slowly.</div>
+        </div>
+      </div>
+      <span style="color:var(--geraldine);font-size:0.7rem;font-weight:700;font-family:var(--font-h);white-space:nowrap;margin-left:1rem" id="pipeline-arr">▼ Open</span>
+    </div>
+    <div style="display:none" id="pipeline-body">
+
+      <!-- STEP PROGRESS BAR -->
+      <div style="background:var(--tiara);padding:0.75rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0;overflow-x:auto">
+        <div style="display:flex;align-items:center;gap:0;flex-shrink:0" id="step-nav">
+          <span class="pipe-step-btn active-step" data-step="1" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--midnight);color:#fff;margin-right:0.35rem">1 · Find Targets</span>
+          <span class="pipe-step-btn" data-step="2" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--tiara);color:var(--muted);border:1px solid var(--border);margin-right:0.35rem">2 · Qualify Fast</span>
+          <span class="pipe-step-btn" data-step="3" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--tiara);color:var(--muted);border:1px solid var(--border);margin-right:0.35rem">3 · Research Contact</span>
+          <span class="pipe-step-btn" data-step="4" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--tiara);color:var(--muted);border:1px solid var(--border);margin-right:0.35rem">4 · Match Trigger</span>
+          <span class="pipe-step-btn" data-step="5" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--tiara);color:var(--muted);border:1px solid var(--border);margin-right:0.35rem">5 · Run the Sequence</span>
+          <span class="pipe-step-btn" data-step="6" style="font-family:var(--font-h);font-size:0.62rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:2rem;cursor:pointer;white-space:nowrap;background:var(--tiara);color:var(--muted);border:1px solid var(--border)">6 · Decision Gate</span>
+        </div>
+      </div>
+
+      <!-- STEP PANELS -->
+      <div style="padding:1.25rem 1.5rem">
+
+        <!-- STEP 1: FIND TARGETS -->
+        <div class="pipe-step" id="pipe-step-1">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.85rem">Step 1 — Find Your Targets</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem">
+            <div style="background:var(--purple-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);margin-bottom:0.4rem">🔍 NCUA.gov</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">Search by state → filter by assets $300M–$2B. Download the 5300 call report spreadsheet and filter by consumer loan concentration. Best source for accurate, current data on every CU in the country.</div>
+            </div>
+            <div style="background:var(--purple-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);margin-bottom:0.4rem">💼 LinkedIn</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">Search "Credit Union" + "VP Operations" / "Chief Lending Officer" / "COO" by geography. 500–5,000 employees as a proxy for asset size. Flag anyone who posted about digital payments, member experience, or efficiency in the last 90 days.</div>
+            </div>
+            <div style="background:var(--purple-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);margin-bottom:0.4rem">🏛️ State League Directories</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">Every state has a credit union league with a member directory. Free to access. Organized by asset size. Often includes key contacts. Start here for geographic territory building.</div>
+            </div>
+            <div style="background:var(--green-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.4rem">🎪 Industry Events</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">CUNA, NAFCU, GAC, state league conferences. Anyone who attended a modernization, lending, or operations session is a warm prospect. Post-event follow-up within 5 days is the warmest outreach you'll ever send.</div>
+            </div>
+            <div style="background:var(--green-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.4rem">🤝 Referrals</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">Ask at every 90-day KPI review: "Who else in your network should we be talking to?" Peer CUs in the same state or asset tier trust each other's word more than any vendor pitch. One referral is worth ten cold emails.</div>
+            </div>
+            <div style="background:var(--green-light);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.4rem">🔔 Google Alerts</div>
+              <div style="font-size:0.78rem;color:var(--midnight);line-height:1.55">Set alerts for "[State] credit union merger" · "credit union digital payments" · "credit union delinquency" · "[CU Name]". Trigger events surface in real time — you'll know before the prospect thinks to call you.</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <span class="pipe-next-btn" data-next="2" style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;color:var(--geraldine);cursor:pointer;display:flex;align-items:center;gap:0.35rem">Next: Qualify Fast →</span>
+          </div>
+        </div>
+
+        <!-- STEP 2: QUALIFY FAST -->
+        <div class="pipe-step" id="pipe-step-2" style="display:none">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.5rem">Step 2 — Qualify Before You Prospect</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">30 seconds. Three questions. If all three are yes — proceed. If not — park and move on. Don't spend prospecting time on CUs that won't convert.</p>
+          <div style="background:var(--midnight);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem">
+            <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:0.85rem">The 30-Second ICP Gate</div>
+            <div style="display:flex;flex-direction:column;gap:0.65rem">
+              <div style="display:flex;align-items:flex-start;gap:0.85rem;background:rgba(255,255,255,0.06);border-radius:8px;padding:0.75rem 1rem">
+                <span style="font-family:var(--font-h);font-size:0.75rem;font-weight:800;color:var(--green);flex-shrink:0">☐ 1</span>
+                <div><div style="font-size:0.82rem;color:#fff;font-weight:600;margin-bottom:0.15rem">Assets between $300M and $2B?</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">Sweet spot is $500M–$1B. Under $300M = ROI story is harder. Over $2B = longer procurement cycles.</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:0.85rem;background:rgba(255,255,255,0.06);border-radius:8px;padding:0.75rem 1rem">
+                <span style="font-family:var(--font-h);font-size:0.75rem;font-weight:800;color:var(--green);flex-shrink:0">☐ 2</span>
+                <div><div style="font-size:0.82rem;color:#fff;font-weight:600;margin-bottom:0.15rem">Consumer loans likely ≥20% of assets?</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">Auto, personal, mortgage mix. Check NCUA 5300. Low loan concentration = low call volume = weak ROI case.</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:0.85rem;background:rgba(255,255,255,0.06);border-radius:8px;padding:0.75rem 1rem">
+                <span style="font-family:var(--font-h);font-size:0.75rem;font-weight:800;color:var(--green);flex-shrink:0">☐ 3</span>
+                <div><div style="font-size:0.82rem;color:#fff;font-weight:600;margin-bottom:0.15rem">Running Symitar, Fiserv DNA, or Corelation Keystone?</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">These are our confirmed integration paths. Other cores = flag for Solutions Consultant before investing prospecting time.</div></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+            <div class="callout cg" style="margin:0"><div class="cl">✅ All Three Yes → Proceed</div><p>Move to Step 3. This CU is worth your prospecting time and attention.</p></div>
+            <div class="callout cr" style="margin:0"><div class="cl">❌ Any No → Park and Move On</div><p>Add to a future pipeline list with a 6-month revisit date. Don't force a prospect that doesn't fit — it wastes your time and damages the relationship before it starts.</p></div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <span class="pipe-next-btn" data-next="3" style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;color:var(--geraldine);cursor:pointer;display:flex;align-items:center;gap:0.35rem">Next: Research Contact →</span>
+          </div>
+        </div>
+
+        <!-- STEP 3: RESEARCH CONTACT -->
+        <div class="pipe-step" id="pipe-step-3" style="display:none">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.5rem">Step 3 — Research Your Contact</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">The goal is to know enough about their specific situation that your first outreach feels like you did your homework — not like a mass blast. CU executives talk to each other. A rep who shows up informed gets remembered for the right reason.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">From NCUA 5300</div>
+              <div style="font-size:0.78rem;color:var(--text);line-height:1.6">
+                <div style="margin-bottom:0.25rem">→ Total assets + YoY growth</div>
+                <div style="margin-bottom:0.25rem">→ Consumer loan portfolio %</div>
+                <div style="margin-bottom:0.25rem">→ Delinquency rate (60+ days)</div>
+                <div style="margin-bottom:0.25rem">→ Total loans outstanding</div>
+                <div>→ Full-time employee count</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">From LinkedIn</div>
+              <div style="font-size:0.78rem;color:var(--text);line-height:1.6">
+                <div style="margin-bottom:0.25rem">→ Role tenure (archetype signal)</div>
+                <div style="margin-bottom:0.25rem">→ Recent posts or articles</div>
+                <div style="margin-bottom:0.25rem">→ Any "digital" or "experience" language</div>
+                <div style="margin-bottom:0.25rem">→ Mutual connections</div>
+                <div>→ Shared groups or events</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">From Press & Web</div>
+              <div style="font-size:0.78rem;color:var(--text);line-height:1.6">
+                <div style="margin-bottom:0.25rem">→ Merger or acquisition activity</div>
+                <div style="margin-bottom:0.25rem">→ New executive hire announcements</div>
+                <div style="margin-bottom:0.25rem">→ Core conversion in progress</div>
+                <div style="margin-bottom:0.25rem">→ Any fintech competition mentions</div>
+                <div>→ Strategic plan or annual report</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--tiara);border-radius:10px;padding:0.85rem 1rem">
+            <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--pale-sky);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem">Before You Move to Step 4 — Form Your Hypothesis</div>
+            <div style="font-size:0.8rem;color:var(--text);line-height:1.6">Which archetype is this contact? <strong>Change Agent</strong> (new to role, active on LinkedIn) · <strong>Reluctant Changer</strong> (mid-tenure, asks about references) · <strong>Status Quo Protector</strong> (long tenure, operational language)<br>Which CU environment pressure is loudest? <strong>Growth & Relevancy</strong> · <strong>Margin & ROA</strong> · <strong>Delinquency & Risk</strong> · <strong>Engagement & Retention</strong></div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <span class="pipe-next-btn" data-next="4" style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;color:var(--geraldine);cursor:pointer">Next: Match Trigger →</span>
+          </div>
+        </div>
+
+        <!-- STEP 4: MATCH TRIGGER TO ENTRY POINT -->
+        <div class="pipe-step" id="pipe-step-4" style="display:none">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.5rem">Step 4 — Match Your Trigger to Your Entry Point</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Every first touch should answer one question before anything else: <strong style="color:var(--midnight)">"Why am I reaching out to you specifically, right now?"</strong> Lead with their situation. The product comes later.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--geraldine);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--geraldine);margin-bottom:0.3rem">🆕 New Exec Hire (COO / CLO / CIO)</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: Email + LinkedIn same day</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"Congrats on the new role. Most incoming operations leaders inherit a payment friction problem they didn't create — and the first 18 months is the best window to fix it. Happy to share what we're seeing at similar-sized CUs."</div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--geraldine);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--geraldine);margin-bottom:0.3rem">📊 Delinquency Spike in NCUA Data</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: Email</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"I pulled [CU Name]'s most recent 5300 filing. Your delinquency rate has moved to [X%]. A portion of that likely isn't a credit risk problem — it's a friction problem. Worth a conversation?"</div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--purple2);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);margin-bottom:0.3rem">🔀 Merger or Acquisition</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: Email</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"Congratulations on the merger. Integration moments are exactly when forward-thinking CUs modernize their payment experience — before the combined member base inherits two different systems."</div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--purple2);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);margin-bottom:0.3rem">🎪 Met at a Conference</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: LinkedIn first, then email</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"Great to connect at [event] — I enjoyed our conversation about [topic]. Wanted to follow up with something specific that I think maps to what you described."</div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.3rem">📅 Contract Renewal Window</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: Email</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"Most CUs re-evaluate payment vendors every 3 years. If that window is approaching for [CU Name], this is the right moment to see what the market looks like — even if you end up staying where you are."</div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.3rem">📬 No Obvious Trigger</div>
+              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">Lead channel: Email — lead with insight, not pitch</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.5;font-style:italic">"I work with credit unions in your asset range on payment experience modernization. One number that tends to get attention: our average client sees a 40% reduction in payment-related call volume in the first year. Worth a conversation?"</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <span class="pipe-next-btn" data-next="5" style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;color:var(--geraldine);cursor:pointer">Next: Run the Sequence →</span>
+          </div>
+        </div>
+
+        <!-- STEP 5: RUN THE SEQUENCE -->
+        <div class="pipe-step" id="pipe-step-5" style="display:none">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.5rem">Step 5 — Run the Slow Burn Sequence</div>
+          <div class="callout cg" style="margin-bottom:1rem"><div class="cl">The CU Prospecting Philosophy</div><p>Credit unions move deliberately. Pressure signals you don't understand their world. Every touch should add something — a data point, an insight, a peer story. Never follow up just to follow up. Earn the conversation before you ask for it.</p></div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem">
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--midnight);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green)">Day 1</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.5)">Email + LinkedIn</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Send Email Touch 1</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Trigger-based or insight-led. Open with their situation, not your product. One specific observation. One light question — not a meeting ask.</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Send LinkedIn Connection</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Same day as email. No pitch in the connection note — just a genuine connect. "I work with credit unions in your space and would love to stay connected."</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--midnight);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green)">Day 5</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.5)">LinkedIn</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)" colspan="2"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">LinkedIn Message — If Connected</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Share something useful — the Payment Experience Gap report, a relevant industry stat, a peer story. Frame it as "thought this might be relevant to what you're working on." Still no meeting ask.</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Not Connected Yet?</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">No action needed on Day 5. Wait for the connection to be accepted. Don't stack touches before they've acknowledged you.</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--midnight);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green)">Day 12</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.5)">Email</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Send Email Touch 2 — The Stat</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Lead with their NCUA data — delinquency rate, asset growth, loan volume. Make it specific to them. "I pulled [CU Name]'s 5300 filing and wanted to share one number..." Light ask at the end.</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Why Wait 12 Days?</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">CU leaders are busy. 12 days gives them room to breathe without forgetting you. This isn't urgency — it's respect for their calendar.</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--midnight);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green)">Day 18</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.5)">Voicemail</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Voicemail — 20 Seconds, One Stat</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Keep it short. One stat. One question. No pitch. "Hi [Name], this is [Your name] from PayNearMe — I've sent a couple of emails about payment friction at [CU Name]. Quick question: is this on your radar for this year? Happy to share what we're seeing. I'll send a follow-up."</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Then Send a Follow-Up Email</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">Within 2 hours of the voicemail — same question in writing. Short. "Just left you a voicemail — wanted to follow up in writing too. [One sentence on why it's relevant right now.]"</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--midnight);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green)">Day 25</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.5)">Email</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Send Email Touch 3 — Peer Reference</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">A similar CU story — same asset size, same core, similar pain. Frame it as "thought this might be relevant" not "here's our case study." CUs respond to peer proof far more than vendor claims.</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Make It Personal</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">"A credit union similar to [CU Name] — [asset size], [core platform] — was seeing [specific problem]. After deploying PayNearMe, [specific result]. I think there's a parallel to what you're working through."</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="background:var(--geraldine);padding:0.65rem 0.85rem;display:flex;flex-direction:column;justify-content:center"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#fff">Day 35</div><div style="font-size:0.65rem;color:rgba(255,255,255,0.75)">Email · Final</div></div>
+              <div style="padding:0.65rem 0.85rem;border-right:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Send Email Touch 4 — Warm Close</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">"I've reached out a few times — if the timing isn't right, I completely understand. I'll stop reaching out unless I hear from you. If things change, you know where to find me." Leave the door open. No pressure. No guilt.</div></div>
+              <div style="padding:0.65rem 0.85rem"><div style="font-family:var(--font-h);font-size:0.7rem;font-weight:700;color:var(--midnight);margin-bottom:0.15rem">Why This Tone?</div><div style="font-size:0.75rem;color:var(--muted);line-height:1.45">CU executives remember how you made them feel. A graceful exit with no pressure often gets a response — or a call 6 months later when the timing is right. Burning the bridge gets nothing.</div></div>
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <span class="pipe-next-btn" data-next="6" style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;color:var(--geraldine);cursor:pointer">Next: Decision Gate →</span>
+          </div>
+        </div>
+
+        <!-- STEP 6: DECISION GATE -->
+        <div class="pipe-step" id="pipe-step-6" style="display:none">
+          <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--geraldine);margin-bottom:0.85rem">Step 6 — Decision Gate</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+            <div style="background:var(--green-light);border:1px solid rgba(0,209,76,0.3);border-radius:10px;padding:0.9rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);margin-bottom:0.5rem">✅ Response Received</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.6">Move to Pre-Call prep immediately. Pull NCUA data, form your archetype hypothesis, pre-populate LeveragePoint. Show up to the first call already knowing their world.</div>
+            </div>
+            <div style="background:var(--sun-light);border:1px solid rgba(254,209,41,0.4);border-radius:10px;padding:0.9rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#7A4A00;margin-bottom:0.5rem">🔄 No Response — Try a Different Contact</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.6">Wait 2 weeks after Touch 4, then try one level up (COO if you started with CLO) or one level down (VP Operations). Run the same 35-day sequence with a fresh angle. Maximum 2 contacts per CU before parking.</div>
+            </div>
+            <div style="background:var(--tiara);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--pale-sky);margin-bottom:0.5rem">⏸️ No Response After 2 Contacts — Park It</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.6">Add to a 90-day revisit list. Set a Google Alert for this CU. Re-engage only when a genuine trigger surfaces — new NCUA data, exec hire, industry news. "Just checking in" is not a re-engagement strategy.</div>
+            </div>
+            <div style="background:var(--ger-light);border:1px solid rgba(255,118,127,0.3);border-radius:10px;padding:0.9rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#8B1A22;margin-bottom:0.5rem">📅 Timing Issue / Out of Office</div>
+              <div style="font-size:0.79rem;color:var(--midnight);line-height:1.6">Note the exact re-engagement date they gave you. Set a calendar reminder. Send a brief email the day they said — not a reminder that you're following up, but something genuinely useful that happens to land on the right day.</div>
+            </div>
+          </div>
+          <div class="callout cg" style="margin-top:1rem"><div class="cl">The Long Game</div><p>CU sales cycles are measured in quarters, not weeks. The rep who shows up consistently with relevant insight — without pressure — is the one who gets the call when the timing is finally right. Plant seeds. Tend them patiently. The harvest comes.</p></div>
+        </div>
+
+      </div><!-- /step panels -->
+    </div><!-- /pipeline-body -->
+  </div><!-- /pipeline-card -->
+
+    <div class="ns-title">Deal Health Check</div>
+  <div class="health-check">
+    <div class="hc-trigger" id="hc-trigger">
+      <div class="hc-trigger-left">
+        <span class="hc-icon">🩺</span>
+        <div>
+          <div class="hc-label">Am I running a complete sales process?</div>
+          <div class="hc-sub">Expand to check your deal health from first call to close</div>
+        </div>
+      </div>
+      <span class="hc-arr" id="hc-arr">▼</span>
+    </div>
+    <div class="hc-body" id="hc-body">
+      <div class="hc-grid">
+        <div class="hc-pre">
+          <div class="hc-col-title">Pre-Sale · Preparation & Research</div>
+          <div class="hc-item"><input type="checkbox" id="hc1"><label for="hc1">NCUA 5300 profile pulled — assets, loan %, delinquency rate, FTE count</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc2"><label for="hc2">Triggering event identified and documented (see trigger list below)</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc3"><label for="hc3">Contact researched on LinkedIn — role tenure, activity, archetype hypothesis set</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc4"><label for="hc4">Core platform confirmed or flagged for first email (Symitar / DNA / Keystone)</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc5"><label for="hc5">LeveragePoint pre-populated with NCUA baseline data</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc6"><label for="hc6">Opening question selected — one question, matched to archetype hypothesis</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc7"><label for="hc7">Walk In Ready confidence card reviewed for this persona</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc8"><label for="hc8">Outbound touch 1 of 4-touch sequence sent</label></div>
+          <div class="hc-note">💡 Use the Pre-Call stage card below for the full NCUA lookup table and outbound templates.</div>
+        </div>
+        <div class="hc-in">
+          <div class="hc-col-title">In-Sale · Discovery, Scoping & Closing</div>
+          <div class="hc-item"><input type="checkbox" id="hc9"><label for="hc9">CU operating environment identified in first 10 minutes</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc10"><label for="hc10">Three-layer pain surfaced — surface → impact → root cause (L1/L2/L3 probing sequence)</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc11"><label for="hc11">Economic buyer and champion identified and confirmed</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc12"><label for="hc12">Integration path validated — DNA version confirmed if applicable</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc13"><label for="hc13">ROI walked live using LeveragePoint before pricing was presented</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc14"><label for="hc14">Every meeting ended with one specific committed next step and a date</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc15"><label for="hc15">Champion armed with the language, ROI model, and materials to sell internally</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc16"><label for="hc16">All findings logged in CRM immediately after every meeting</label></div>
+          <div class="hc-note">💡 Use the stage cards below to access talk tracks, probing questions, and tools for each phase.</div>
+        </div>
+        <div class="hc-post">
+          <div class="hc-col-title">Post-Sale · Onboarding & Nurturing</div>
+          <div class="hc-item"><input type="checkbox" id="hc17"><label for="hc17">Warm handoff to implementation team — not a cold transfer</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc18"><label for="hc18">KPI baseline established before go-live (call volume, delinquency rate, self-service %)</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc19"><label for="hc19">30, 60, 90-day champion check-in calls calendared</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc20"><label for="hc20">Member adoption expectations set with champion before go-live (30–90 day ramp)</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc21"><label for="hc21">90-day KPI review completed and documented — did we deliver?</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc22"><label for="hc22">Reference conversation scheduled at 90-day KPI review while momentum is high</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc23"><label for="hc23">Referral ask made — "Who else in your network should we be talking to?"</label></div>
+          <div class="hc-item"><input type="checkbox" id="hc24"><label for="hc24">Expansion opportunity seeded — additional channels, loan types, or branches not yet live?</label></div>
+          <div class="hc-note">💡 Use the Post-Close stage card for full onboarding and nurturing talk tracks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="ns-title">Where am I in my deal?</div>
+  <div class="stage-grid">
+    <div class="stage-card" data-stage="precall"><span class="sc-emoji">🔭</span><div class="sc-label">Pre-Call</div><div class="sc-name">Prospect & Prep</div><div class="sc-outcome">Research, triggering events, outbound templates, NCUA lookup</div></div>
+    <div class="stage-card" data-stage="s1"><span class="sc-emoji">🔍</span><div class="sc-label">Stage 1</div><div class="sc-name">Discovery</div><div class="sc-outcome">Surface the pain, 3-layer probing, identify the champion</div></div>
+    <div class="stage-card" data-stage="s2"><span class="sc-emoji">✅</span><div class="sc-label">Stage 2</div><div class="sc-name">Qualify & Align</div><div class="sc-outcome">Confirm ICP fit, economic buyer, and go/no-go</div></div>
+    <div class="stage-card" data-stage="s3"><span class="sc-emoji">💡</span><div class="sc-label">Stage 3</div><div class="sc-name">Demo & ROI</div><div class="sc-outcome">Show the product, walk the ROI live, own the comparison</div></div>
+    <div class="stage-card" data-stage="s4"><span class="sc-emoji">⚙️</span><div class="sc-label">Stage 4</div><div class="sc-name">Integration Scoping</div><div class="sc-outcome">Confirm core, integration path, and 30-60-90 timeline</div></div>
+    <div class="stage-card" data-stage="s5"><span class="sc-emoji">📋</span><div class="sc-label">Stage 5</div><div class="sc-name">Proposal</div><div class="sc-outcome">Present pricing against confirmed ROI, get to a decision</div></div>
+    <div class="stage-card" data-stage="s6"><span class="sc-emoji">✍️</span><div class="sc-label">Stage 6</div><div class="sc-name">Contracting & Close</div><div class="sc-outcome">Mutual close plan, signatures, implementation handoff</div></div>
+    <div class="stage-card" data-stage="s7"><span class="sc-emoji">🌱</span><div class="sc-label">Stage 7</div><div class="sc-name">Post-Close</div><div class="sc-outcome">Go-live, KPI review, reference, referral ask</div></div>
+  </div>
+
+  <!-- I NEED TO -->
+  <div class="ns-title">I need to...</div>
+  <div class="intent-grid">
+    <div class="intent-btn" data-stage="precall"><span class="ib-emoji">📬</span><div><div class="ib-label">Prospect a new CU</div><div class="ib-desc">NCUA research, triggering events, email sequence, LinkedIn & voicemail</div></div></div>
+    <div class="intent-btn" data-stage="questions"><span class="ib-emoji">🔍</span><div><div class="ib-label">Ask better questions</div><div class="ib-desc">Discovery question bank by CU environment and pain type</div></div></div>
+    <div class="intent-btn" data-stage="s3"><span class="ib-emoji">🎯</span><div><div class="ib-label">Get ready for a demo</div><div class="ib-desc">5-step demo flow, LeveragePoint prep, executive personas</div></div></div>
+    <div class="intent-btn" data-stage="s4"><span class="ib-emoji">🔗</span><div><div class="ib-label">Navigate the IT conversation</div><div class="ib-desc">Integration scoping, DNA flag, IT questions guide, 30-60-90</div></div></div>
+    <div class="intent-btn" data-stage="objections"><span class="ib-emoji">🛡️</span><div><div class="ib-label">Handle a tough objection</div><div class="ib-desc">Common pushbacks, competitor handling, evaluation framework</div></div></div>
+    <div class="intent-btn" data-stage="champion"><span class="ib-emoji">🤝</span><div><div class="ib-label">Coach my champion</div><div class="ib-desc">What to give them, how to frame it, and how to help them sell internally</div></div></div>
+    <div class="intent-btn" data-stage="stall"><span class="ib-emoji">🔄</span><div><div class="ib-label">Restart a stalled deal</div><div class="ib-desc">Diagnose why it went dark, pick the right re-engagement play</div></div></div>
+    <div class="intent-btn" data-stage="s6"><span class="ib-emoji">🏁</span><div><div class="ib-label">Get to a close</div><div class="ib-desc">Mutual close plan, 30-60-90 roadmap, escalation protocol</div></div></div>
+  </div>
+
+  <!-- AI -->
+  <div class="ns-title">Just tell me where you are...</div>
+  <div class="ai-box">
+    <div style="display:flex;align-items:flex-start;gap:1rem">
+      <span style="font-size:1.5rem;flex-shrink:0">🤖</span>
+      <div>
+        <div style="font-family:var(--font-h);font-size:0.82rem;font-weight:700;color:var(--midnight);margin-bottom:0.35rem">AI Deal Assistant — Available in Hosted Version</div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.65;margin-bottom:0.5rem">This feature uses an AI model to read your deal situation and surface the right playbook content instantly. It requires a hosted deployment with a configured API key.</p>
+        <div style="background:var(--tiara);border-radius:8px;padding:0.65rem 0.85rem;font-size:0.78rem;color:var(--midnight);line-height:1.6">
+          <strong>To enable:</strong> Host this file on a web server and configure an Anthropic API key. Contact your administrator or refer to the deployment guide for setup instructions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /navigator -->
+
+<!-- STAGE OVERLAY — DevAltus pattern -->
+<div class="stage-overlay" id="stage-overlay">
+  <div class="overlay-backdrop" id="overlay-backdrop"></div>
+  <div class="overlay-panel">
+    <div class="overlay-nav">
+      <button class="overlay-back" id="overlay-back">← Back to Navigator</button>
+      <span class="overlay-stage-name" id="overlay-stage-name"></span>
+    </div>
+
+    <!-- PRE-CALL -->
+    <div class="stage-panel" id="panel-precall">
+      <div class="sv-hero"><span class="sv-emoji">🔭</span><div><div class="sv-label">Pre-Call</div><div class="sv-title">Prospect & Prep</div><div class="sv-owner">You — before any first call</div></div></div>
+      <div class="sv-body">
+
+        <!-- FULL-WIDTH ROW 1: YOU FIND / THEY TELL -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:0.85rem">
+          <div style="padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple2)">Before the Call — Research Checklist</div>
+          <div class="find-tell" style="border:none;border-radius:0;margin:0">
+            <div class="ft-col ft-you">
+              <div class="ft-lbl">🔍 You Find This (Before the Call)</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 0.5rem">
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Total assets (ICP gate: $300M+)</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Core platform: Symitar, DNA, or Keystone?</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Consumer loan % of assets (must be ≥20%)</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">LinkedIn: role tenure, activity, recent posts</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Delinquency rate — 60+ days past due</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Press/website: merger, exec hire, strategy</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Total loans outstanding (ROI baseline)</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Active member count (dormancy math)</div>
+              </div>
+            </div>
+            <div class="ft-col ft-they">
+              <div class="ft-lbl">💬 They Tell You This (In Discovery)</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 0.5rem">
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Actual call volume for loan payments</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Internal budget cycle / board timeline</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">% via call center vs. self-service</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Who else is in the decision</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Current payment vendor(s)</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">DNA version if applicable</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Reconciliation pain points</div>
+                <div class="ft-item" style="font-size:0.72rem;white-space:nowrap">Fraud exposure across channels</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FULL-WIDTH ROW 2: TRIGGERING EVENTS -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:0.9rem 1.25rem;margin-bottom:0.85rem">
+          <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--sunglow);margin-bottom:0.6rem">⚡ Triggering Events — Natural Openings for a PNM Conversation</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.65rem">
+            <div style="background:var(--purple-light);border-radius:8px;padding:0.6rem 0.75rem"><div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--purple2);margin-bottom:0.25rem">LinkedIn</div><div style="font-size:0.75rem;color:var(--midnight);line-height:1.45">New exec hire in last 90 days · New "digital" or "member experience" role posted</div></div>
+            <div style="background:var(--ger-light);border-radius:8px;padding:0.6rem 0.75rem"><div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:#8B1A22;margin-bottom:0.25rem">Press / News</div><div style="font-size:0.75rem;color:var(--midnight);line-height:1.45">Merger or acquisition · Core conversion announced · Fintech competition mentioned</div></div>
+            <div style="background:var(--sun-light);border-radius:8px;padding:0.6rem 0.75rem"><div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:#7A4A00;margin-bottom:0.25rem">NCUA Data</div><div style="font-size:0.75rem;color:var(--midnight);line-height:1.45">Delinquency rate spike YoY · Asset growth without proportional staff growth</div></div>
+            <div style="background:var(--green-light);border-radius:8px;padding:0.6rem 0.75rem"><div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--green2);margin-bottom:0.25rem">Industry Events</div><div style="font-size:0.75rem;color:var(--midnight);line-height:1.45">Just met at CUNA, GAC, or state league · Prospect spoke on a modernization panel</div></div>
+            <div style="background:var(--tiara);border-radius:8px;padding:0.6rem 0.75rem"><div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;color:var(--pale-sky);margin-bottom:0.25rem">Internal Signals</div><div style="font-size:0.75rem;color:var(--midnight);line-height:1.45">Contract renewal window · Known vendor dissatisfaction from a referral</div></div>
+          </div>
+        </div>
+
+        <!-- THREE-COLUMN GRID: PREPARE / OUTBOUND / LEAVE WITH -->
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Prepare Before the Call</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Pre-populate LeveragePoint with NCUA data — assets, delinquency rate, estimated call volume</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Select one opening question matched to archetype hypothesis</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Identify most likely CU environment: Growth, Margin, Delinquency, or Engagement</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Review Walk In Ready confidence card for this persona</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Pull competitive intel — SWBC, REPAY, or other vendor in play?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Queue supporting materials: CU case study, Payment Experience Gap report link</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">Outbound Templates</div>
+            <div class="coll-trigger" id="ct-email">
+              <span>📧 4-Touch Email Sequence</span><span class="coll-arr">▼</span>
+            </div>
+            <div class="coll-body" id="cb-email">
+              <div class="eseq">
+                <div class="etouch"><div class="eth"><span class="etnum">Touch 1</span><span class="etday">Day 1 · The Noise Problem</span></div><div class="etsubj">COO: "Your call center is processing payments it shouldn't" · CLO: "A delinquency question for [CU Name]"</div><div class="etbody">"[First name] — every time a [CU Name] member calls in to make a loan payment, it costs your team between $7 and $12 in staff time for something that should cost nothing. PayNearMe helps credit unions eliminate those calls — not deflect them, eliminate them. Our average client sees a 40% reduction in payment-related call volume in the first year. Worth 15 minutes? — [Your name]"</div></div>
+                <div class="etouch"><div class="eth"><span class="etnum">Touch 2</span><span class="etday">Day 5 · The Stat</span></div><div class="etsubj">"One number from [CU Name]'s NCUA filing"</div><div class="etbody">"[First name] — I pulled [CU Name]'s most recent 5300 filing. Your delinquency rate is [X%]. A portion of that isn't a credit risk problem — it's a friction problem. PayNearMe typically drives a 5–15% lift in on-time payments across targeted portfolios. I can show you what that math looks like at your portfolio size. Open to a quick call? — [Your name]"</div></div>
+                <div class="etouch"><div class="eth"><span class="etnum">Touch 3</span><span class="etday">Day 10 · Peer Reference</span></div><div class="etsubj">"What [similar CU] did about loan payment friction"</div><div class="etbody">"[First name] — a credit union similar to [CU Name] in size and core platform was routing significant loan payment volume through their call center. After deploying PayNearMe, agent-assisted payment calls dropped by over 40%. PayNearMe is the Payment Experience Management platform purpose-built for credit unions. Interested in seeing how the numbers might look for [CU Name]? — [Your name]"</div></div>
+                <div class="etouch"><div class="eth"><span class="etnum">Touch 4</span><span class="etday">Day 15 · Direct Ask</span></div><div class="etsubj">"Closing the loop — [CU Name] + PayNearMe"</div><div class="etbody">"[First name] — I've reached out a few times about reducing payment-related call volume and improving on-time loan payments at [CU Name]. If this isn't a priority right now, no problem — just let me know. If you're open to 15 minutes, I'd love to show you what we've done with similar CUs. — [Your name]"</div></div>
+              </div>
+            </div>
+
+            <div class="coll-trigger" id="ct-li">
+              <span>💼 LinkedIn Template (≤300 chars)</span><span class="coll-arr">▼</span>
+            </div>
+            <div class="coll-body" id="cb-li">
+              <div class="scblk"><div class="scl">Connection / InMail</div><div class="scb">"[First name] — saw you lead [role] at [CU Name]. PayNearMe helps CUs eliminate loan payment calls vs. just deflecting them — 40% reduction on average. Worth a 15-min conversation? Happy to share your NCUA data first."</div></div>
+            </div>
+
+            <div class="coll-trigger" id="ct-vm">
+              <span>📞 Voicemail Script (≤30 secs)</span><span class="coll-arr">▼</span>
+            </div>
+            <div class="coll-body" id="cb-vm">
+              <div class="scblk"><div class="scl">Cold Voicemail</div><div class="scb">"Hi [First name], this is [Your name] from PayNearMe. We help credit unions eliminate loan payment calls — not deflect them, eliminate them. Our average client cuts payment-related call volume by 40% in the first year. I pulled [CU Name]'s NCUA data and I think there's a real conversation here. I'll send you a quick email. Thanks."</div></div>
+            </div>
+          </div>
+
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave Pre-Call With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>NCUA profile complete — assets, delinquency rate, loan portfolio %, FTE count</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Triggering event identified and documented</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Core confirmed or flagged for first email</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Archetype hypothesis set from LinkedIn research</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>LeveragePoint pre-loaded with baseline NCUA data</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Touch 1 of 4-touch sequence sent</div></div>
+            <div class="callout cr" style="margin:0.65rem 0"><div class="cl">⚠️ If Core is DNA</div><p>Flag the specific DNA version to your Solutions Consultant before booking the first call. Don't let the IT conversation get ahead of validation.</p></div>
+            <div class="leave-hl">
+              <div class="lh-lbl">The Committed Next Step</div>
+              <div class="lh-txt">First call on calendar with COO, VP Operations, or equivalent. Not IT. Not a generic "let's connect."</div>
+            </div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">NCUA.gov → 5300 Call Report</span><span class="tc">LeveragePoint</span><span class="tc">Walk In Ready Card</span><span class="tc">LinkedIn</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 1: DISCOVERY -->
+    <div class="stage-panel" id="panel-s1">
+      <div class="sv-hero"><span class="sv-emoji">🔍</span><div><div class="sv-label">Stage 1</div><div class="sv-title">Discovery</div><div class="sv-owner">You</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>NCUA research complete, core confirmed, triggering event documented</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Archetype hypothesis confirmed from LinkedIn / role tenure</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>One opening question selected — matched to archetype</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CU environment hypothesis set — which pressure is most likely?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Walk In Ready confidence card reviewed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>LeveragePoint pre-loaded with NCUA baseline</div></div>
+            <div class="callout cg"><div class="cl">The Only Job In This Meeting</div><p>Ask great questions and listen. Come prepared, not pitched. <strong>The rep who asks the best questions wins the deal.</strong></p></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Open with:</strong> "Before I tell you anything about us — I'd love to understand how things work today. Mind if I ask a few questions?"</div></div>
+
+            <div class="sub-hdr" style="margin-top:0.75rem;font-size:0.72rem">Identify the Environment (First 10 Minutes)</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>Growth & Relevancy:</em> "How are you thinking about competing for younger members who've grown up with Venmo and Apple Pay? Where do you feel most exposed?"</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>Margin & ROA:</em> "Is reducing operational cost on the board's radar? How are you scaling your loan portfolio without scaling headcount?"</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>Delinquency & Risk:</em> "How much of your delinquency do you attribute to members who genuinely can't pay vs. members who just didn't get around to it?"</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>Engagement & Retention:</em> "What % of your membership hasn't meaningfully interacted with you in the last 12 months?"</div></div>
+
+            <div class="sub-hdr" style="font-size:0.72rem">3-Layer Probing Sequence</div>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:0.5rem;line-height:1.5">It takes three questions to get to the real issue. L1 surfaces the symptom. L2 surfaces the business impact. L3 surfaces the root cause — the one they haven't said out loud yet.</p>
+
+            <div class="sandler">
+              <div class="sandler-env">
+                <div class="sandler-env-hdr" data-env="env-growth">📱 Growth & Relevancy <span>▼</span></div>
+                <div class="sandler-env-body" id="env-growth">
+                  <div class="sandler-q"><span class="sandler-level sl1">L1</span><span>"When a 28-year-old member wants to make a loan payment on a Sunday night — what does that experience look like for them today?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl2">L2</span><span>"When that experience frustrates them, what does it cost you — in calls to your service team, in late payments, or in members you don't hear from again?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl3">L3</span><span>"If younger members are quietly benchmarking you against Venmo and Apple Pay every time they make a payment — what does that tell you about where the relationship is headed?"</span></div>
+                </div>
+              </div>
+              <div class="sandler-env">
+                <div class="sandler-env-hdr" data-env="env-margin">📊 Margin & ROA Pressure <span>▼</span></div>
+                <div class="sandler-env-body" id="env-margin">
+                  <div class="sandler-q"><span class="sandler-level sl1">L1</span><span>"Walk me through what a member experiences when they want to make a loan payment today — and tell me what percentage of those end up as a call to your service team."</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl2">L2</span><span>"If each of those agent-assisted calls costs between $7 and $12 in staff time — have you quantified what that line item looks like annually against your loan portfolio?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl3">L3</span><span>"What would it mean to your cost-to-income ratio if you could eliminate the majority of those calls — not deflect them, eliminate them — without adding headcount?"</span></div>
+                </div>
+              </div>
+              <div class="sandler-env">
+                <div class="sandler-env-hdr" data-env="env-delinq">⚠️ Delinquency & Risk <span>▼</span></div>
+                <div class="sandler-env-body" id="env-delinq">
+                  <div class="sandler-q"><span class="sandler-level sl1">L1</span><span>"When a payment fails on your current platform — what does the next screen show a member? An alternative payment path, or an error message?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl2">L2</span><span>"Of the members who show up in your 30-day past-due bucket — how many of those do you think tried to pay and hit friction versus members who simply couldn't afford to?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl3">L3</span><span>"If friction is driving a meaningful portion of your delinquency — what's that worth to you annually in recovery costs, collection staff time, and loan loss provisions?"</span></div>
+                </div>
+              </div>
+              <div class="sandler-env">
+                <div class="sandler-env-hdr" data-env="env-engage">🤝 Member Engagement & Retention <span>▼</span></div>
+                <div class="sandler-env-body" id="env-engage">
+                  <div class="sandler-q"><span class="sandler-level sl1">L1</span><span>"What % of your indirect loan members have had any interaction with the credit union beyond their auto-payment in the last 12 months?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl2">L2</span><span>"When those members don't interact with you — what's your current strategy for re-engaging them before they refinance somewhere else?"</span></div>
+                  <div class="sandler-q"><span class="sandler-level sl3">L3</span><span>"If the payment moment is one of your only regular touchpoints with indirect members — what does it say about the relationship if that touchpoint feels impersonal and transactional?"</span></div>
+                  <div style="background:var(--tiara);border-radius:7px;padding:0.55rem 0.75rem;margin-top:0.5rem;font-size:0.77rem;color:var(--midnight);line-height:1.5"><strong>The Login Wall:</strong> Indirect borrowers often have no online banking credentials. If your payment portal requires registration, they hit a wall — and they either call in or they don't pay. Ask: "What does your guest checkout experience look like for a member who only has an auto loan with you and has never set up online banking?"</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tt"><div class="tt-lbl">Share Thought Leadership Naturally</div><div class="tt-body">"We see across our CU clients that about 40% of delinquency is friction-driven — does that resonate with what you're seeing?" Let the data validate their pain. Don't lead with it.</div></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Pain summary captured — call volume, delinquency profile, core, reconciliation burden</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CU operating environment confirmed — which pressure is loudest?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Root cause pain surfaced (L3 answered) — not just the symptom</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Economic buyer identified or path to identify confirmed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Champion confirmed — most motivated to move</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Follow-up email sent within 24 hours — what you heard + next step</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>All findings logged in CRM immediately</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Demo on calendar with a confirmed date — or a specific re-engagement date set.</div></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">LeveragePoint — baseline inputs</span><span class="tc">Ready & Steady Card</span><span class="tc">CRM</span><span class="tc">Follow-Up Email Template</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage-panel" id="panel-s2">
+      <div class="sv-hero"><span class="sv-emoji">✅</span><div><div class="sv-label">Stage 2</div><div class="sv-title">Qualify & Align</div><div class="sv-owner">You</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Discovery summary reviewed — enough to build a real business case?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>ICP gate confirmed: $300M+ assets, consumer loans ≥20%, meaningful call center volume</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Archetype confirmed — adjust approach accordingly</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Economic buyer identified — is champion the decision maker?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Core confirmed and integration path validated (DNA version flagged if applicable)</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Run the 5-point qualification checklist:</strong></div></div>
+            <div style="padding-left:1.25rem">
+              <div class="bid-item" style="margin-bottom:0.4rem"><div style="font-size:0.82rem;color:var(--text);line-height:1.55">☐ Assets and loan portfolio meet ICP threshold</div></div>
+              <div class="bid-item" style="margin-bottom:0.4rem"><div style="font-size:0.82rem;color:var(--text);line-height:1.55">☐ Meaningful call center or collections volume confirmed</div></div>
+              <div class="bid-item" style="margin-bottom:0.4rem"><div style="font-size:0.82rem;color:var(--text);line-height:1.55">☐ Pain is real and specific — not hypothetical</div></div>
+              <div class="bid-item" style="margin-bottom:0.4rem"><div style="font-size:0.82rem;color:var(--text);line-height:1.55">☐ Champion has motivation and access to push this forward</div></div>
+              <div class="bid-item" style="margin-bottom:0.4rem"><div style="font-size:0.82rem;color:var(--text);line-height:1.55">☐ Budget authority identified or path confirmed</div></div>
+            </div>
+            <div class="bid-item" style="margin-top:0.5rem"><div class="bid-dot"></div><div><strong>Ask:</strong> "Who else would need to weigh in — and what does internal approval look like?"</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Timeline:</strong> "Is there a budget cycle or contract renewal window driving timing?"</div></div>
+            <div class="callout cy" style="margin-top:0.5rem"><div class="cl">Go / No-Go Decision Point</div><p>If you can't check all five items, this deal goes on hold — not in the pipeline. A deal that doesn't qualify today stalls at Stage 5.</p></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Go / no-go decision made and logged in CRM</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>All key stakeholders identified by name and role</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Rough timeline established — budget, board, contract renewal</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Solutions Consultant briefed if demo is next</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Demo scheduled — confirmed date, confirmed attendees, Solutions Consultant notified with deal context brief.</div></div>
+          </div>
+        </div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1rem">
+        <div class="coll-trigger" id="ct-scbrief" style="border-radius:0;margin:0;border:none;border-bottom:1px solid var(--border)">
+          <span>📋 Solutions Consultant Deal Context Brief — What to Include</span><span class="coll-arr">▼</span>
+        </div>
+        <div class="coll-body" id="cb-scbrief">
+          <div style="padding:0.85rem 1rem;font-size:0.81rem;color:var(--text);line-height:1.7">
+            <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.5rem">Send this to your Solutions Consultant before they engage</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1.5rem">
+              <div><strong>CU Name + Asset Size:</strong> [from NCUA]</div>
+              <div><strong>Core Platform:</strong> [Symitar / DNA / Keystone + version if DNA]</div>
+              <div><strong>Primary Pain:</strong> [call volume / delinquency / reconciliation / fraud]</div>
+              <div><strong>Champion Name + Title:</strong> [who is driving this internally]</div>
+              <div><strong>Economic Buyer:</strong> [who approves budget]</div>
+              <div><strong>Stakeholders in Demo:</strong> [who will be in the room]</div>
+              <div><strong>Discovery Summary:</strong> [2-3 sentences on what they told you]</div>
+              <div><strong>Committed Next Step:</strong> [what was agreed after discovery]</div>
+              <div><strong>Competitive Context:</strong> [SWBC / REPAY / other in play?]</div>
+              <div><strong>Timeline Sensitivity:</strong> [board date / budget cycle / renewal window]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">CRM — update stage</span><span class="tc">LeveragePoint — finalize inputs</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage-panel" id="panel-s3">
+      <div class="sv-hero"><span class="sv-emoji">💡</span><div><div class="sv-label">Stage 3</div><div class="sv-title">Demo & ROI</div><div class="sv-owner">You + Solutions Consulting</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>LeveragePoint pre-populated with prospect's NCUA data and discovery inputs — show their numbers, not generic benchmarks</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Demo environment confirmed and tested with Solutions Consultant</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Competitive intel pulled — SWBC or REPAY in the mix?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Solutions Consultant briefed with full deal context</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CFO attendance confirmed or ruled out — if CFO in room, lead with payback period not features</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Relevant CU case study selected and ready to send post-meeting</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Never start cold.</strong> "Based on what you told me, I want to show you three things that map directly to what you described..."</div></div>
+            <div class="callout cg" style="margin:0.5rem 0"><div class="cl">🎯 The QR Code Moment — Land This First</div><p>Before walking the full demo, hand the prospect your phone or display a QR code and ask them to scan it on their own device. They see a fake loan balance, make a one-click payment — no login, no credentials, no portal. This single moment consistently triggers an immediate "aha" across all personas, especially executives who've been tolerating the Login Wall for years. Land the emotional reaction before the feature walk.</p></div>
+            <div class="sub-hdr" style="font-size:0.72rem">5-Step Demo Flow</div>
+            <div style="padding-left:1.25rem;margin-bottom:0.5rem">
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>1.</strong> Smart Link™ — one-click SMS payment. No login, no portal. Let them feel it.</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>2.</strong> Payment breadth — Venmo, Apple Pay, cash at 62K+ locations side by side.</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>3.</strong> Agent interface — two-click payment for inbound calls. Show the staff experience.</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>4.</strong> Business Rules — exception prevention, not exception management.</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7"><strong>5.</strong> ROI dashboard — show success in their own data.</div>
+            </div>
+            <div class="bid-item" style="margin-top:0.5rem"><div class="bid-dot"></div><div><strong>Walk ROI live:</strong> Annual savings before pricing. Never make them do the math.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Own the comparison:</strong> 62K+ cash locations, Smart Switch™, Kinective/Core10, both 2026 awards — name differentiators before they raise a competitor.</div></div>
+            <div class="tt"><div class="tt-lbl">Demo Close Question</div><div class="tt-body">"Based on what you saw, is this directionally the kind of solution that could solve what you described? If so, I'd love to get our implementation team on a call with your IT contact to confirm the integration path."</div></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>ROI model summary sent within 24 hours</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Relevant CU case study attached to follow-up</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Demo objections noted and addressed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CRM updated with demo outcome and champion reaction</div></div>
+            <div style="background:var(--tiara);border:1px solid var(--border);border-radius:10px;padding:0.75rem 0.9rem;margin:0.65rem 0">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--midnight);margin-bottom:0.5rem">Executive Attendance — Lead With This</div>
+              <div style="font-size:0.78rem;color:var(--text);line-height:1.6">
+                <div style="margin-bottom:0.3rem"><strong>CEO:</strong> Member relevancy, competitive positioning, brand differentiation against fintechs</div>
+                <div style="margin-bottom:0.3rem"><strong>COO/VP Operations:</strong> Call volume reduction, reconciliation improvement, scale without headcount</div>
+                <div style="margin-bottom:0.3rem"><strong>CLO/VP Lending:</strong> Delinquency reduction, on-time payment lift, friction-driven loss prevention</div>
+                <div style="margin-bottom:0.3rem"><strong>CFO:</strong> Payback period, net annual savings, cost-per-payment comparison — send ROI model directly after</div>
+                <div><strong>CIO/IT:</strong> PCI DSS 4.0 + SOC 2 Type II, Kinective/Core10 connection, no core disruption, 6–8 week kickoff</div>
+              </div>
+            </div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Integration scoping call on calendar — IT contact identified, Solutions Consultant confirmed, specific date agreed.</div></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">LeveragePoint ROI — walk live</span><span class="tc">Demo Environment</span><span class="tc">CU Case Study</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 4 -->
+    <div class="stage-panel" id="panel-s4">
+      <div class="sv-hero"><span class="sv-emoji">⚙️</span><div><div class="sv-label">Stage 4</div><div class="sv-title">Integration Scoping</div><div class="sv-owner">You + Solutions Consulting + CU IT</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="callout cr"><div class="cl">⚠️ DNA Version — Confirm Before This Call</div><p>If prospect runs DNA, do not assume the integration path is confirmed. Validate the specific DNA version with your Solutions Consultant. Ask: "Which version — Standard DNA, DNA Connect, or another?" Never let the IT conversation get ahead of this.</p></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Core confirmed and Solutions Consultant briefed on version and integration path</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>IT Questions Guide shared with champion before the call</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Solutions Consultant briefed with full deal context</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Implementation anxiety talk track ready</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Your role:</strong> Solutions Consultant owns the technical conversation. You own the business outcome — remind the room why they're doing this.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Agenda:</strong> confirm core and version → Kinective/Core10 path → security requirements → go-live timeline</div></div>
+            <div class="tt"><div class="tt-lbl">Implementation Anxiety Talk Track</div><div class="tt-body">"I want to get ahead of the IT conversation before it starts. The most common concern is how disruptive this will be. Honest answer: our average go-live is 6 to 8 weeks from integration kickoff via Kinective or Core10 — your IT team enables the connection, they don't build it. Full member adoption ramps over the first 30 to 90 days post-launch, and clients typically see measurable KPI improvement within 90 days of go-live."</div></div>
+            <div class="sub-hdr" style="font-size:0.72rem">30-60-90 Day Roadmap</div>
+            <div style="padding-left:1.25rem">
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>Day 1–30:</strong> Integration configuration and environment setup via Kinective or Core10</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:0.3rem"><strong>Day 31–60:</strong> Testing, training, and soft launch — your IT team enables, PayNearMe supports</div>
+              <div style="font-size:0.82rem;color:var(--text);line-height:1.7"><strong>Day 61–90:</strong> Go-live and adoption ramp begins — full member adoption builds over this window; measurable KPI improvement typically visible within 90 days of launch</div>
+            </div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Written scoping summary to all parties within 48 hours</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Integration path confirmed in writing — core, version, connection method</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Go-live estimate logged in CRM</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>BRD initiated by Solutions Consultant</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Proposal call scheduled — champion and CFO confirmed, BRD in progress.</div></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1rem">
+          <div class="sub-hdr" style="margin-top:0">IT Questions Guide — Share With Champion Before the Scoping Call</div>
+          <div class="it-grid">
+            <div class="callout cy"><div class="cl">Integration & Architecture</div><p>→ What middleware connects to our core?<br>→ Does this require core config changes?<br>→ How are reconciliation files delivered?<br>→ Is there a sandbox before go-live?<br>→ <strong>If DNA:</strong> Which version?</p></div>
+            <div class="callout cy"><div class="cl">Security & Compliance</div><p>→ What is PayNearMe's PCI DSS level?<br>→ Is SOC 2 Type II available?<br>→ How is member data tokenized?<br>→ What is the incident response process?</p></div>
+            <div class="callout cg"><div class="cl">Timeline & Resources</div><p>→ What IT resources are required from us?<br>→ What is the go-live timeline for our core?<br>→ What does the 30-60-90 look like?<br>→ Who is our dedicated implementation contact?</p></div>
+            <div class="callout cg"><div class="cl">Post Go-Live & Support</div><p>→ What does ongoing support look like?<br>→ What is the uptime SLA?<br>→ How are outages handled — what is Smart Switch™?<br>→ What is the escalation path?</p></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">IT Questions Guide</span><span class="tc">30-60-90 Roadmap</span><span class="tc">BRD — Solutions Consultant initiates</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 5 -->
+    <div class="stage-panel" id="panel-s5">
+      <div class="sv-hero"><span class="sv-emoji">📋</span><div><div class="sv-label">Stage 5</div><div class="sv-title">Proposal & Case Design</div><div class="sv-owner">You + Solutions Consulting</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>BRD in progress — Solutions Consultant has captured integration specs and workflow needs</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Solutions Consultant aligned on scope — no surprises in the proposal</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Pricing inputs confirmed internally — do not present without approval</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>LeveragePoint ROI finalized — this is the business case you're pricing against</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CFO path confirmed — in this meeting or does champion bring it to them?</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>ROI before price, always.</strong> "Before I show you the investment, let me remind you what we're solving for..." Show savings before cost.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Price anchored to ROI:</strong> "Your annual savings is [X]. Your investment is [Y]. Payback period is [Z] months."</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Confirm decision process:</strong> "Who else needs to weigh in — and what does internal approval look like from here?"</div></div>
+            <div class="callout cy"><div class="cl">Objection to Watch For</div><p>"We need to look at other options." — Normal. Most CUs require 3 vendor evaluations per procurement policy. Embrace it. Offer the evaluation criteria framework to help them build criteria that play to PNM's strengths.</p></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Proposal sent in writing with ROI model attached</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Decision timeline confirmed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>BRD sign-off timeline confirmed</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Champion has shared proposal internally — next check-in confirmed with specific agenda.</div></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">LeveragePoint ROI — finalized</span><span class="tc">Proposal Template</span><span class="tc">BRD</span><span class="tc">Evaluation Framework</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 6 -->
+    <div class="stage-panel" id="panel-s6">
+      <div class="sv-hero"><span class="sv-emoji">✍️</span><div><div class="sv-label">Stage 6</div><div class="sv-title">Contracting & Close</div><div class="sv-owner">You</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Mutual Close Plan shared with champion — both sides accountable</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Legal and procurement path confirmed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Board approval threshold checked</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>BRD finalized and signed off</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Non-standard terms flagged to manager before responding</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>30-60-90 roadmap confirmed — champion knows what happens after signature</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Initiate KPI baseline conversation</strong> — agree on success metrics before signature so Post-Close review has a baseline to measure against. Don't leave this for the kickoff call.</div></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">In This Meeting</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Walk the Mutual Close Plan</strong> — shared timeline, both sides' commitments confirmed</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Walk the 30-60-90 roadmap</strong> — PayNearMe stays closely involved throughout</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Surface and resolve</strong> outstanding concerns before contract goes to legal</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Weekly champion contact</strong> during legal review — never let the deal go quiet</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Never commit</strong> to non-standard terms without manager approval</div></div>
+
+            <div class="sub-hdr" style="font-size:0.72rem;margin-top:0.85rem">Closing Questions — Use These to Move to Signature</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>"Based on everything we've walked through — is there anything still unresolved that would prevent us from moving forward?"</em></div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>"What does your internal approval process look like from here — and what's the realistic timeline to signatures?"</em></div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>"Is there a board meeting or budget cycle we need to be ahead of to keep the timeline on track?"</em></div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>"If we can get signatures by [date], we can have your integration kickoff scheduled within the same week. Does that timeline work on your end?"</em></div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><em>"Who else needs to sign off — and what do they need from us to feel confident saying yes?"</em></div></div>
+
+            <div class="callout cy"><div class="cl">Setting Shared Timeline Expectations</div><p>The 6–8 week integration kickoff window is PayNearMe's commitment. What follows depends on both sides — coach your champion early to own the internal readiness narrative so that if timelines shift, the team isn't surprised. Frame it as a partnership: "We'll move as fast as you're ready to move with us."</p></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave This Meeting With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Signed contract — or specific date for signatures</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Implementation team briefed immediately upon signature</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Implementation kickoff scheduled</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CRM updated — close date, contract value, kickoff date</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Signed contract in hand AND kickoff on calendar — both, not one or the other.</div></div>
+            <div class="callout cg" style="margin-top:0.65rem"><div class="cl">Close is Not the Finish Line</div><p>Brief the implementation team, attend the kickoff, and set the 90-day reference conversation now while momentum is high.</p></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">Mutual Close Plan</span><span class="tc">MSA / Contract</span><span class="tc">BRD — confirmed complete</span><span class="tc">Implementation Handoff Brief</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STAGE 7 -->
+    <div class="stage-panel" id="panel-s7">
+      <div class="sv-hero"><span class="sv-emoji">🌱</span><div><div class="sv-label">Stage 7</div><div class="sv-title">Post-Close</div><div class="sv-owner">You + Implementation</div></div></div>
+      <div class="sv-body">
+        <div class="bid-grid">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Before Kickoff</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Implementation handoff brief prepared — discovery findings, champion contact, key commitments, timeline</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Implementation team introduced to champion — warm handoff, not a cold transfer</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>30-60-90 timeline confirmed and communicated to all parties</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>KPI baseline established — agree on metrics before go-live so success is measurable and shared</div></div>
+            <div style="background:var(--tiara);border-radius:8px;padding:0.65rem 0.85rem;margin:0.3rem 0 0.5rem">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--pale-sky);margin-bottom:0.4rem">KPI Baseline — Agree on These Before Go-Live</div>
+              <div style="font-size:0.78rem;color:var(--text);line-height:1.5">
+                <div>★ Current inbound call volume for loan payments</div>
+                <div>★ Payment mix: self-service vs. agent-assisted</div>
+                <div>★ Current 30/60-day delinquency rate</div>
+                <div>★ Member satisfaction score (if tracked)</div>
+                <div>★ Month-end close time / exception count</div>
+              </div>
+            </div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">During Implementation</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Attend the kickoff</strong> — your presence signals continuity and protects the relationship</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Check in at 30 and 60 days</strong> — don't disappear after close</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Set adoption expectations:</strong> full member adoption ramps over 30–90 days post-launch</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>At 90 days:</strong> KPI review — call volume, self-service adoption, delinquency trend. Document the win.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Reference conversation:</strong> schedule at 90-day review while momentum is peak</div></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">Leave Post-Close With</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>CU live and member adoption ramping</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>90-day KPI review completed and documented</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Reference committed — who can we call?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Referral ask made — "Who else in your network should we be talking to?"</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Expansion seeded — additional channels, loan types, or branches?</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Reference confirmed by name and referral conversation scheduled or warm introduction made.</div></div>
+          </div>
+        </div>
+        <div class="tools-row"><span class="tl">📁 Tools</span><span class="tc">Implementation Handoff Brief</span><span class="tc">KPI Baseline Document</span><span class="tc">Reference & Referral Template</span><span class="tc">CRM</span></div>
+      </div>
+    </div>
+
+    <!-- STALLED -->
+    <div class="stage-panel" id="panel-stall">
+      <div class="sv-hero"><span class="sv-emoji">🔄</span><div><div class="sv-label">Quick Reference</div><div class="sv-title">When Deals Go Dark</div><div class="sv-owner">Diagnose first. Then pick the right play.</div></div></div>
+      <div class="sv-body">
+        <div class="callout cy" style="margin-bottom:1.25rem"><div class="cl">Why Deals Go Dark — The Two Dominant Factors</div><p><strong>Implementation anxiety</strong> — interested but terrified of the operational disruption. <strong>Unclear ROI</strong> — the champion can't build an internal business case. Both are solvable. Neither is a no.</p></div>
+        <div class="stall-grid">
+          <div class="stall-card"><div class="stall-title">Implementation Anxiety</div><div class="stall-diag">Went quiet after a positive demo. IT concerns raised. Nothing moved.</div><div class="stall-move">→ Lead with 30-60-90 roadmap. Share IT Questions Guide. Offer a peer reference call. Specificity is the antidote.</div></div>
+          <div class="stall-card"><div class="stall-title">Business Case Never Locked</div><div class="stall-diag">Champion liked it but couldn't sell it internally.</div><div class="stall-move">→ Go back to LeveragePoint with their NCUA data. Walk live — never send cold. Give champion the ROI language to present themselves.</div></div>
+          <div class="stall-card"><div class="stall-title">Champion Went Cold</div><div class="stall-diag">Main contact stopped responding after initial enthusiasm.</div><div class="stall-move">→ Re-engage with value: new stat, industry article, peer reference. Or reach one level above. "Who else should I be speaking with?"</div></div>
+          <div class="stall-card"><div class="stall-title">Competing Priority</div><div class="stall-diag">Core conversion, merger, or internal initiative pushed your deal to the back burner.</div><div class="stall-move">→ Name it directly: "Has something changed?" Set a specific re-engagement date in writing and send a calendar hold.</div></div>
+          <div class="stall-card"><div class="stall-title">New Blocker Emerged</div><div class="stall-diag">A new stakeholder or procurement hurdle not visible earlier.</div><div class="stall-move">→ "Has something changed since we last spoke?" Surface the blocker explicitly. Engage the new stakeholder if champion can facilitate.</div></div>
+          <div class="stall-card"><div class="stall-title">Wrong Entry Point</div><div class="stall-diag">Talking to someone without motivation or authority to move.</div><div class="stall-move">→ Find a different internal advocate closer to the pain — COO if stuck in IT, CLO if stuck with a non-decision maker.</div></div>
+        </div>
+        <div class="callout cg" style="margin-top:1.25rem"><div class="cl">Restart Questions by Stage</div><p><strong>Post-Discovery:</strong> "What you described is exactly what we solve — demo on the calendar?"<br><br><strong>Post-Demo:</strong> "What resonated most? Let's get Solutions Consultant and your IT contact on a call to confirm the integration path."<br><br><strong>Post-Scoping:</strong> "Integration confirmed. Who approves this, what do they need, and how do we get them there?"<br><br><strong>Stalled anywhere:</strong> "What would need to be different for this to become a priority? 10 minutes this week?"</p></div>
+      </div>
+    </div>
+
+
+    <!-- OBJECTIONS -->
+    <div class="stage-panel" id="panel-objections">
+      <div class="sv-hero"><span class="sv-emoji">🛡️</span><div><div class="sv-label">Quick Reference</div><div class="sv-title">Handle a Tough Objection</div><div class="sv-owner">Every objection is a signal of interest — respond with curiosity, not defensiveness</div></div></div>
+      <div class="sv-body">
+        <div class="callout cg" style="margin-bottom:1.25rem"><div class="cl">The Mindset</div><p>The goal isn't to win the argument — it's to help the prospect see past their concern and back to the business case. Ask what's behind the objection before you answer it.</p></div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1rem">
+          <div style="padding:0.7rem 1.25rem;border-bottom:1px solid var(--border);font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple2)">Common Objections & Responses</div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj1" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"We already have Fiserv / Jack Henry."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj1b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"Fiserv processes transactions. <strong style="color:var(--midnight)">We manage the payment experience.</strong> Your core handles the banking rails — PayNearMe handles what members see, feel, and interact with when they actually make a payment. Most CUs running Fiserv or Jack Henry still have members calling in to pay loans — that's the gap we fill. We're an additive layer, not a replacement."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj2" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"We can't take on another integration project."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj2b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"Understood — and that's exactly why the integration path matters. We connect via Kinective or Core10 middleware, which means your IT team enables it — they don't build it. There's no core disruption. Our average go-live from integration kickoff is <strong style="color:var(--midnight)">6 to 8 weeks</strong>. Full member adoption ramps over the first 30 to 90 days post-launch."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj3" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"Our members are fine with how they pay."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj3b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"Is your portal buried 3 clicks deep? They're tolerating it — not fine with it. Check your delinquency data for the real answer. Members don't tell you the payment experience is broken — they just don't pay on time, or they call in instead of completing it themselves. The data tells the story they're not saying out loud."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj4" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"More payment channels means more fraud exposure."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj4b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"<strong style="color:var(--midnight)">Fragmentation is the real fraud risk.</strong> Running multiple payment vendors with separate fraud tools and separate audit trails gives you less visibility, not more. PayNearMe is a single platform with built-in tokenization, unified channel visibility, PCI DSS 4.0 certification, and SOC 2 Type II. One platform means one place to see everything — and one place to respond."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj5" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"IT will push back on security and complexity."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj5b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"PCI DSS 4.0 and SOC 2 Type II — both available for review before the demo. We connect on top of your existing core, so there's no disruption to core systems. Our best client feedback from IT teams: <em>'The best part is I never hear from you.'</em> That's what CIO/IT leaders actually want — a vendor that delivers and then disappears into the infrastructure. Share the IT Questions Guide with your champion before the scoping call so their IT team arrives prepared."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj7" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"That implementation fee is a big upfront hit."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj7b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"That's the most common budget objection we hear — and it's fair to name it. Two things worth putting next to that number: what are you currently spending on your existing payment infrastructure, including staff time for exceptions and call handling? And would it help to run the amortization math against your NCUA baseline? Most clients recover the implementation fee within the first 90 days through call deflection alone."</div>
+          </div>
+
+          <div style="border-bottom:1px solid var(--border)">
+            <div class="coll-trigger" id="obj8" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"Five years is a long commitment — can we do something shorter?"</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj8b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">"The concern is usually about flexibility — core conversion, digital banking switch, merger. Our integration sits on top of your core via Kinective or Core10, so a core conversion doesn't require starting over. What I'd ask you to weigh: CUs who see the strongest ROI are the ones who've had 18–24 months to fully build member habits on the platform. A shorter term may feel safer, but it limits how much of the upside you capture." <br><br><em style="font-size:0.78rem">Note: Any non-standard contract term requests must go through your Sales Manager before responding to the prospect.</em></div>
+          </div>
+
+          <div>
+            <div class="coll-trigger" id="obj6" style="border-radius:0;margin:0;border:none;background:var(--tiara)"><span>"A competitor is showing us something similar."</span><span class="coll-arr">▼</span></div>
+            <div class="coll-body" id="obj6b" style="padding:1rem 1.25rem;font-size:0.82rem;color:var(--muted);line-height:1.65">
+              "Worth comparing — what specifically are they showing you? The differences come down to three things: payment type breadth (especially cash at 62,000+ retail locations), Smart Switch™ redundancy so you never have processing downtime at month-end, and our implementation track record at credit unions specifically. PayNearMe was named 2026 Best PayTech Solution by FinTech Futures and 2026 Top Payments ISV by the ETA. Happy to do a side-by-side."
+              <div style="margin-top:0.85rem;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+                <div class="callout cy" style="margin:0"><div class="cl">If They Name SWBC</div><p>Often the incumbent. Ask: "Is what SWBC is showing you a modernization of what you already have, or a genuinely new experience for your members?" Key gaps: no retail cash network, no Smart Switch™, built as a utility — not a member experience layer.</p></div>
+                <div class="callout cy" style="margin:0"><div class="cl">If They Name REPAY</div><p>Publicly traded, broad market reach. Lead with depth of CU focus: "PayNearMe is purpose-built for the CU vertical — it's not one of many markets, it's our primary focus." No retail cash network, no Smart Switch™.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem">
+          <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.75rem">How to Evaluate a Payments Partner — Share With Your Champion</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.8rem;color:var(--muted);line-height:1.6">
+            <div><strong style="color:var(--midnight);display:block;margin-bottom:0.15rem">Back-End Operations</strong>Does this platform prevent exceptions — or just manage them after the fact? What's the Business Rules capability?</div>
+            <div><strong style="color:var(--midnight);display:block;margin-bottom:0.15rem">Reconciliation</strong>Single daily file across all channels — or still managing multiple feeds? Unified settlement and reporting?</div>
+            <div><strong style="color:var(--midnight);display:block;margin-bottom:0.15rem">Reporting & Data</strong>Visibility into self-service adoption, payment abandonment, and channel mix? How fast does reporting refresh?</div>
+            <div><strong style="color:var(--midnight);display:block;margin-bottom:0.15rem">Partnership Mindset</strong>Does this vendor become part of your roadmap — or hand off and hope for the best? KPI improvements visible within 90 days?</div>
+          </div>
+          <div class="callout cy" style="margin-top:0.85rem;margin-bottom:0"><div class="cl">Know This Going In</div><p>Most credit unions are required to evaluate a minimum of three vendors before committing to a new third-party relationship — consistent with NCUA vendor due diligence guidance (Supervisory Letter 07-01). Don't be surprised when your champion says they need to "look at other options." Embrace it and help them build criteria that play to PayNearMe's strengths.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCOVERY QUESTION BANK -->
+    <div class="stage-panel" id="panel-questions">
+      <div class="sv-hero"><span class="sv-emoji">🔍</span><div><div class="sv-label">Quick Reference</div><div class="sv-title">Ask Better Questions</div><div class="sv-owner">Use before or during discovery — pick the questions that fit the moment</div></div></div>
+      <div class="sv-body">
+        <div class="callout cg" style="margin-bottom:1.25rem"><div class="cl">The Only Rule</div><p>Pick one question. Ask it. Then be quiet. The rep who asks the best questions and listens longest wins the deal. Never run through a list — let the conversation lead you to the next question naturally.</p></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:1rem">
+          <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="background:var(--ger-light);padding:0.65rem 1rem;border-bottom:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#8B1A22;text-transform:uppercase;letter-spacing:0.1em">📱 Growth & Relevancy</div><div style="font-size:0.7rem;color:var(--muted);margin-top:0.15rem">Competing for younger members in a fintech-saturated world</div></div>
+            <div style="padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem">Identify the Environment</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"How are you thinking about competing for younger members who've grown up with Venmo and Apple Pay? Where do you feel most exposed?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What percentage of new loan originations are going to members under 35 — and are you winning or losing that segment?"</div>
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0.65rem 0 0.5rem">Go Deeper</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"When a 28-year-old member wants to make a loan payment on a Sunday night — what does that experience look like for them today?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"When that experience frustrates them, what does it cost you — in calls, in late payments, or in members you don't hear from again?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"If younger members are quietly benchmarking you against Venmo and Apple Pay every time they pay — what does that tell you about where the relationship is headed?"</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="background:var(--sun-light);padding:0.65rem 1rem;border-bottom:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:#7A4A00;text-transform:uppercase;letter-spacing:0.1em">📊 Margin & ROA Pressure</div><div style="font-size:0.7rem;color:var(--muted);margin-top:0.15rem">Scaling the loan portfolio without scaling headcount</div></div>
+            <div style="padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem">Identify the Environment</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Is reducing operational cost on the board's radar? How are you thinking about scaling your loan portfolio without scaling headcount?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What does your cost-per-payment look like for agent-assisted versus self-service today? Have you quantified that gap?"</div>
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0.65rem 0 0.5rem">Go Deeper</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Walk me through what a member experiences when they want to make a loan payment — what percentage end up as a call?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"If each agent-assisted call costs $7–$12 in staff time — have you quantified what that looks like annually?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"What would it mean to your cost-to-income ratio if you could eliminate the majority of those calls — not deflect them, eliminate them?"</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="background:var(--green-light);padding:0.65rem 1rem;border-bottom:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--green2);text-transform:uppercase;letter-spacing:0.1em">⚠️ Delinquency & Risk</div><div style="font-size:0.7rem;color:var(--muted);margin-top:0.15rem">Friction-driven delinquency vs. true credit risk</div></div>
+            <div style="padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem">Identify the Environment</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"How much of your delinquency do you attribute to members who genuinely can't pay — versus members who meant to pay and didn't get around to it?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What does your payment abandonment rate look like? When a payment fails, does the next screen offer an alternative — or just an error message?"</div>
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0.65rem 0 0.5rem">Go Deeper</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Of the members in your 30-day past-due bucket — how many tried to pay and hit friction versus those who simply couldn't afford to?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Where are you seeing fraudulent payments — and what's the exposure across your current payment channels?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"If friction is driving a meaningful portion of your delinquency — what's that worth annually in recovery costs, collection staff time, and loan loss provisions?"</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="background:var(--purple-light);padding:0.65rem 1rem;border-bottom:1px solid var(--border)"><div style="font-family:var(--font-h);font-size:0.65rem;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.1em">🤝 Engagement & Retention</div><div style="font-size:0.7rem;color:var(--muted);margin-top:0.15rem">Converting indirect borrowers into loyal members</div></div>
+            <div style="padding:0.85rem 1rem">
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem">Identify the Environment</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What percentage of your membership has had no meaningful interaction with you in the last 12 months? What's your re-engagement strategy?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"How many indirect members are you actively engaging — and what's your strategy for converting them to direct relationships?"</div>
+              <div style="font-family:var(--font-h);font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0.65rem 0 0.5rem">Go Deeper</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What % of your indirect loan members have had any interaction beyond their auto-payment in the last 12 months?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"What does your guest checkout experience look like for a member who only has an auto loan and has never set up online banking?"</div>
+              <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"If the payment moment is one of your only touchpoints with indirect members — what does it say about the relationship if that touchpoint feels transactional?"</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem">
+          <div style="font-family:var(--font-h);font-size:0.6rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--pale-sky);margin-bottom:0.85rem">Process & Urgency — Ask These in Every Discovery</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1.5rem">
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Is there something driving a timeline — budget cycle, contract renewal, board initiative?"</div>
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Who else would need to be involved in evaluating something like this?"</div>
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"Walk me through your reconciliation process at end of day. How many exceptions per week?"</div>
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic;padding-bottom:0.4rem;border-bottom:1px solid var(--border)">"When you bring a vendor investment to your CFO or board, what does the ROI case need to look like?"</div>
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"When a member has a great payment experience — what does that actually feel like for them, and how often do you think that's happening today?"</div>
+            <div style="font-size:0.8rem;color:var(--midnight);line-height:1.6;font-style:italic">"How many payment vendors are you currently working with — and what would consolidating to one platform mean for your team?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COACH MY CHAMPION -->
+    <div class="stage-panel" id="panel-champion">
+      <div class="sv-hero"><span class="sv-emoji">🤝</span><div><div class="sv-label">Quick Reference</div><div class="sv-title">Coach My Champion</div><div class="sv-owner">The internal advocate who can't close without you behind them</div></div></div>
+      <div class="sv-body">
+        <div class="callout cy" style="margin-bottom:1.25rem"><div class="cl">Why This Matters</div><p>Your champion is selling PayNearMe internally while you're not in the room. If you haven't given them the right language, the right materials, and the right framing — they will improvise. And improvised pitches lose to the status quo every time.</p></div>
+        <div class="bid-grid" style="margin-bottom:1rem">
+          <div class="bid-col bid-before">
+            <div class="bid-lbl">Understand Your Champion First</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>What is their motivation?</strong> Career win, operational relief, board credibility, or peer recognition? Match your framing to what a win means to them personally.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>What is their authority?</strong> Can they approve, or do they recommend? If they recommend — who approves, and what does that person care about most?</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>What objections will they face internally?</strong> IT complexity, implementation cost, board approval threshold, competing priorities. Know these before they walk in.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>What's their communication style?</strong> Data-driven → give them the LeveragePoint model. Story-driven → give them a peer CU reference. Risk-averse → give them the evaluation framework.</div></div>
+            <div class="callout cg" style="margin-top:0.75rem"><div class="cl">The Champion Test</div><p>Ask: "If your CEO asked you tomorrow why PayNearMe — what would you say?" Their answer tells you exactly what they've internalized and what gaps you still need to fill.</p></div>
+          </div>
+          <div class="bid-col bid-in">
+            <div class="bid-lbl">What to Give Them</div>
+            <div class="sub-hdr" style="font-size:0.72rem;margin-top:0">The Language Package</div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>One-sentence summary:</strong> "PayNearMe replaces our fragmented payment experience with a single platform that reduces loan payment call volume, drives down friction-driven delinquency, and gives members a modern payment experience — without touching our core."</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>Their specific ROI number</strong> from LeveragePoint — built with their own NCUA data. Never give them a generic benchmark.</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div><strong>A peer reference:</strong> "A credit union similar to ours in size and core platform saw X." Peer proof carries more weight internally than any vendor claim.</div></div>
+            <div class="sub-hdr" style="font-size:0.72rem">The Materials Package</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>LeveragePoint ROI model with their baseline NCUA data pre-populated</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Relevant CU case study — same asset tier and core where possible</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>IT Questions Guide — so they can hand it to their IT contact and look prepared</div></div>
+            <div class="bid-item"><div class="bid-dot"></div><div>Evaluation framework — so they can frame the vendor comparison on criteria that favor PayNearMe</div></div>
+          </div>
+          <div class="bid-col bid-leave">
+            <div class="bid-lbl">How to Coach the Conversation</div>
+            <div class="sub-hdr" style="font-size:0.72rem;margin-top:0">For the CFO / Finance</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>"Lead with payback period — not features. 'The implementation fee is recovered in [X] months through call deflection alone. Year two is pure savings.'"</div></div>
+            <div class="sub-hdr" style="font-size:0.72rem">For IT / CIO</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>"Lead with what they won't have to do. 'We connect via Kinective or Core10 — your team enables it, they don't build it. PCI DSS 4.0 and SOC 2 Type II are standard.'"</div></div>
+            <div class="sub-hdr" style="font-size:0.72rem">For the Board</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>"Lead with member experience and competitive relevancy. 'Members are benchmarking us against every modern brand they interact with daily. This closes that gap.'"</div></div>
+            <div class="sub-hdr" style="font-size:0.72rem">For Skeptics</div>
+            <div class="bid-item"><div class="bid-dot"></div><div>"Don't argue — offer a peer reference call. 'Would it help to talk to a similar CU who's been live for 12 months?'"</div></div>
+            <div class="leave-hl"><div class="lh-lbl">The Committed Next Step</div><div class="lh-txt">Champion presents internally with a specific date. You follow up the day after — not a week later.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /overlay-panel -->
+</div><!-- /stage-overlay -->
+
+<!-- STANDARD FOOTER -->
+<div class="std-footer">
+  <div class="sf-lbl">The Standard — These Don't Change</div>
+  <div class="sf-rules">
+    <div class="sf-rule"><strong>ENTRY ·</strong> Never lead with IT or CFO</div>
+    <div class="sf-rule"><strong>NEXT STEP ·</strong> Always leave with one committed next step and a date</div>
+    <div class="sf-rule"><strong>ROI ·</strong> Know the ROI before every demo</div>
+    <div class="sf-rule"><strong>INTEGRATION ·</strong> Know your core and DNA version before the demo</div>
+    <div class="sf-rule"><strong>CHAMPION ·</strong> Arm your champion to sell internally</div>
+    <div class="sf-rule"><strong>ESCALATE ·</strong> Your manager should never be blindsided</div>
+    <div class="sf-rule"><strong>FINISH LINE ·</strong> Close is not the finish line</div>
+  </div>
+</div>
+<div class="page-footer">PayNearMe · Credit Union Vertical · Volume 2 · DO · Internal Use Only</div>
+
+<script>
+// ── PIPELINE BUILDER ──
+var pipelineTrigger = document.getElementById('pipeline-trigger');
+var pipelineBody = document.getElementById('pipeline-body');
+var pipelineArr = document.getElementById('pipeline-arr');
+
+pipelineTrigger.addEventListener('click', function() {
+  var isOpen = pipelineBody.style.display === 'block';
+  pipelineBody.style.display = isOpen ? 'none' : 'block';
+  pipelineArr.textContent = isOpen ? '▼ Open' : '▲ Close';
+});
+
+function goToStep(n) {
+  var steps = document.querySelectorAll('.pipe-step');
+  for (var i = 0; i < steps.length; i++) steps[i].style.display = 'none';
+  var target = document.getElementById('pipe-step-' + n);
+  if (target) target.style.display = 'block';
+  var btns = document.querySelectorAll('.pipe-step-btn');
+  for (var i = 0; i < btns.length; i++) {
+    var active = btns[i].getAttribute('data-step') == n;
+    btns[i].style.background = active ? 'var(--midnight)' : 'var(--tiara)';
+    btns[i].style.color = active ? '#fff' : 'var(--muted)';
+    btns[i].style.border = active ? 'none' : '1px solid var(--border)';
+  }
+}
+
+var stepBtns = document.querySelectorAll('.pipe-step-btn');
+for (var i = 0; i < stepBtns.length; i++) {
+  stepBtns[i].addEventListener('click', function() { goToStep(this.getAttribute('data-step')); });
+}
+
+var nextBtns = document.querySelectorAll('.pipe-next-btn');
+for (var i = 0; i < nextBtns.length; i++) {
+  nextBtns[i].addEventListener('click', function() {
+    goToStep(this.getAttribute('data-next'));
+    document.getElementById('pipeline-body').scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+// ── EXACT SAME PATTERN AS DEVALTUS ──
+// Attach listeners directly — NOT inside DOMContentLoaded
+
+var overlay = document.getElementById('stage-overlay');
+var overlayBack = document.getElementById('overlay-back');
+var overlayStageName = document.getElementById('overlay-stage-name');
+var stageNames = {
+  precall:'Pre-Call · Prospect & Prep',
+  s1:'Stage 1 · Discovery',
+  s2:'Stage 2 · Qualify & Align',
+  s3:'Stage 3 · Demo & ROI',
+  s4:'Stage 4 · Integration Scoping',
+  s5:'Stage 5 · Proposal & Case Design',
+  s6:'Stage 6 · Contracting & Close',
+  s7:'Stage 7 · Post-Close',
+  stall:'When Deals Go Dark',
+  objections:'Handle a Tough Objection',
+  questions:'Ask Better Questions',
+  champion:'Coach My Champion'
+};
+
+function openStage(id) {
+  // Hide all panels
+  var panels = document.querySelectorAll('.stage-panel');
+  for (var i = 0; i < panels.length; i++) {
+    panels[i].classList.remove('active');
+  }
+  // Show target panel
+  var target = document.getElementById('panel-' + id);
+  if (target) target.classList.add('active');
+  // Update label
+  overlayStageName.textContent = stageNames[id] || '';
+  // Update active nav chip
+  var chips = document.querySelectorAll('.nav-chip');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].classList.toggle('active', chips[i].getAttribute('data-stage') === id);
+  }
+  // Open overlay
+  overlay.classList.add('active');
+  overlay.scrollTop = 0;
+}
+
+function closeOverlay() {
+  overlay.classList.remove('active');
+  var chips = document.querySelectorAll('.nav-chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('active');
+}
+
+// Stage cards
+var stageCards = document.querySelectorAll('.stage-card, .intent-btn');
+for (var i = 0; i < stageCards.length; i++) {
+  stageCards[i].addEventListener('click', function() {
+    openStage(this.getAttribute('data-stage'));
+  });
+}
+
+// Nav chips
+var navChips = document.querySelectorAll('.nav-chip');
+for (var i = 0; i < navChips.length; i++) {
+  navChips[i].addEventListener('click', function() {
+    openStage(this.getAttribute('data-stage'));
+  });
+}
+
+// Back button and backdrop close — exact DevAltus pattern
+overlayBack.addEventListener('click', closeOverlay);
+
+// ── DEAL HEALTH CHECK TOGGLE ──
+var hcTrigger = document.getElementById('hc-trigger');
+var hcBody = document.getElementById('hc-body');
+var hcArr = document.getElementById('hc-arr');
+hcTrigger.addEventListener('click', function() {
+  var isOpen = hcBody.classList.contains('open');
+  hcBody.classList.toggle('open', !isOpen);
+  hcArr.style.transform = isOpen ? '' : 'rotate(180deg)';
+});
+
+// ── COLLAPSIBLES (outbound templates) ──
+var collapsibles = [
+  {trigger:'ct-email', body:'cb-email'},
+  {trigger:'ct-li',    body:'cb-li'},
+  {trigger:'ct-vm',    body:'cb-vm'},
+  {trigger:'ct-followup', body:'cb-followup'},
+  {trigger:'ct-scbrief',  body:'cb-scbrief'},
+  {trigger:'obj1', body:'obj1b'},
+  {trigger:'obj2', body:'obj2b'},
+  {trigger:'obj3', body:'obj3b'},
+  {trigger:'obj4', body:'obj4b'},
+  {trigger:'obj5', body:'obj5b'},
+  {trigger:'obj6', body:'obj6b'},
+  {trigger:'obj7', body:'obj7b'},
+  {trigger:'obj8', body:'obj8b'}
+];
+for (var i = 0; i < collapsibles.length; i++) {
+  (function(item) {
+    var t = document.getElementById(item.trigger);
+    var b = document.getElementById(item.body);
+    if (!t || !b) return;
+    t.addEventListener('click', function() {
+      var isOpen = b.classList.contains('open');
+      b.classList.toggle('open', !isOpen);
+      var arr = t.querySelector('.coll-arr');
+      if (arr) arr.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+  })(collapsibles[i]);
+}
+
+// ── SANDLER ENVIRONMENT TOGGLES ──
+var sandlerHdrs = document.querySelectorAll('.sandler-env-hdr');
+for (var i = 0; i < sandlerHdrs.length; i++) {
+  sandlerHdrs[i].addEventListener('click', function() {
+    var envId = this.getAttribute('data-env');
+    var body = document.getElementById(envId);
+    if (!body) return;
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    var arr = this.querySelector('span:last-child');
+    if (arr) arr.style.transform = isOpen ? '' : 'rotate(180deg)';
+  });
+}
+
+</script>
+</body>
+</html>
