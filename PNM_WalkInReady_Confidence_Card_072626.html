@@ -109,6 +109,7 @@ body{font-family:var(--font-b);background:#F0F2F5;color:var(--text);min-height:1
 .footer-meta{font-size:0.62rem;color:rgba(255,255,255,0.3)}
 
 @media print {
+  .print-btn { display: none !important; }
   @page {
     size: landscape;
     margin: 0.4in;
@@ -266,7 +267,7 @@ body{font-family:var(--font-b);background:#F0F2F5;color:var(--text);min-height:1
   </div>
 
 </div>
-<div style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:999">
+<div class="print-btn" style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:999">
   <button onclick="window.print()" style="background:var(--midnight);color:#fff;font-family:var(--font-h);font-size:0.7rem;font-weight:700;border:none;border-radius:2rem;padding:0.5rem 1.1rem;cursor:pointer;box-shadow:0 2px 12px rgba(1,35,65,0.25);display:flex;align-items:center;gap:0.4rem;letter-spacing:0.05em">🖨️ Print / Save as PDF</button>
 </div>
 </body>
